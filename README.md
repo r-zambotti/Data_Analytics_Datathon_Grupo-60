@@ -29,7 +29,7 @@ A aplicação é baseada em dados de alunos de 2020 a 2022, e tem como objetivo 
 
 Você pode acessar a aplicação ao vivo através do seguinte link:
 
-[Datathon Passos Mágicos - Análise Exploratória](https://datathon-wesleyesantos-g44.streamlit.app/)
+[Datathon Passos Mágicos - Análise Exploratória]()
 
 ## 📚 Sobre a Metodologia "Passos Mágicos"
 
