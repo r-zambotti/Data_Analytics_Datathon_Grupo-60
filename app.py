@@ -162,6 +162,11 @@ if page == page_0:
                     a instituição atende centenas de crianças e adolescentes, oferecendo bolsas de estudo, suporte psicológico e oportunidades de intercâmbio.
                     </p>
                     ''', unsafe_allow_html=True)
+        
+    st.markdown('---')
+    insert_image(image_path = r'img/passos_magicos.png',
+                 source = 'https://passosmagicos.org.br/',
+                 caption = 'Imagem oficial da ONG Passos Mágicos')   
     
     # create_quote('''
     #             O petróleo começa com a formação das bacias sedimentares, 
@@ -184,10 +189,8 @@ if page == page_0:
     #             dado o calor ao longo do tempo, ocorre a formação do petróleo. Esse processo é extremamente lento 
     #             e, por isso, o petróleo é considerado um <b>recurso não renovável</b>.<br><br>
     #             ''' , unsafe_allow_html=True)
-    
-    # insert_image(image_path = r'img/bacias_sedimentares_revista_superinteressante.webp',
-    #              source = 'https://super.abril.com.br/coluna/deriva-continental/nos-bastidores-da-terra-geologa-explica-a-formacao-do-petroleo',
-    #              caption = 'Processo de formação do petróleo nas bacias sedimentares - Revista Superinteressante')
+
+
                   
     # st.markdown('''
     #             <p style="font-size: 18px"><br>
@@ -211,21 +214,21 @@ if page == page_0:
     #         ''')  
 
 # Análise
-# elif page == page_1:
-#     # carregar dados
-#     data = pd.read_parquet(r'data/data_w_indicators.parquet')
-#     # sidebar - adicionar filtros
-#     st.sidebar.title('⚙️ Filtros')
-#     # filtros de ano com slider
-#     min_year = data.index.year.min()
-#     min_year = int(min_year)
-#     max_year = data.index.year.max()
-#     max_year = int(max_year)
-#     # filtro de preço com slider
-#     min_price = data['brent'].min()
-#     min_price = int(min_price)
-#     max_price = data['brent'].max()
-#     max_price = int(max_price)
+elif page == page_1:
+    # carregar dados
+    data = pd.read_parquet(r'data/data_w_indicators.parquet')
+    # sidebar - adicionar filtros
+    st.sidebar.title('⚙️ Filtros')
+    # filtros de ano com slider
+    min_year = data.index.year.min()
+    min_year = int(min_year)
+    max_year = data.index.year.max()
+    max_year = int(max_year)
+    # filtro de preço com slider
+    min_price = data['brent'].min()
+    min_price = int(min_price)
+    max_price = data['brent'].max()
+    max_price = int(max_price)
 
 #     year_slider = st.sidebar.slider('Ano', min_year, max_year, (min_year, max_year))
 #     price_slider = st.sidebar.slider('Preço (U$D )', min_price, max_price, (min_price, max_price))
