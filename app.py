@@ -40,7 +40,7 @@ st.set_page_config(layout='centered',
 
 # paginação
 page_0 = 'Introdução ✨'
-page_1 = 'Análise Exploratória'
+page_1 = 'Análise Exploratória 🎲'
 page_2 = 'Dashboard'
 page_3 = 'Conclusão'
 page_4 = 'Referências'
@@ -212,7 +212,7 @@ if page == page_0:
 # Análise Exploratória
 elif page == page_1:
 
-    st.title('Análise Exploratória')
+    st.title('Análise Exploratória 🔎')
     st.markdown('<br>', unsafe_allow_html=True)
     
     st.markdown('''
@@ -245,13 +245,13 @@ elif page == page_1:
                 ''', unsafe_allow_html=True)
 
     #Análise dos Indicadores
-    st.subheader(':blue[Indicadores 📈]', divider='blue')
+    st.subheader('Análise dos Indicadores', divider='orange')
 
-    #Divindo cada indicador em tabelas para melhor visualização
-    tab0,tab,tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(tabs=['INDE','Pedras','IEG', 'IDA', 'IAN', 'IAA', 'IPS', 'IPP', 'IPV', 'Ponto de Virada'])
+    #Divindo cada indicador em selectbox para melhor visualização
+    indicador = st.selectbox('Selecione o indicador:', ['INDE','Pedras','IEG', 'IDA', 'IAN', 'IAA', 'IPS', 'IPP', 'IPV', 'Ponto de Virada'])
 
     #Tabela INDE
-    with tab0:
+    if indicador == 'INDE':
         
         st.markdown('''
                     <p style="font-size: 18px">
@@ -283,57 +283,137 @@ elif page == page_1:
                     ''', unsafe_allow_html=True)
 
     #Tabela Pedras
-    with tab:
-        st.markdown('''As <b><font color='blue'>Pedras</b></font> podem ser definidas como o quanto os alunos estão pontuando, então ele entra num esquema de classificação, o que traz mais clareza na análise e atenção para o desenvolvimento de cada aluno e também dá uma visão mais competitiva aos alunos, porém eles irão almejar as melhores classificações. Até o último relatório PEDE tinhamos 4 pedras que são:''',unsafe_allow_html=True)
-        st.markdown('''- <b><font color='blue'>Quartzo:</b></font> Alunos com INDE entre <b><font color='blue'>2,405 a 5,506</b></font>.''',unsafe_allow_html=True)
-        st.markdown('''- <b><font color='blue'>Ágata:</b></font> Alunos com INDE entre <b><font color='blue'>5,506 a 6,868</b></font>.''',unsafe_allow_html=True)
-        st.markdown('''- <b><font color='blue'>Ametista:</b></font> Alunos com INDE entre <b><font color='blue'>6,868 a 8,230</b></font>.''',unsafe_allow_html=True)
-        st.markdown('''- <b><font color='blue'>Topázio:</b></font> Alunos com INDE entre <b><font color='blue'>8,230 a 9,294</b></font>.''',unsafe_allow_html=True)
-    with tab1:
-        st.markdown('''###### <font color='blue'>IEG (Índice de Engajamento Global)''',unsafe_allow_html=True )
-        st.markdown('''Avalia o nível de envolvimento dos alunos em atividades extracurriculares e programas de intercâmbio. Este índice é importante para entender como as experiências fora da sala de aula contribuem para o desenvolvimento pessoal e acadêmico dos alunos.''')
+    if indicador == 'Pedras':
 
-    with tab2:
-        st.markdown('''###### <font color='blue'>IDA (Índice de Desenvolvimento Acadêmico)''',unsafe_allow_html=True)
-        st.markdown('''Mede o progresso acadêmico dos alunos, considerando notas, frequência escolar e participação em atividades educacionais. Este índice ajuda a identificar áreas que necessitam de melhorias e a eficácia das intervenções pedagógicas.''')
-
-    with tab3:
-        st.markdown('''######  <font color='blue'>IAN (Índice de Aproveitamento Nutricional)''',unsafe_allow_html=True)
-        st.markdown('''Avalia a qualidade da alimentação fornecida às crianças e jovens, medindo o impacto da nutrição no desempenho escolar e no bem-estar geral dos alunos.''')
-
-    with tab4:
-        st.markdown('''######  <font color='blue'>IAA (Índice de Atendimento e Acompanhamento)''',unsafe_allow_html=True)
-        st.markdown('''Mede a qualidade e a frequência do atendimento psicológico e psicopedagógico oferecido aos alunos. Este índice é crucial para garantir que os alunos recebam o suporte necessário para superar desafios emocionais e acadêmicos.''')
-
-    with tab5:
-        st.markdown('''######  <font color='blue'>IPS (Índice de Participação Social)''',unsafe_allow_html=True)
-        st.markdown('''Avalia o envolvimento dos alunos em atividades comunitárias e projetos sociais. Este índice ajuda a medir o impacto dos programas da Passos Mágicos na formação de cidadãos conscientes e ativos na sociedade.''')
-
-    with tab6:
-        st.markdown('''###### <font color='blue'>IPP (Índice de Progresso Pessoal)''',unsafe_allow_html=True)
-        st.markdown('''Mede o desenvolvimento pessoal dos alunos, considerando aspectos como autoestima, habilidades sociais e resiliência. Este índice é importante para avaliar o impacto das intervenções da Passos Mágicos no crescimento pessoal dos alunos.''')
-
-    with tab7:
-        st.markdown('''###### <font color='blue'>IPV (Índice de Permanência e Valorização)''',unsafe_allow_html=True)
-        st.markdown('''Avalia a taxa de retenção dos alunos nos programas da Passos Mágicos e a valorização dos mesmos pelos beneficiários e suas famílias. Este índice é fundamental para entender a satisfação e o comprometimento dos alunos com os programas oferecidos.''')
-    
-    with tab8:
-        st.markdown(''' O Ponto de virada indica que o aluno atingiu um passo mágico, é a conquista de uma habilidade fundamental, é medido através das notas, avaliações e outros dados, e demonstra que o aluno teve um grande progresso, essa evolução o ajudará a enfrentar vários desafios que encontrará pela frente, assim como:''' )
         st.markdown('''
-        - Os alunos poderão superar dificuldades em matérias específicas e melhorar seu desempenho acadêmico,
-        - Isso pode incluir avanços em leitura, matemática, ciências e outras áreas,
-        - O ponto de virada traz consigo uma sensação de realização e confiança,
-        - Os alunos se sentirão mais capazes e confiantes em suas habilidades,
-        - Eles desenvolverão habilidades de comunicação, resolução de conflitos, empatia e trabalho em equipe,
-        - Isso os ajudará a lidar com situações sociais e emocionais,
-        - O ponto de virada também envolve uma ampliação da visão de mundo,
-        - Os alunos estarão mais abertos a diferentes culturas, perspectivas e oportunidades,
-        - Os alunos serão incentivados a assumir o protagonismo em suas vidas,
-        - Eles tomarão decisões mais conscientes e terão maior autonomia,
-        - O ponto de virada ensina a importância da persistência e da resiliência,
-        - Os alunos saberão que podem superar obstáculos com esforço contínuo.
-        ''')
+                    As <b><font color='blue'>Pedras</b></font> podem ser definidas como o quanto os alunos estão pontuando, então ele entra num esquema de classificação, 
+                    o que traz mais clareza na análise e atenção para o desenvolvimento de cada aluno e também dá uma visão mais competitiva aos alunos, porém eles irão almejar as melhores classificações. 
+                    Até o último relatório PEDE tinhamos 4 pedras que são:
+                    ''',unsafe_allow_html=True)
         
+        st.markdown('''
+                    - <b><font color='blue'>Quartzo:</b></font> Alunos com INDE entre <b><font color='blue'>2,405 a 5,506</b></font>.
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    - <b><font color='blue'>Ágata:</b></font> Alunos com INDE entre <b><font color='blue'>5,506 a 6,868</b></font>.
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    - <b><font color='blue'>Ametista:</b></font> Alunos com INDE entre <b><font color='blue'>6,868 a 8,230</b></font>.
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    - <b><font color='blue'>Topázio:</b></font> Alunos com INDE entre <b><font color='blue'>8,230 a 9,294</b></font>.
+                    ''',unsafe_allow_html=True)
+        
+    #Tabela IEG    
+    if indicador == 'IEG':
+
+        st.markdown('''
+                    ###### <font color='blue'>IEG (Índice de Engajamento Global)
+                    ''',unsafe_allow_html=True )
+        
+        st.markdown('''
+                    Avalia o nível de envolvimento dos alunos em atividades extracurriculares e programas de intercâmbio. Este índice é importante para entender como as experiências 
+                    fora da sala de aula contribuem para o desenvolvimento pessoal e acadêmico dos alunos.
+                    ''')
+
+    #Tabela IDA
+    if indicador == 'IDA':
+
+        st.markdown('''
+                    ###### <font color='blue'>IDA (Índice de Desenvolvimento Acadêmico)
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    Mede o progresso acadêmico dos alunos, considerando notas, frequência escolar e participação em atividades educacionais. 
+                    Este índice ajuda a identificar áreas que necessitam de melhorias e a eficácia das intervenções pedagógicas.
+                    ''')
+
+    #Tabela IAN
+    if indicador == 'IAN':
+
+        st.markdown('''
+                    ######  <font color='blue'>IAN (Índice de Aproveitamento Nutricional)
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    Avalia a qualidade da alimentação fornecida às crianças e jovens, medindo o impacto da nutrição no desempenho escolar e no bem-estar geral dos alunos.
+                    ''')
+        
+    #Tabela IAA
+    if indicador == 'IAA':
+
+        st.markdown('''
+                    ######  <font color='blue'>IAA (Índice de Atendimento e Acompanhamento)
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    Mede a qualidade e a frequência do atendimento psicológico e psicopedagógico oferecido aos alunos. 
+                    Este índice é crucial para garantir que os alunos recebam o suporte necessário para superar desafios emocionais e acadêmicos.
+                    ''')
+        
+    #Tabela IPS
+    if indicador == 'IPS':
+
+        st.markdown('''
+                    ######  <font color='blue'>IPS (Índice de Participação Social)
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    Avalia o envolvimento dos alunos em atividades comunitárias e projetos sociais. Este índice ajuda a medir o impacto dos programas da Passos Mágicos na formação de cidadãos conscientes e ativos na sociedade.
+                    ''')
+        
+    #Tabela IPP
+    if indicador == 'IPP':
+
+        st.markdown('''
+                    ###### <font color='blue'>IPP (Índice de Progresso Pessoal)
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    Mede o desenvolvimento pessoal dos alunos, considerando aspectos como autoestima, habilidades sociais e resiliência. 
+                    Este índice é importante para avaliar o impacto das intervenções da Passos Mágicos no crescimento pessoal dos alunos.
+                    ''')
+        
+    #Tabela IPV
+    if indicador == 'IPV':
+
+        st.markdown('''
+                    ###### <font color='blue'>IPV (Índice de Permanência e Valorização)
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    Avalia a taxa de retenção dos alunos nos programas da Passos Mágicos e a valorização dos mesmos pelos beneficiários e suas famílias. 
+                    Este índice é fundamental para entender a satisfação e o comprometimento dos alunos com os programas oferecidos.
+                    ''')
+        
+    #Tabela Ponto de Virada   
+    if indicador == 'Ponto de Virada':
+        
+        st.markdown(''' 
+                    O Ponto de virada indica que o aluno atingiu um passo mágico, é a conquista de uma habilidade fundamental, 
+                    é medido através das notas, avaliações e outros dados, e demonstra que o aluno teve um grande progresso, 
+                    essa evolução o ajudará a enfrentar vários desafios que encontrará pela frente, assim como:
+                    ''' )
+        
+        st.markdown('''
+                    - Os alunos poderão superar dificuldades em matérias específicas e melhorar seu desempenho acadêmico,
+                    - Isso pode incluir avanços em leitura, matemática, ciências e outras áreas,
+                    - O ponto de virada traz consigo uma sensação de realização e confiança,
+                    - Os alunos se sentirão mais capazes e confiantes em suas habilidades,
+                    - Eles desenvolverão habilidades de comunicação, resolução de conflitos, empatia e trabalho em equipe,
+                    - Isso os ajudará a lidar com situações sociais e emocionais,
+                    - O ponto de virada também envolve uma ampliação da visão de mundo,
+                    - Os alunos estarão mais abertos a diferentes culturas, perspectivas e oportunidades,
+                    - Os alunos serão incentivados a assumir o protagonismo em suas vidas,
+                    - Eles tomarão decisões mais conscientes e terão maior autonomia,
+                    - O ponto de virada ensina a importância da persistência e da resiliência,
+                    - Os alunos saberão que podem superar obstáculos com esforço contínuo.
+                    ''')
+        
+
     st.subheader(':blue[PEDE (Pesquisa Extensiva do Desenvolvimento Educacional) 🗃️]', divider='blue')
 
     tab9, tab10 = st.tabs(tabs=['Base (Conceito e download)', 'Estrutura e Dicionário'])
