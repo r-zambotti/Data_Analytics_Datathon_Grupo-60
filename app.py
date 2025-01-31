@@ -174,40 +174,6 @@ if page == page_0:
                  source = 'https://passosmagicos.org.br/',
                  caption = 'Imagem oficial da ONG Passos Mágicos')   
     
-  
-    
-    
-    # st.markdown('''
-    #             <p style="font-size: 18px">
-    #             Vestígios de matéria orgânica em decomposição - principalmente algas e plânctons - 
-    #             se acumulam no fundo de corpos de água, como mares e lagos. 
-    #             Esses restos são cobertos por camadas de sedimentos que exercem cada vez mais pressão e, 
-    #             dado o calor ao longo do tempo, ocorre a formação do petróleo. Esse processo é extremamente lento 
-    #             e, por isso, o petróleo é considerado um <b>recurso não renovável</b>.<br><br>
-    #             ''' , unsafe_allow_html=True)
-
-
-                  
-    # st.markdown('''
-    #             <p style="font-size: 18px"><br>
-    #                 Estudos geofísicos aéreos e terrestres são realizados para 
-    #                 a identificação de bacias sedimentares com maiores chances de encontrar petróleo.
-    #                 A profundidade dos poços de petróleo em áreas terrestres (<i>onshore</i>) varia, em média, 
-    #                 entre 1.500 e 3.000 metros. Já em áreas no mar (<i>offshore</i>), pode atingir até 10.000 metros. 
-    #                 Portanto, a extração do petróleo em terra firme é diferente da exploração em mar - 
-    #                 e ambos os procedimentos são complexos.<br>
-    #                 <b>80 milhões de barris</b> de petróleo são extraídos por dia em todo o mundo, 
-    #                 onde cada barril contém <b>159 litros</b> de petróleo.</b><br><br>
-    #             </p>
-    #             ''', unsafe_allow_html=True)
-    
-    # create_warning(' Perigo',
-    #         '''
-    #         Os meios de exploração do petróleo, bem como a queima constante, são altamente danosos ao meio ambiente.
-    #         A extração de petróleo é uma atividade que emite gases de efeito estufa, contribuindo para o aquecimento global.
-    #         Também, o derramamento de petróleo no mar causa uma série de prejuízos ao ecossistema marinho, afetando a vida existente naquele local.
-    #         Esses fatos reforçam a necessidade de investimento em fontes de energia limpa e renovável.
-    #         ''')  
 
 # Análise Exploratória
 elif page == page_1:
@@ -416,71 +382,71 @@ elif page == page_1:
 
     st.subheader(':blue[PEDE (Pesquisa Extensiva do Desenvolvimento Educacional) 🗃️]', divider='blue')
 
-    tab9, tab10 = st.tabs(tabs=['Base (Conceito e download)', 'Estrutura e Dicionário'])
-    with tab9:
-        st.markdown('''A base <b><font color='blue'>PEDE</font></b> foi disponibilizada a base completa referenciando as colunas por anos, sendo que os anos disponibilizados para esse trabalho foram os anos 2020, 2021 e 2022, como tiveram alguns alunos que iniciaram no decorrer desse período a base exigiu uma atenção na realização de análise e algumas limpezas que foram cruciais para seguir com a análise exploratória.''', unsafe_allow_html=True)
-        st.download_button(label="Baixar Base PEDE (csv)",data=csv_data,file_name="PEDE_PASSOS_DATASET_FIAP.csv",mime="text/csv")
-    with tab10:
-        st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
-        st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
+    # tab9, tab10 = st.tabs(tabs=['Base (Conceito e download)', 'Estrutura e Dicionário'])
+    # with tab9:
+    #     st.markdown('''A base <b><font color='blue'>PEDE</font></b> foi disponibilizada a base completa referenciando as colunas por anos, sendo que os anos disponibilizados para esse trabalho foram os anos 2020, 2021 e 2022, como tiveram alguns alunos que iniciaram no decorrer desse período a base exigiu uma atenção na realização de análise e algumas limpezas que foram cruciais para seguir com a análise exploratória.''', unsafe_allow_html=True)
+    #     st.download_button(label="Baixar Base PEDE (csv)",data=csv_data,file_name="PEDE_PASSOS_DATASET_FIAP.csv",mime="text/csv")
+    # with tab10:
+    #     st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
+    #     st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
 
-        st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
-        data_dict = {
-        "INSTITUICAO_ENSINO_ALUNO_2020": "Mostra instituição de Ensino do Aluno em 2020",
-        "NOME": "Nome do Aluno (dados estão anonimizados)",
-        "IDADE_ALUNO_2020": "Idade do Aluno em 2020",
-        "PEDRA_2020": "Classificação do Aluno baseado no número do INDE (2020), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
-        "IAA_2020": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2020",
-        "IEG_2020": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2020",
-        "IPS_2020": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2020",
-        "IDA_2020": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2020",
-        "IPP_2020": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2020",
-        "IPV_2020": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2020",
-        "IAN_2020": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2020",
-        "INDE_2020": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2020.",
-        "DESTAQUE_IEG_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Engajamento' em 2020",
-        "DESTAQUE_IDA_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2020",
-        "DESTAQUE_IPV_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2020",
-        "PONTO_VIRADA_2020": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2020",
-        "PEDRA_2021": "Classificação do Aluno baseado no número do INDE (2021), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
-        "IAA_2021": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2021",
-        "IEG_2021": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2021",
-        "IPS_2021": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2021",
-        "IDA_2021": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2021",
-        "IPP_2021": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2021",
-        "IPV_2021": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2021",
-        "IAN_2021": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2021",
-        "INDE_2021": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2021.",
-        "REC_EQUIPE_1_2021": "Recomendação: da Equipe de Avalição: 1 em 2021",
-        "REC_EQUIPE_2_2021": "Recomendação: da Equipe de Avalição: 2 em 2021",
-        "REC_EQUIPE_3_2021": "Recomendação: da Equipe de Avalição: 3 em 2021",
-        "REC_EQUIPE_4_2021": "Recomendação: da Equipe de Avalição: 4 em 2021",
-        "REC_PSICO_2021": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2021",
-        "PONTO_VIRADA_2021": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2021",
-        "PEDRA_2022": "Classificação do Aluno baseado no número do INDE (2022), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
-        "IAA_2022": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2022",
-        "IEG_2022": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2022",
-        "IPS_2022": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2022",
-        "IDA_2022": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2022",
-        "IPP_2022": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2022",
-        "IPV_2022": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2022",
-        "IAN_2022": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2022",
-        "INDE_2022": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2022.",
-        "REC_PSICO_2022": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2022",
-        "REC_AVA_1_2022": "Recomendação da Equipe de Avalição 1 em 2022",
-        "REC_AVAL_2_2022": "Recomendação da Equipe de Avalição: 2 em 2022",
-        "REC_AVAL_3_2022": "Recomendação da Equipe de Avalição: 3 em 2022",
-        "REC_AVAL_4_2022": "Recomendação da Equipe de Avalição: 4 em 2022",
-        "DESTAQUE_IEG_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Engajamento' em 2022",
-        "DESTAQUE_IDA_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2022",
-        "DESTAQUE_IPV_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2022",
-        "PONTO_VIRADA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2022",
-        "INDICADO_BOLSA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno foi indicado para alguma Bolsa no Ano de 2022"
-        }
-        df = pd.DataFrame(list(data_dict.items()), columns=["Nome da Coluna", "Detalhamento dos dados"])
+    #     st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
+    #     data_dict = {
+    #     "INSTITUICAO_ENSINO_ALUNO_2020": "Mostra instituição de Ensino do Aluno em 2020",
+    #     "NOME": "Nome do Aluno (dados estão anonimizados)",
+    #     "IDADE_ALUNO_2020": "Idade do Aluno em 2020",
+    #     "PEDRA_2020": "Classificação do Aluno baseado no número do INDE (2020), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
+    #     "IAA_2020": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2020",
+    #     "IEG_2020": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2020",
+    #     "IPS_2020": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2020",
+    #     "IDA_2020": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2020",
+    #     "IPP_2020": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2020",
+    #     "IPV_2020": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2020",
+    #     "IAN_2020": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2020",
+    #     "INDE_2020": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2020.",
+    #     "DESTAQUE_IEG_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Engajamento' em 2020",
+    #     "DESTAQUE_IDA_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2020",
+    #     "DESTAQUE_IPV_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2020",
+    #     "PONTO_VIRADA_2020": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2020",
+    #     "PEDRA_2021": "Classificação do Aluno baseado no número do INDE (2021), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
+    #     "IAA_2021": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2021",
+    #     "IEG_2021": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2021",
+    #     "IPS_2021": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2021",
+    #     "IDA_2021": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2021",
+    #     "IPP_2021": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2021",
+    #     "IPV_2021": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2021",
+    #     "IAN_2021": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2021",
+    #     "INDE_2021": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2021.",
+    #     "REC_EQUIPE_1_2021": "Recomendação: da Equipe de Avalição: 1 em 2021",
+    #     "REC_EQUIPE_2_2021": "Recomendação: da Equipe de Avalição: 2 em 2021",
+    #     "REC_EQUIPE_3_2021": "Recomendação: da Equipe de Avalição: 3 em 2021",
+    #     "REC_EQUIPE_4_2021": "Recomendação: da Equipe de Avalição: 4 em 2021",
+    #     "REC_PSICO_2021": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2021",
+    #     "PONTO_VIRADA_2021": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2021",
+    #     "PEDRA_2022": "Classificação do Aluno baseado no número do INDE (2022), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
+    #     "IAA_2022": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2022",
+    #     "IEG_2022": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2022",
+    #     "IPS_2022": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2022",
+    #     "IDA_2022": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2022",
+    #     "IPP_2022": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2022",
+    #     "IPV_2022": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2022",
+    #     "IAN_2022": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2022",
+    #     "INDE_2022": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2022.",
+    #     "REC_PSICO_2022": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2022",
+    #     "REC_AVA_1_2022": "Recomendação da Equipe de Avalição 1 em 2022",
+    #     "REC_AVAL_2_2022": "Recomendação da Equipe de Avalição: 2 em 2022",
+    #     "REC_AVAL_3_2022": "Recomendação da Equipe de Avalição: 3 em 2022",
+    #     "REC_AVAL_4_2022": "Recomendação da Equipe de Avalição: 4 em 2022",
+    #     "DESTAQUE_IEG_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Engajamento' em 2022",
+    #     "DESTAQUE_IDA_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2022",
+    #     "DESTAQUE_IPV_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2022",
+    #     "PONTO_VIRADA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2022",
+    #     "INDICADO_BOLSA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno foi indicado para alguma Bolsa no Ano de 2022"
+    #     }
+    #     df = pd.DataFrame(list(data_dict.items()), columns=["Nome da Coluna", "Detalhamento dos dados"])
 
-        st.markdown('''A base contém 50 colunas referente ao período de 2020 a 2022, com colunas adicionais no decorrer dos anos.''', unsafe_allow_html=True)
-        st.table(df)
+        # st.markdown('''A base contém 50 colunas referente ao período de 2020 a 2022, com colunas adicionais no decorrer dos anos.''', unsafe_allow_html=True)
+        # st.table(df)
 
     # carregar dados
     # data = pd.read_parquet(r'data/data_w_indicators.parquet')
@@ -2192,101 +2158,101 @@ elif page == page_1:
 #     st.markdown('<br>', unsafe_allow_html=True)
     
     
-# # referências        
-# else:
-#     st.title('Referências')
-#     st.markdown('<br>', unsafe_allow_html=True)
-#     # subtítulo
-#     st.header('Fontes de dados')
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     Os dados utilizados neste projeto foram obtidos a partir das fontes listadas abaixo:
-#                 </p>
-#                 ''', unsafe_allow_html=True)
+# referências        
+else:
+    st.title('Referências')
+    st.markdown('<br>', unsafe_allow_html=True)
+    # subtítulo
+    st.header('Fontes de dados')
+    st.markdown('''
+                <p style="font-size: 18px">
+                    Os dados utilizados neste projeto foram obtidos a partir das fontes listadas abaixo:
+                </p>
+                ''', unsafe_allow_html=True)
     
-#     # lista de fontes de dados
-#     st.markdown('''
-#                 #### [**IPEA**](http://www.ipeadata.gov.br/Default.aspx) - Instituto de Pesquisa Econômica Aplicada
-#                 Portal de dados econômicos do governo brasileiro, disponibiliza dados de diversos indicadores econômicos, 
-#                 como inflação, PIB, taxa de juros, câmbio e preços de *commodities*. As séries temporais podem ser baixadas 
-#                 em formato `.csv`. O IPEA também permite acesso através de requisições `HTTP` por meio de API.
-#                 ''')
+    # lista de fontes de dados
+    st.markdown('''
+                #### [**IPEA**](http://www.ipeadata.gov.br/Default.aspx) - Instituto de Pesquisa Econômica Aplicada
+                Portal de dados econômicos do governo brasileiro, disponibiliza dados de diversos indicadores econômicos, 
+                como inflação, PIB, taxa de juros, câmbio e preços de *commodities*. As séries temporais podem ser baixadas 
+                em formato `.csv`. O IPEA também permite acesso através de requisições `HTTP` por meio de API.
+                ''')
     
-#     with st.expander('🐍 Exibir código Python'):
-#         st.code('''
-#                 # acessar dados do IPEA
+    with st.expander('🐍 Exibir código Python'):
+        st.code('''
+                # acessar dados do IPEA
                 
-#                 !pip install ipeadatapy                 # instalar biblioteca
-#                 import ipeadatapy as ipea               # importar biblioteca
+                !pip install ipeadatapy                 # instalar biblioteca
+                import ipeadatapy as ipea               # importar biblioteca
                 
-#                 #ipea.list_series()                     # lista de séries disponíveis
+                #ipea.list_series()                     # lista de séries disponíveis
                 
-#                 df = ip.timeseries(ipea_table_code)     # obter dados do petróleo Brent
-#                 ''')
+                df = ip.timeseries(ipea_table_code)     # obter dados do petróleo Brent
+                ''')
     
-#     st.markdown('''
-#                 #### [**FRED**](https://fred.stlouisfed.org/series/DCOILBRENTEU) - Federal Reserve Economic Data
-#                 Banco de dados econômicos mantido pelo Federal Reserve Bank of St. Louis, nos EUA. 
-#                 Ele contém uma vasta quantidade de dados econômicos, incluindo séries temporais de preços de *commodities*, 
-#                 como o [**petróleo Brent**](https://fred.stlouisfed.org/series/DCOILBRENTEU).
-#                 Os dados podem ser baixados em formato `.csv`. O FRED disponibiliza também permite acesso através de requisições `HTTP` por meio de API.
-#                 ''')
+    st.markdown('''
+                #### [**FRED**](https://fred.stlouisfed.org/series/DCOILBRENTEU) - Federal Reserve Economic Data
+                Banco de dados econômicos mantido pelo Federal Reserve Bank of St. Louis, nos EUA. 
+                Ele contém uma vasta quantidade de dados econômicos, incluindo séries temporais de preços de *commodities*, 
+                como o [**petróleo Brent**](https://fred.stlouisfed.org/series/DCOILBRENTEU).
+                Os dados podem ser baixados em formato `.csv`. O FRED disponibiliza também permite acesso através de requisições `HTTP` por meio de API.
+                ''')
 
-#     with st.expander('🐍 Exibir código Python'):
-#         st.code('''
-#                     # acessar dados do FRED
+    with st.expander('🐍 Exibir código Python'):
+        st.code('''
+                    # acessar dados do FRED
                     
-#                     !pip install pandas_datareader            # instalar biblioteca
-#                     import pandas_datareader as pdr           # importar biblioteca
+                    !pip install pandas_datareader            # instalar biblioteca
+                    import pandas_datareader as pdr           # importar biblioteca
                     
-#                     df = pdr.get_data_fred('DCOILBRENTEU')    # obter dados do petróleo Brent
-#                 ''')
+                    df = pdr.get_data_fred('DCOILBRENTEU')    # obter dados do petróleo Brent
+                ''')
 
-#     st.markdown('''
-#                 #### [**Yahoo Finance**](https://finance.yahoo.com/quote/CL=F?p=CL=F) - Yahoo Finance
-#                 Plataforma de notícias e dados financeiros, permite acessar cotações de ativos, índices 
-#                 e preços de *commodities*. Os dados podem ser baixados em formato `.csv` e também acessados por meio de API.
-#                 A biblioteca [`yfinance`](https://pypi.org/project/yfinance/) permite acessar os dados do Yahoo Finance diretamente no Python:
-#                 ''')
+    st.markdown('''
+                #### [**Yahoo Finance**](https://finance.yahoo.com/quote/CL=F?p=CL=F) - Yahoo Finance
+                Plataforma de notícias e dados financeiros, permite acessar cotações de ativos, índices 
+                e preços de *commodities*. Os dados podem ser baixados em formato `.csv` e também acessados por meio de API.
+                A biblioteca [`yfinance`](https://pypi.org/project/yfinance/) permite acessar os dados do Yahoo Finance diretamente no Python:
+                ''')
     
-#     with st.expander('🐍 Exibir código Python'):
-#         st.code('''
-#                     # acessar dados do Yahoo Finance
+    with st.expander('🐍 Exibir código Python'):
+        st.code('''
+                    # acessar dados do Yahoo Finance
                     
-#                     !pip install yfinance            # instalar biblioteca
-#                     import yfinance as yf            # importar biblioteca
+                    !pip install yfinance            # instalar biblioteca
+                    import yfinance as yf            # importar biblioteca
                     
-#                     df = yf.download('BZ=F')         # obter dados do petróleo Brent
-#                 ''')
+                    df = yf.download('BZ=F')         # obter dados do petróleo Brent
+                ''')
 
-#     st.markdown('<br>', unsafe_allow_html=True)
-#     # subtítulo para Bibliografia
-#     st.header('Bibliografia')
-#     # lista de links
-#     st.markdown('''
-#                     - [**OPEC**](https://www.opec.org/opec_web/en/about_us/24.htm) - Organization of the Petroleum Exporting Countries
-#                     - [**CBI**](https://cbie.com.br/) - Centro Brasileiro de Infraestrutura
-#                     - [**Investopedia**](https://www.investopedia.com/terms/f/futuresmarket.asp) - Futures Market
-#                     - [**Wikipedia**](https://en.wikipedia.org/wiki/Brent_Crude) - Brent Crude Oil
-#                     - [**AWS**](https://aws.amazon.com/pt/) - Amazon Web Services
-#                     - [**Super Interessante**](https://super.abril.com.br/coluna/deriva-continental/nos-bastidores-da-terra-geologa-explica-a-formacao-do-petroleo) - Nos bastidores da Terra: geóloga explica a formação do petróleo
-#                     - [**Forecasting Oil Price Using Web-based Sentiment Analysis**](https://www.mdpi.com/1996-1073/12/22/4291) - 
-#                         Energies (2019), por ZHAO, Lu-Tao; ZENG, Guan-Rong; WANG, Wen-Jing; ZHANG, Zhi-Gang
-#                     - [**Análise prática de séries temporais: predição com estatística e aprendizado de máquina**](https://www.amazon.com.br/Análise-Prática-Séries-Temporais-Estatística/dp/8550815624) - 
-#                         Alta Books (2021), por NIELSEN, Aileen
-#                 ''')
+    st.markdown('<br>', unsafe_allow_html=True)
+    # subtítulo para Bibliografia
+    st.header('Bibliografia')
+    # lista de links
+    st.markdown('''
+                    - [**OPEC**](https://www.opec.org/opec_web/en/about_us/24.htm) - Organization of the Petroleum Exporting Countries
+                    - [**CBI**](https://cbie.com.br/) - Centro Brasileiro de Infraestrutura
+                    - [**Investopedia**](https://www.investopedia.com/terms/f/futuresmarket.asp) - Futures Market
+                    - [**Wikipedia**](https://en.wikipedia.org/wiki/Brent_Crude) - Brent Crude Oil
+                    - [**AWS**](https://aws.amazon.com/pt/) - Amazon Web Services
+                    - [**Super Interessante**](https://super.abril.com.br/coluna/deriva-continental/nos-bastidores-da-terra-geologa-explica-a-formacao-do-petroleo) - Nos bastidores da Terra: geóloga explica a formação do petróleo
+                    - [**Forecasting Oil Price Using Web-based Sentiment Analysis**](https://www.mdpi.com/1996-1073/12/22/4291) - 
+                        Energies (2019), por ZHAO, Lu-Tao; ZENG, Guan-Rong; WANG, Wen-Jing; ZHANG, Zhi-Gang
+                    - [**Análise prática de séries temporais: predição com estatística e aprendizado de máquina**](https://www.amazon.com.br/Análise-Prática-Séries-Temporais-Estatística/dp/8550815624) - 
+                        Alta Books (2021), por NIELSEN, Aileen
+                ''')
     
     
-# # footer
-# st.markdown('<br>', unsafe_allow_html=True)
+# footer
+st.markdown('<br>', unsafe_allow_html=True)
 
-# st.markdown('---')
+st.markdown('---')
 
-# # texto -> Agradecimentos
-# st.markdown('''<p style="font-size: 18px; text-align: center;">
-#             Obrigado por acompanhar este projeto! 🚀
-#             <br>
-#             </p>''', unsafe_allow_html=True)
+# texto -> Agradecimentos
+st.markdown('''<p style="font-size: 18px; text-align: center;">
+            Obrigado por acompanhar este projeto! 🚀
+            <br>
+            </p>''', unsafe_allow_html=True)
 
 # linkedin = 'https://www.linkedin.com/in/viniplima/'
 # github = 'https://github.com/euvina/'
