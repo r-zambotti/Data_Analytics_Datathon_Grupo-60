@@ -8,6 +8,7 @@ import seaborn as sns
 import plotly.graph_objects as go
 import plotly.express as px
 import pmdarima as pm
+import requests
 
 #from keras.models import Sequential
 #from keras.layers import LSTM, Dense
@@ -22,6 +23,8 @@ from sklearn.preprocessing import MinMaxScaler
 
 from sklearn.model_selection import TimeSeriesSplit
 from statsmodels.tsa.stattools import adfuller
+
+from PIL import Image
 
 import pickle
 
@@ -38,10 +41,18 @@ st.set_page_config(layout='centered',
                    page_title='Associação Passos Mágicos - Tech Challenge - FIAP', 
                    page_icon='🌟', initial_sidebar_state='auto')
 
+#Dados
+url = "https://github.com/wesleyesantos/Postech-Datathon/raw/main/PEDE_PASSOS_DATASET_FIAP.csv"
+url1 = "https://github.com/4ca63473-734d-4d8c-8181-9635c1837ddc"
+response = requests.get(url)
+csv_data = response.content
+response1 = requests.get(url1)
+file_data = response1.content
+
 # paginação
 page_0 = 'Introdução ✨'
 page_1 = 'Análise Exploratória 🎲'
-page_2 = 'Dashboard'
+page_2 = 'Dashboard 📈'
 page_3 = 'Conclusão'
 page_4 = 'Referências'
 
@@ -66,7 +77,8 @@ if page == page_0:
     
     create_warning('Importante', 
                    '''
-                        Este artigo tem fins exclusivamente educacionais.
+                        Este artigo tem fins exclusivamente educacionais.<br><br>
+                        Para acessar os Dados do projeto, clicar na opção abaixo "Nota Técnica". 
                     ''')
     
     st.markdown('<br>', unsafe_allow_html=True)
@@ -84,6 +96,83 @@ if page == page_0:
         - [XGBoost](https://xgboost.readthedocs.io/en/stable/)
         - [Prophet](https://facebook.github.io/prophet/)
 
+        ---
+        
+        **📡 Base de Dados e Dicionário**:
+        ''')
+
+        tab9, tab10 = st.tabs(tabs=['Base de Dados', 'Dicionário'])
+
+        with tab9:
+            st.markdown('''Base de dados PEDE (Pesquisa Extensiva do Desenvolvimento Educacional)''',unsafe_allow_html=True)
+            
+            st.download_button(label="Baixar Base PEDE (csv)",data=csv_data,file_name="PEDE_PASSOS_DATASET_FIAP.csv",mime="text/csv")
+
+        with tab10:
+            st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
+            st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
+
+            st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
+            data_dict = {
+            "INSTITUICAO_ENSINO_ALUNO_2020": "Mostra instituição de Ensino do Aluno em 2020",
+            "NOME": "Nome do Aluno (dados estão anonimizados)",
+            "IDADE_ALUNO_2020": "Idade do Aluno em 2020",
+            "PEDRA_2020": "Classificação do Aluno baseado no número do INDE (2020), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
+            "IAA_2020": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2020",
+            "IEG_2020": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2020",
+            "IPS_2020": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2020",
+            "IDA_2020": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2020",
+            "IPP_2020": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2020",
+            "IPV_2020": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2020",
+            "IAN_2020": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2020",
+            "INDE_2020": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2020.",
+            "DESTAQUE_IEG_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Engajamento' em 2020",
+            "DESTAQUE_IDA_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2020",
+            "DESTAQUE_IPV_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2020",
+            "PONTO_VIRADA_2020": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2020",
+            "PEDRA_2021": "Classificação do Aluno baseado no número do INDE (2021), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
+            "IAA_2021": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2021",
+            "IEG_2021": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2021",
+            "IPS_2021": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2021",
+            "IDA_2021": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2021",
+            "IPP_2021": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2021",
+            "IPV_2021": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2021",
+            "IAN_2021": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2021",
+            "INDE_2021": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2021.",
+            "REC_EQUIPE_1_2021": "Recomendação: da Equipe de Avalição: 1 em 2021",
+            "REC_EQUIPE_2_2021": "Recomendação: da Equipe de Avalição: 2 em 2021",
+            "REC_EQUIPE_3_2021": "Recomendação: da Equipe de Avalição: 3 em 2021",
+            "REC_EQUIPE_4_2021": "Recomendação: da Equipe de Avalição: 4 em 2021",
+            "REC_PSICO_2021": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2021",
+            "PONTO_VIRADA_2021": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2021",
+            "PEDRA_2022": "Classificação do Aluno baseado no número do INDE (2022), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
+            "IAA_2022": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2022",
+            "IEG_2022": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2022",
+            "IPS_2022": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2022",
+            "IDA_2022": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2022",
+            "IPP_2022": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2022",
+            "IPV_2022": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2022",
+            "IAN_2022": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2022",
+            "INDE_2022": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2022.",
+            "REC_PSICO_2022": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2022",
+            "REC_AVA_1_2022": "Recomendação da Equipe de Avalição 1 em 2022",
+            "REC_AVAL_2_2022": "Recomendação da Equipe de Avalição: 2 em 2022",
+            "REC_AVAL_3_2022": "Recomendação da Equipe de Avalição: 3 em 2022",
+            "REC_AVAL_4_2022": "Recomendação da Equipe de Avalição: 4 em 2022",
+            "DESTAQUE_IEG_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Engajamento' em 2022",
+            "DESTAQUE_IDA_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2022",
+            "DESTAQUE_IPV_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2022",
+            "PONTO_VIRADA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2022",
+            "INDICADO_BOLSA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno foi indicado para alguma Bolsa no Ano de 2022"
+            }
+
+            df = pd.DataFrame(list(data_dict.items()), columns=["Nome da Coluna", "Detalhamento dos dados"])
+
+            st.markdown('''A base contém 50 colunas referente ao período de 2020 a 2022, com colunas adicionais no decorrer dos anos.''', unsafe_allow_html=True)
+
+            st.table(df)    
+            
+        st.markdown('''        
         ---
         
         **📡 Fontes de dados**:
@@ -170,11 +259,10 @@ if page == page_0:
     st.markdown('---')
 
     # Inserindo imagem da ONG Passos Mágicos
-    insert_image(image_path = r'img/passos_magicos.png',
-                 source = 'https://passosmagicos.org.br/',
-                 caption = 'Imagem oficial da ONG Passos Mágicos')   
-    
 
+    image =  Image.open("img/passos_magicos.png")
+    st.image(image, caption= "Imagem oficial da ONG Passos Mágicos")
+    
 # Análise Exploratória
 elif page == page_1:
 
@@ -378,75 +466,6 @@ elif page == page_1:
                     - O ponto de virada ensina a importância da persistência e da resiliência,
                     - Os alunos saberão que podem superar obstáculos com esforço contínuo.
                     ''')
-        
-
-    st.subheader(':blue[PEDE (Pesquisa Extensiva do Desenvolvimento Educacional) 🗃️]', divider='blue')
-
-    # tab9, tab10 = st.tabs(tabs=['Base (Conceito e download)', 'Estrutura e Dicionário'])
-    # with tab9:
-    #     st.markdown('''A base <b><font color='blue'>PEDE</font></b> foi disponibilizada a base completa referenciando as colunas por anos, sendo que os anos disponibilizados para esse trabalho foram os anos 2020, 2021 e 2022, como tiveram alguns alunos que iniciaram no decorrer desse período a base exigiu uma atenção na realização de análise e algumas limpezas que foram cruciais para seguir com a análise exploratória.''', unsafe_allow_html=True)
-    #     st.download_button(label="Baixar Base PEDE (csv)",data=csv_data,file_name="PEDE_PASSOS_DATASET_FIAP.csv",mime="text/csv")
-    # with tab10:
-    #     st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
-    #     st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
-
-    #     st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
-    #     data_dict = {
-    #     "INSTITUICAO_ENSINO_ALUNO_2020": "Mostra instituição de Ensino do Aluno em 2020",
-    #     "NOME": "Nome do Aluno (dados estão anonimizados)",
-    #     "IDADE_ALUNO_2020": "Idade do Aluno em 2020",
-    #     "PEDRA_2020": "Classificação do Aluno baseado no número do INDE (2020), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
-    #     "IAA_2020": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2020",
-    #     "IEG_2020": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2020",
-    #     "IPS_2020": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2020",
-    #     "IDA_2020": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2020",
-    #     "IPP_2020": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2020",
-    #     "IPV_2020": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2020",
-    #     "IAN_2020": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2020",
-    #     "INDE_2020": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2020.",
-    #     "DESTAQUE_IEG_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Engajamento' em 2020",
-    #     "DESTAQUE_IDA_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2020",
-    #     "DESTAQUE_IPV_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2020",
-    #     "PONTO_VIRADA_2020": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2020",
-    #     "PEDRA_2021": "Classificação do Aluno baseado no número do INDE (2021), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
-    #     "IAA_2021": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2021",
-    #     "IEG_2021": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2021",
-    #     "IPS_2021": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2021",
-    #     "IDA_2021": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2021",
-    #     "IPP_2021": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2021",
-    #     "IPV_2021": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2021",
-    #     "IAN_2021": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2021",
-    #     "INDE_2021": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2021.",
-    #     "REC_EQUIPE_1_2021": "Recomendação: da Equipe de Avalição: 1 em 2021",
-    #     "REC_EQUIPE_2_2021": "Recomendação: da Equipe de Avalição: 2 em 2021",
-    #     "REC_EQUIPE_3_2021": "Recomendação: da Equipe de Avalição: 3 em 2021",
-    #     "REC_EQUIPE_4_2021": "Recomendação: da Equipe de Avalição: 4 em 2021",
-    #     "REC_PSICO_2021": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2021",
-    #     "PONTO_VIRADA_2021": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2021",
-    #     "PEDRA_2022": "Classificação do Aluno baseado no número do INDE (2022), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
-    #     "IAA_2022": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2022",
-    #     "IEG_2022": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2022",
-    #     "IPS_2022": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2022",
-    #     "IDA_2022": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2022",
-    #     "IPP_2022": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2022",
-    #     "IPV_2022": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2022",
-    #     "IAN_2022": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2022",
-    #     "INDE_2022": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2022.",
-    #     "REC_PSICO_2022": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2022",
-    #     "REC_AVA_1_2022": "Recomendação da Equipe de Avalição 1 em 2022",
-    #     "REC_AVAL_2_2022": "Recomendação da Equipe de Avalição: 2 em 2022",
-    #     "REC_AVAL_3_2022": "Recomendação da Equipe de Avalição: 3 em 2022",
-    #     "REC_AVAL_4_2022": "Recomendação da Equipe de Avalição: 4 em 2022",
-    #     "DESTAQUE_IEG_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Engajamento' em 2022",
-    #     "DESTAQUE_IDA_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2022",
-    #     "DESTAQUE_IPV_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2022",
-    #     "PONTO_VIRADA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2022",
-    #     "INDICADO_BOLSA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno foi indicado para alguma Bolsa no Ano de 2022"
-    #     }
-    #     df = pd.DataFrame(list(data_dict.items()), columns=["Nome da Coluna", "Detalhamento dos dados"])
-
-        # st.markdown('''A base contém 50 colunas referente ao período de 2020 a 2022, com colunas adicionais no decorrer dos anos.''', unsafe_allow_html=True)
-        # st.table(df)
 
     # carregar dados
     # data = pd.read_parquet(r'data/data_w_indicators.parquet')
@@ -463,665 +482,10 @@ elif page == page_1:
     # max_price = data['brent'].max()
     # max_price = int(max_price)
 
-#     year_slider = st.sidebar.slider('Ano', min_year, max_year, (min_year, max_year))
-#     price_slider = st.sidebar.slider('Preço (U$D )', min_price, max_price, (min_price, max_price))
-#     # título da página
-#     st.title('Análise sobre o petróleo Brent')
-#     # texto sobre o petróleo Brent
-#     st.markdown('''
-#                 <br>
-#                     <p style="font-size: 18px">
-#                     <b style = "font-size: 22px">O petróleo Brent</b> é uma classificação de petróleo extraído do Mar do Norte. 
-#                     Assim como o petróleo West Texas Intermediate (WTI), 
-#                     o petróleo Brent é um dos principais tipos de petróleo cru negociados no mercado internacional. 
-#                     Ambos são usados como referência para o preço do petróleo em todo o mundo e 
-#                     amplamente negociados em <b>mercados de futuros</b>.<br><br>
-#                     </p>
-#                 ''', unsafe_allow_html=True)
-                    
-#     create_curiosity('Mercado Futuro', 
-#                     '''
-#                     Onde são negociados contratos de compra ou venda de um ativo em uma data futura.<br>
-#                     O petróleo é negociado primeiro em mercados de futuros e, em seguida, 
-#                     esses contrados são comercializados em bolsas de <i>commodities</i>, 
-#                     como a Intercontinental Exchange (ICE) em Londres.
-#                     ''')
-    
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                 <br><br>
-#                     O preço do petróleo é regulado pela Organização dos Países Exportadores de Petróleo (OPEP) ou, 
-#                     em inglês, Organization of the Petroleum Exporting Countries (OPEC) - 
-#                     um cartel intergovernamental de 13 nações, fundado em 15 de setembro de 1960.
-#                     O preço sofre influência de fatores como a produção e o transporte, 
-#                     a demanda por produtos petrolíferos e a especulação do mercado.
-#                     A unidade de medida dada para transações é geralmente dólares americanos por barril. 
-#                     O gráfico a seguir mostra a evolução do preço do petróleo Brent ao longo dos anos:
-#                 </p>
-#                 ''', unsafe_allow_html=True)
-    
-
-#     df = data.loc[(data.index.year >= year_slider[0]) & (data.index.year <= year_slider[1]) & 
-#                   (data['brent'] >= price_slider[0]) & (data['brent'] <= price_slider[1])]
-#     # gráfico com plotly para brent
-#     fig = px.line(df, x=df.index, y='brent', 
-#                   title='Preço do petróleo Brent - Fechamento diário',
-#                   labels={'brent': 'Preço (U$D )', 'date': 'Data'},                      
-#                   color_discrete_sequence=['#4089FF'],
-#                   template='plotly_dark')
-#     fig.update_layout(title_font_size=20) 
-#     fig.update_xaxes(title=None)
-#     fig.update_yaxes(range=[0, df['brent'].max() * 1.1])
-#     st.plotly_chart(fig, use_container_width=True)
-    
-#     create_quote('''
-#                     Desde 1973, a posição da OPEP sempre foi a de desacelerar a produção – 
-#                     através de uma política de cotas para cada país-membro – 
-#                     quando surgiam sinais de queda nos preços, 
-#                     de modo a diminuir a oferta e reequilibrar as cotações.
-#                     ''', 
-#                     'Os limites do preço do petróleo - IPEA', 
-#                     'https://desafios.ipea.gov.br/index.php?option=com_content&view=article&id=3261&catid=28&Itemid=39')
-    
-#     st.markdown('''
-#             <br>
-#                 <p style="font-size: 18px">
-#                 Ao longo dos 37 anos de registro, o valor do dinheiro teve grandes alterações. Também, 
-#                 mudou o comportamento do mercado e a tecnologia evoluiu. Sem levar em conta tais componentes,
-#                 ainda é possível enxergar, no gráfico acima, o efeito de marcos importantes:<br>
-#                 <br>
-#                 - A mínima do período data de 10 de Dezembro de 1998, com preço equivalente a U$D 9.10.<br>
-#                 - A segunda menor mínima ocorreu na Pandemia de COVID-19, em 21 de Abril de 2020, com preço em U$D 9.12.<br>
-#                 - Em 2008, o preço do barril de petróleo Brent atingiu o valor recorde de U$D 143.95. Com a grande recessão, 
-#                 o preço caiu para U$D 33.73 no mesmo ano. A variação agressiva foi de -326.78%.<br>
-#                 - As guerras entre EUA e Iraque (2003) e entre Rússia e Ucrânia (2022) 
-#                 também impactaram diretamente no preço do petróleo - por questões de oferta e demanda, 
-#                 dificuldades na produção e circulação de mercadorias, além da especulação do mercado.</b>
-#                 <br><br>
-#                 </p>
-#             ''', unsafe_allow_html=True)
-
-#     create_insight('Volatilidade', 
-#                    '''
-#                         Acompanhar fatos históricos e incorporá-los no treinamento do modelo é essencial. 
-#                         No entanto, cada novo evento pode gerar diferentes e imprevisíveis impactos no preços dos ativos.
-#                     ''')
-    
-#     st.markdown('<br>', unsafe_allow_html=True)
-    
-#     # gráfico boxplot
-#     fig = px.box(df, x=df.index.year, y='brent', 
-#                 title='Volatilidade anual no preço do Brent', 
-#                 labels={'value': 'U$D '}, template='plotly_dark',
-#                 color_discrete_sequence=['#4089FF'])
-#     fig.update_layout(title_font_size=20)
-#     fig.update_xaxes(title=None)
-#     fig.update_yaxes(range=[0, df['brent'].max() * 1.1])
-#     st.plotly_chart(fig, use_container_width=True)
-    
-#     st.markdown('---')
-    
-#     st.title('Análise de Série Temporal')
-            
-#     # diferenciação e variação percentual
-#     st.markdown('''
-#                 <br>
-#                     <p style="font-size: 18px">
-#                     <b>Diferenciar</b> uma série temporal é importante por diversos motivos, como:<br>
-#                     - Estacionariedade: a média e a variância são constantes ao longo do tempo.<br>
-#                     - Sazonalidade: permite minimizar ciclos que se repetem em intervalos regulares.<br>
-#                     - Tendência: ajuda a remover tendências para facilitar a modelagem.
-#                     <br><br>
-#                     </p>
-#                 ''', unsafe_allow_html=True)
-    
-#     # código para diferença
-#     with st.expander('🐍 Exibir código Python'):
-#         st.code('''
-#                 # diferenciar série temporal
-#                 df['brent_diff'] = df['brent'].diff()
-#                 # variação percentual
-#                 df['brent_pct'] = df['brent'].pct_change() * 100
-#                 ''')   
-
-#     # same chart with make_sublots and y lower lim = 0
-#     fig = make_subplots(rows=3, cols=1, shared_xaxes=True,
-#                         subplot_titles=['Original', 'Diferença', 'Variação (%)'])
-#     # original
-#     fig.add_trace(go.Scatter(x=df.index, y=df['brent'], name='Original',
-#                             line=dict(color='#4089FF')), row=1, col=1)
-#     # diferença
-#     fig.add_trace(go.Scatter(x=df.index, y=df['brent_diff'], name='Diferença',
-#                             line=dict(color='#4089FF')), row=2, col=1)
-#     # variação percentual
-#     fig.add_trace(go.Scatter(x=df.index, y=df['brent_pct'], name='Variação (%)',
-#                             line=dict(color='#4089FF')), row=3, col=1)
-    
-#     # atualizar layout
-#     fig.update_layout(title='Preço do Petróleo Brent - Original, Diferença e Variação (%)',
-#                     title_font_size=20, showlegend=False, template='plotly_dark',
-#                     hovermode='x unified', height=600)
-#     fig.update_yaxes(range=[0, df['brent'].max() * 1.1], row=1, col=1)
-#     fig.update_yaxes(range=[-20, 20], row=2, col=1)
-#     fig.update_yaxes(range=[-60, 60], row=3, col=1)
-#     fig.update_xaxes(title='')
-#     st.plotly_chart(fig, use_container_width=True)
-    
-    
-#     # teste de estacionariedade
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                 Com o teste estatístico de Dickey-Fuller, podemos verificar se a série temporal é estacionária.<br>
-#                 - <b>Hipótese nula (H0)</b>: a série temporal não é estacionária.<br>
-#                 - <b>Hipótese alternativa (H1)</b>: a série temporal é estacionária.<br>
-#                 <br>
-#                 ''', unsafe_allow_html=True)
-
-#     with st.expander('🐍 Exibir código Python'):
-#         st.code('''
-#                 # teste de estacionariedade
-#                 !pip install statsmodels
-#                 from statsmodels.tsa.stattools import adfuller
-                
-#                 # executar teste
-#                 adfuller(df['brent'].dropna())
-                
-#                 # resultados: 
-#                 # - estatística do teste
-#                 # - p-valor
-#                 # - lags
-#                 # - número de observações
-#                 # - valores críticos
-#                 ''')
-    
-#     st.markdown('<br>', unsafe_allow_html=True)
-    
-#     # expandir resultados
-#     with st.expander('📊 Resultados do Teste de Dickey-Fuller'):
-#         # executar teste de Dickey-Fuller em brent_diff
-#         # auto-lag = AIC (Akaike Information Criterion):
-#             # penaliza a complexidade do modelo
-#         dftest = adfuller(df['brent_diff'], autolag='AIC', regression='c')
-#         # criar dataframe com resultados
-#         results_keys = ['Estatística do Teste', 'p-valor', 'Lags', 'Observações', 
-#                         'Valor Crítico (1%)', 'Valor Crítico (5%)', 'Valor Crítico (10%)']
-#         result_values = [dftest[0], dftest[1], dftest[2], dftest[3], 
-#                         dftest[4]['1%'], dftest[4]['5%'], dftest[4]['10%']]
-#         # criar dicionário com chave e resultados
-#         results_dict = dict(zip(results_keys, result_values))
-#         # exibir resultados em diciário
-#         st.write(results_dict)   
-
-#     st.markdown('<br>', unsafe_allow_html=True)
-    
-#     create_analysis('Resultados do Teste de Dickey-Fuller',
-#                     '''
-#                     Conforme os resultados do teste de Dickey-Fuller, 
-#                     a série temporal da diferença do preço do petróleo Brent é estacionária,
-#                     uma vez que tanto o p-valor é menor que 0.05, 
-#                     quanto a estatística do teste é menor que os valores críticos da série.
-#                     ''')
-    
-#     st.markdown('<br><br>', unsafe_allow_html=True)
-    
-#     # buttom to select 1 of 2 charts
-#     selected_chart = st.radio('Selecione o gráfico:', ['Diferença', 'Variação Percentual (%)'])
-#     if selected_chart == 'Diferença':
-        
-#         # histograma com a diferença
-#         fig = px.histogram(df, x='brent_diff', nbins=100,
-#                         title='Histograma da Diferença Diária no Preço do Petróleo Brent', 
-#                         color_discrete_sequence=['#4089FF'], 
-#                         marginal='box', histnorm='probability density',
-#                         labels={'value': 'Diferença'}, template='plotly_dark')
-#         fig.update_traces(marker_line_color='white', marker_line_width=1)
-#         fig.update_xaxes(title_text=None)
-#         fig.update_yaxes(title_text='')
-#         fig.update_layout(title_font_size=20,
-#                           width=600, height=500)
-#         st.plotly_chart(fig, use_container_width=True)
-        
-#     else:
-#         # histograma com a variação percentual
-#         fig = px.histogram(df, x='brent_pct', nbins=100,
-#                         title='Histograma da Variação Percentual Diária no Preço do Petróleo Brent', 
-#                         color_discrete_sequence=['#4089FF'], marginal='box',
-#                         labels={'value': 'Percentual de Mudança'}, template='plotly_dark')
-#         fig.update_traces(marker_line_color='white', marker_line_width=1)
-#         fig.update_xaxes(title_text=None)
-#         fig.update_yaxes(title_text='')
-#         fig.update_layout(title_font_size=20,
-#                           width=600, height=500)
-#         st.plotly_chart(fig, use_container_width=True)
-        
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     <br>
-#                     O histograma da série diferenciada é mais próximo de uma 
-#                     distribuição normal do que a série original.
-#                     Para verificar a normalidade, o teste de Kolmogorov-Smirnov é aplicado, onde: <br>
-#                     - <b>Hipótese nula (H0)</b>: a série diferenciada segue uma distribuição normal.<br>
-#                     - <b>Hipótese alternativa (H1)</b>: a série diferenciada não segue uma distribuição normal.<br>
-#                     <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)
-    
-#     # resultados do teste de Kolmogorov-Smirnov
-#     with st.expander('📊 Resultados do Teste de Kolmogorov-Smirnov'):
-#         ks_results = normality_test(df['brent_diff'].dropna())
-#         # rename keys 'statistic' to 'Estátistica do Teste' and 'pvalue' to 'p-valor'
-#         ks_results = {k.replace('statistic', 'Estatística do Teste').replace('p-value', 'p-valor'): v 
-#                      for k, v in ks_results.items()}
-#         st.write(ks_results)
-        
-#     st.markdown('<br>', unsafe_allow_html=True)
-    
-#     create_analysis('Resultados do Teste de Kolmogorov-Smirnov',
-#                     '''
-#                     De acordo com o teste estatístico de Kolmogorov-Smirnov,
-#                     o p-valor é menor que 0.05, indicando que a hipótese nula é rejeitada.
-#                     Então, a série diferenciada <b>não</b> segue uma distribuição normal.
-#                     ''')   
-    
-#     st.markdown('<br>', unsafe_allow_html=True)
-
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     <br>
-#                     O gráfico a seguir mostra a variação do preço do barril de petróleo Brent ao longo do tempo.
-#                     Note que as maiores variações correspondem ao mês de Maio, como nos anos 2008, 2009, 2020 e 2022. 
-#                     Por sua vez, as 2 maiores baixas do preço correspondem a Outubro/2008, em vista da Grande Recessão, e 
-#                     Março/2020, início da Pandemia de COVID-19.
-#                     <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)
-
-#     fig = px.imshow(df.pivot_table(index='year', columns=df.index.month, values='brent_diff'),
-#                 labels=dict(color='Variação Brent'),
-#                 title='Variação do Preço do Brent ao longo do tempo',
-#                 color_continuous_scale='RdBu',
-#                 width=800, height=1000,
-#                 template='plotly_dark')
-#     # mostrar meses 1 por 1
-#     fig.update_xaxes(tickvals=list(range(1, 13)),
-#                     ticktext=['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 
-#                               'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-#                     side='top', title='')
-#     fig.update_yaxes(title='')
-#     fig.update_layout(title_font_size=20)
-#     st.plotly_chart(fig, use_container_width=True)
-    
-#     # texto
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     A variação diária do petróleo Brent teve evolução constante nos últimos 10 anos dos dados (2014-2024), exceto em 2020.
-#                     A média de variação entre 2014 e 2019 foi de -0.007%, com desvio padrão de 2.16%. Durante os anos de 2020 e 2021,
-#                     a variação média foi de 0.15%, com desvio padrão de 5.05%. Além disso, a variação máxima sobre o preço diário 
-#                     durante a pandemia foi de 50.98%.<br><br>
-#                     A plotagem da variável em 3 dimensões, onde o eixo do gráfico que contém a data é 
-#                     desmembrado em 2 outros eixos (ano e mês), ajuda a enxergar padrões, 
-#                     como ciclos de sazonalidade e tendências:
-#                     <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)    
-
-
-#     # brent 3d x ano x mês
-#     fig = px.scatter_3d(df, x=df.index.year, y=df.index.month, z='brent',
-#                         title='Preço do Petróleo Brent x Ano x Mês',
-#                         labels={'x': 'Ano', 'y': 'Mês', 'z': 'Preço'},
-#                         color=df.index.month,
-#                         color_continuous_scale='PuBu',
-#                         width=1000, height=800,
-#                         opacity=0.7,
-#                         template='plotly_dark')
-
-#     fig.update_layout(scene=dict( 
-#                                 xaxis_title='Ano',
-#                                 yaxis_title='Mês',
-#                                 zaxis_title='Preço (U$D )'),
-#                                 coloraxis_colorbar=dict(title='Mês'),
-#                                 title_font_size=20)
-    
-#     st.plotly_chart(fig, use_container_width=True)
-    
-#     # divider
-#     st.markdown('---')
-#     # título
-#     st.title('Features')
-    
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     <b><i>Features</i></b> podem ser extraídas a partir de datas, como:<br><br>
-#                     - mês e dia do mês<br>
-#                     - ano, trimestre e dia do ano<br>
-#                     - semana, dia da semana e semana do ano (calendário ISO 8601)
-#                     <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)
-    
-#     with st.expander('🐍 Exibir código Python'):
-#         st.code('''
-#                 !pip install pandas             # instalar biblioteca Pandas
-#                 import pandas as pd             # importar biblioteca Pandas
-                
-#                 # função para adicionar features de data
-#                 def date_features(dataframe):
-        
-#                 df = dataframe.copy()
-#                 df.index.rename('date', inplace=True)
-                
-#                 df['year'] = df.index.year
-#                 df['month'] = df.index.month
-#                 df['day'] = df.index.day
-#                 df['day_of_week'] = df.index.dayofweek
-#                 df['day_of_year'] = df.index.dayofyear
-#                 df['week_of_year'] = df.index.isocalendar().week
-#                 df['quarter'] = df.index.quarter
-                
-#                 return df
-                
-#                 # aplicar função
-#                 df = date_features(df)
-#                 ''')    
-    
-#     st.markdown('<br>', unsafe_allow_html=True)
-    
-#     # texto
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                 Para a construção dos modelos de previsão, além do preço do petróleo Brent,
-#                 outros índices representativos foram utilizados como regressores (<i>features</i>):
-                
-#                 - **SP500**: Índice de ações da bolsa de valores dos EUA (unidade: pontos)
-#                 - **Exxon**: Ações da Exxon Mobil Corporation (unidade: U$D )
-#                 - **BP**: Ações da British Petroleum (unidade: U$D )
-#                 <br>
-#                 ''', unsafe_allow_html=True)
-    
-#     # plot
-#     fig = make_subplots(rows=3, cols=1, shared_xaxes=True,
-#                         subplot_titles=['SP500', 'Exxon', 'BP'])
-#     # SP500
-#     fig.add_trace(go.Scatter(x=df.index, y=df['sp500'], name='SP500',
-#                             line=dict(color='#4089FF')), row=1, col=1)
-#     # Exxon
-#     fig.add_trace(go.Scatter(x=df.index, y=df['exxon'], name='Exxon',
-#                             line=dict(color='#4089FF')), row=2, col=1)
-#     # BP
-#     fig.add_trace(go.Scatter(x=df.index, y=df['bp'], name='BP',
-#                             line=dict(color='#4089FF')), row=3, col=1)
-
-#     # atualizar layout
-#     fig.update_layout(title='Índices de Ações e Ações de Empresas de Petróleo',
-#                     title_font_size=20, showlegend=False, template='plotly_dark')
-#     fig.update_xaxes(title_text='')
-#     st.plotly_chart(fig)
-    
-#     # texto
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                 A análise de correlação de Pearson ajuda a entender como as variáveis se relacionam entre si.
-#                 Para dados econômicos, fatos similares acontecem entre os preços absolutos e, portanto, 
-#                 correlações altas são esperadas. Portanto, também é importante visualizar a 
-#                 correlação entre as séries diferenciadas. 
-#                 </p>
-#                 ''', unsafe_allow_html=True)
-    
-    
-#     # selecionar se série diferenciada ou não
-#     selected_series = st.radio('Selecione a série:', ['Original', 'Diferença'])
-    
-#     if selected_series == 'Original':
-#         # control for selected features
-#         price_cols = ['brent', 'sp500', 'exxon', 'bp']
-#         # checkbox
-#         selected_features = st.multiselect('⚙️ Selecione as features:', 
-#                                         price_cols, price_cols)
-#         # plotar correlação
-#         corr = df[selected_features].corr().round(2)
-#         fig = px.imshow(corr, color_continuous_scale='blues', 
-#                         title='Correlação entre as variáveis',
-#                         labels=dict(color='Correlação'),
-#                         text_auto=True,
-#                         template='plotly_dark',
-#                         width=600, height=600)
-#         fig.update_layout(title_font_size=20)
-#         fig.update_traces(textfont_size=18)
-#         fig.update_xaxes(title=None, tickfont_size=18)
-#         fig.update_yaxes(title=None, tickfont_size=18)
-#         st.plotly_chart(fig, use_container_width=True)
-#         # else
-#     else:
-#         # control for selected features
-#         diff_cols = ['brent_diff', 'sp500_diff', 'exxon_diff', 'bp_diff']
-#         # checkbox
-#         selected_features = st.multiselect('⚙️ Selecione as features:', 
-#                                         diff_cols, diff_cols)
-#         # plotar correlação
-#         corr = df[selected_features].corr().round(2)
-#         fig = px.imshow(corr, color_continuous_scale='blues', 
-#                         title='Correlação entre as variáveis',
-#                         labels=dict(color='Correlação'),
-#                         text_auto=True,
-#                         template='plotly_dark',
-#                         width=600, height=600)
-#         fig.update_layout(title_font_size=20)
-#         fig.update_traces(textfont_size=18)
-#         fig.update_xaxes(title=None, tickfont_size=18)
-#         fig.update_yaxes(title=None, tickfont_size=18)
-#         st.plotly_chart(fig, use_container_width=True)
-
-#     st.markdown('<br>', unsafe_allow_html=True)
-    
-#     # insight
-#     create_insight('Correlação',
-#                 '''
-#                 Ao considerar todo o período dos dados, 
-#                 a correlação dos preços absolutos entre Brent e Exxon é forte (85%), 
-#                 já com as séries diferenciadas passa a ser baixa (33%).
-#                 Além disso, note que nenhuma das correlações apresentadas é negativa.
-#                 ''')
-    
-#     st.markdown('<br><br>', unsafe_allow_html=True)
-    
-#     # select one feature to plot with brent
-#     features_to_plot = ['exxon', 'sp500', 'bp']
-#     selected_feature = st.selectbox('⚙️ Selecione a feature para plotar com Brent:', features_to_plot)
-#     # plotar gráfico
-#     fig = px.scatter(df, x='brent', y=selected_feature,
-#                     title=f'Petróleo Brent x {selected_feature.title()}',
-#                     color=df.index.year,
-#                     color_continuous_scale='ice',
-#                     width=800, height=800,
-#                     template='plotly_dark')
-
-#     fig.update_layout(coloraxis_colorbar=dict(title='Ano'),
-#                     title_font_size=20)
-#     st.plotly_chart(fig, use_container_width=True)
-#     # divider    
-#     st.markdown('---')
-    
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                 Alguns indicadores utilizados para a <b>análise técnica</b> de ativos financeiros
-#                 podem ser úteis para entender a tendência e volatilidade dos preços, como:
-#                 </p>
-#                 ''', unsafe_allow_html=True)
-
-#     # lista de indicadores
-#     st.markdown('''
-#                 - **EMA**: Exponential Moving Average, ou Média Móvel Exponencial,
-#                             com janelas de 14, 26, 200 dias.
-#                 - **MACD**: Moving Average Convergence Divergence, ou Convergência e Divergência de Médias Móveis,
-#                             com 12 dias para a média rápida, 26 dias para a média lenta e 9 dias para o sinal.
-#                 - **RSI**: Relative Strength Index, ou Índice de Força Relativa, com janela de 14 dias.
-#                 ''', unsafe_allow_html=True)
-    
-#     with st.expander('🐍 Exibir código Python'):
-#         st.code('''    
-#                 !pip install pandas_ta             # instalar biblioteca
-#                 import pandas_ta as ta             # importar biblioteca
-                
-#                 # função
-#                 def create_ta_indicators(df, column) -> pd.DataFrame:
-        
-#                 df[f'{column}_rsi'] = ta.rsi(df[column], length=14)
-#                 df[f'{column}_macd'] = ta.macd(df[column], fast=12, slow=26, signal=9)[['MACD_12_26_9']]
-#                 df[f'{column}_macd_signal'] = ta.macd(df[column], fast=12, slow=26, signal=9)[['MACDs_12_26_9']]
-#                 df[f'{column}_macd_hist'] = ta.macd(df[column], fast=12, slow=26, signal=9)[['MACDh_12_26_9']]
-#                 df[f'{column}_ema_14'] = ta.ema(df[column], length=14)
-#                 df[f'{column}_ema_26'] = ta.ema(df[column], length=26)
-#                 df[f'{column}_ema_200'] = ta.ema(df[column], length=200)
-        
-#                 # remover valores nulos
-#                 df.dropna(inplace=True)
-                
-#                 return df
-                
-#                 # aplicar função
-#                 df = create_ta_indicators(df, 'brent')
-#                 ''')
-
-#     # pular linha
-#     st.markdown('<br>', unsafe_allow_html=True)
-    
-#     # selecione o indicador
-#     indicators = ['EMA', 'MACD', 'RSI']
-#     selected_indicator = st.selectbox('⚙️ Selecione o indicador:', indicators)
-
-#     if selected_indicator == 'EMA':
-#         # renomear colunas para Preço Original, 14 dias, 26 dias e 200 dias
-#         ema_cols = ['brent', 'brent_ema_14', 'brent_ema_26', 'brent_ema_200']
-#         # plotar gráfico
-#         fig = px.line(df[ema_cols], title='EMA do Preço do Petróleo Brent',
-#                         labels={'value': 'Preço (U$D )', 'date': 'Data'},
-#                         template='plotly_dark')
-#         fig.update_layout(title_font_size=20)
-#         fig.update_xaxes(title=None)
-#         fig.update_yaxes(range=[0, df['brent'].max() * 1.1])
-#         st.plotly_chart(fig, use_container_width=True)
-        
-#         st.markdown('<br>', unsafe_allow_html=True)
-
-#         st.markdown('''
-#                     <p style="font-size: 18px">
-#                     EMA (<i>Exponential Moving Average</i>, ou Média Móvel Exponencial)
-#                     é um indicador de análise técnica que suaviza os preços e é utilizado para 
-#                     identificar a direção da tendência. A EMA dá um peso maior aos valores mais recentes, 
-#                     enquanto a Média Móvel Simples (SMA) dá o mesmo peso a todos os valores. 
-#                     A EMA de 14 dias é mais sensível às mudanças de preço, 
-#                     enquanto a EMA de 200 dias é mais lenta e é utilizada para identificar a tendência de longo prazo.
-#                     </p>
-#                     ''', unsafe_allow_html=True)
-
-#         st.latex(r'''
-#                 EMA_{t} = \frac{P_{t}*k + EMA_{t-1}*(1-k)}{1}
-#                 ''')
-
-#         st.markdown('''
-#                     Onde:<br>
-#                     t = período de tempo recente<br>
-#                     P = preço do ativo<br>
-#                     k = calculado como 2/(n+1), onde n é o número de dias para suavização<br>
-#                     ''', unsafe_allow_html=True)
-    
-#     elif selected_indicator == 'MACD':
-#         # MACD
-#         fig = px.line(df, x=df.index, 
-#                   y=['brent_macd', 'brent_macd_signal', 'brent_macd_hist'],
-#                   title='MACD do Preço do Petróleo Brent',
-#                   labels={'value': 'MACD'}, template='plotly_dark')
-#         fig.update_layout(title_font_size=20)
-#         fig.update_xaxes(title=None)
-#         fig.update_yaxes(range=[df['brent_macd'].min() * 1.1, df['brent_macd'].max() * 1.1])
-#         st.plotly_chart(fig, use_container_width=True)
-        
-#         st.markdown('<br>', unsafe_allow_html=True)
-        
-#         st.markdown('''
-#                     <p style="font-size: 18px">
-#                     MACD (<i>Moving Average Convergence Divergence</i>, ou Média Móvel Convergência/Divergência),
-#                     é um indicador que mostra a relação entre duas médias móveis de valores. 
-#                     A MACD é calculada subtraindo a EMA de 26 dias da EMA de 12 dias. 
-#                     O sinal é a EMA de 9 dias da MACD. O histograma é a diferença entre a MACD e o sinal.
-#                     </p>
-#                     ''', unsafe_allow_html=True)
-        
-#         st.latex(r'''
-#                 MACD = EMA_{12} - EMA_{26}
-#                 ''')
-#         st.latex(r'''
-#                 Sinal = EMA_{9}(MACD_p)
-#                 ''')
-#         st.latex(r'''
-#                 Histograma = MACD - Sinal
-#                 ''')
-        
-#         st.markdown('''
-#                     Onde:<br>
-#                     MACD = Média Móvel Convergência/Divergência<br>
-#                     EMA = Média Móvel Exponencial<br>
-#                     ''', unsafe_allow_html=True)
-
-#     else:
-#         # RSI
-#         fig = px.line(df, x=df.index, y='brent_rsi', 
-#                   title='RSI do Preço do Petróleo Brent', 
-#                   labels={'value': 'RSI'}, template='plotly_dark')
-#         fig.add_hline(y=70, line_dash='dot', line_color='red', 
-#                       annotation_text='70', annotation_position='bottom right')
-#         fig.add_hline(y=30, line_dash='dot', line_color='green',
-#                         annotation_text='30', annotation_position='top right')
-#         fig.update_layout(title_font_size=20)
-#         fig.update_xaxes(title=None)
-#         fig.update_yaxes(range=[0, 100])
-#         st.plotly_chart(fig, use_container_width=True)
-        
-#         st.markdown('<br>', unsafe_allow_html=True)
-        
-#         st.markdown('''
-#                     <p style="font-size: 18px">
-#                     RSI (<i>Relative Strength Index</i>, ou Índice de Força Relativa),  é um indicador  
-#                     que mede a força e a velocidade das mudanças no valor de um ativo. O RSI varia de 0 a 100 e é normalmente 
-#                     usado para identificar condições de sobrecompra e sobrevenda. Um ativo é considerado sobrecomprado 
-#                     quando o RSI está acima de 70 e sobrevendido quando está abaixo de 30.
-#                     </p>
-#                     ''', unsafe_allow_html=True)
-        
-#         st.latex(r'''
-#                 RSI = 100 - \frac{100}{1 + RS}
-#                 ''')
-        
-#         st.markdown('''
-#                     Onde:<br>
-#                     ''', unsafe_allow_html=True)
-        
-#         st.latex(r'''
-#                 RS = \frac{Média_{ganhos}}{Média_{perdas}}
-#                 ''')
-
-    
-#     st.markdown('<br>', unsafe_allow_html=True)
-#     # divider
-#     st.markdown('---')
-#     # texto
-#     st.markdown('''### Dataframe Final''')
-#     st.markdown('''
-#                 Com isso, o dataframe completo pode ser visualizado abaixo:
-#                 ''', unsafe_allow_html=True)
-#     # dataframe
-#     # controles para ordenar o dataframe: ascending or descending
-#     ascending = st.checkbox('Índice decrescente', value=False)
-#     if ascending:
-#         df = df.sort_index(ascending=False)
-#     # mostrar dataframe
-#     st.dataframe(df)
-    
-
-# elif page == page_2:
-#     # título
-#     st.title('Modelos de Previsão')
+# Dashboard
+elif page == page_2:
+    # título
+    st.title('Modelos de Previsão')
 #     # seleção de modelo
 #     model = st.selectbox('Selecione o modelo:', ['XGBoost', 'Prophet'])
     
