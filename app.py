@@ -60,7 +60,7 @@ page_4 = 'Referências'
 st.sidebar.title('Menu')
 page = st.sidebar.radio('Selecione a página:', 
                         [page_0, page_1, page_2, page_3, page_4])
-     
+        
 # Introdução
 if page == page_0:
     
@@ -484,8 +484,61 @@ elif page == page_1:
 
 # Dashboard
 elif page == page_2:
+
     # título
     st.title('Dashboard')
+
+    st.markdown ('---')
+
+    cols_container = st.columns(3, gap="small")
+    with cols_container[0]:
+        quadro_1 = cols_container[0].container(height = 200, border=True)
+        quadro_1.markdown("### 2.673")
+        quadro_1.markdown("\nindivíduos responderam a pesquisa")
+    with cols_container[1]:
+        quadro_2 = cols_container[1].container(height = 200, border=True)
+        quadro_2.markdown("### 654")
+        quadro_2.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
+    with cols_container[2]:
+        quadro_3 = cols_container[2].container(height = 200, border=True)
+        quadro_3.markdown("### 141.669")
+        quadro_3.markdown("\nquestões respondidas no total")
+
+    cols_container = st.columns(3, gap="small") 
+    with cols_container[0]:
+        quadro_4 = cols_container[0].container(height = 200, border=True)
+        quadro_4.markdown("### 2.673")
+        quadro_4.markdown("\nindivíduos responderam a pesquisa")
+    with cols_container[1]:
+        quadro_5 = cols_container[1].container(height = 200, border=True)
+        quadro_5.markdown("### 654")
+        quadro_5.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
+    with cols_container[2]:
+        quadro_6 = cols_container[2].container(height = 200, border=True)
+        quadro_6.markdown("### 141.669")
+        quadro_6.markdown("\nquestões respondidas no total")
+        
+    st.markdown ('---')
+
+    st.sidebar.title('⚙️ Modelos')
+
+    #seleção de modelo if st.sidebar.button("Pedras"): st.header("Pedras") 
+    if st.sidebar.button("Ponto de Virada"): 
+        st.subheader('Ponto de Virada', divider='orange') 
+    
+    if st.sidebar.button("Desempenho Acadêmico"): 
+        st.subheader('Desempenho Acadêmico', divider='orange')
+        
+    if st.sidebar.button("Desempenho Psicossocial"): 
+        st.subheader('Desempenho Psicossocial', divider='orange') 
+    
+    if st.sidebar.button("Desempenho Psicopedagógica"): 
+        st.subheader('Desempenho Psicopedagógica', divider='orange') 
+    
+    if st.sidebar.button("Análise por Aluno"): 
+        st.subheader('Análise por Aluno', divider='orange')
+
+
 #     # seleção de modelo
 #     model = st.selectbox('Selecione o modelo:', ['XGBoost', 'Prophet'])
     
