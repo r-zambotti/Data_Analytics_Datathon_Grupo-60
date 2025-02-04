@@ -486,43 +486,53 @@ elif page == page_1:
 elif page == page_2:
 
     # título
-    st.title('Dashboard')
+    st.title('Dashboard :bar_chart:')
 
-    st.markdown ('---')
+    col1, col2 = st.columns(2)
 
-    cols_container = st.columns(3, gap="small")
-    with cols_container[0]:
-        quadro_1 = cols_container[0].container(height = 200, border=True)
-        quadro_1.markdown("### 2.673")
-        quadro_1.markdown("\nindivíduos responderam a pesquisa")
-    with cols_container[1]:
-        quadro_2 = cols_container[1].container(height = 200, border=True)
-        quadro_2.markdown("### 654")
-        quadro_2.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
-    with cols_container[2]:
-        quadro_3 = cols_container[2].container(height = 200, border=True)
-        quadro_3.markdown("### 141.669")
-        quadro_3.markdown("\nquestões respondidas no total")
+    with col1:
+        opcao_ano = st.selectbox("Selecione o ano:",("Todos","2020", "2021", "2022", "2023", "2024"))
 
-    cols_container = st.columns(3, gap="small") 
-    with cols_container[0]:
-        quadro_4 = cols_container[0].container(height = 200, border=True)
-        quadro_4.markdown("### 2.673")
-        quadro_4.markdown("\nindivíduos responderam a pesquisa")
-    with cols_container[1]:
-        quadro_5 = cols_container[1].container(height = 200, border=True)
-        quadro_5.markdown("### 654")
-        quadro_5.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
-    with cols_container[2]:
-        quadro_6 = cols_container[2].container(height = 200, border=True)
-        quadro_6.markdown("### 141.669")
-        quadro_6.markdown("\nquestões respondidas no total")
+    with col2:
+        matricula = st.selectbox("Selecione a matricula",("Público","Particular"))
+        
+    if opcao_ano == "Todos":
+        cols_container = st.columns(3, gap="small")
+        with cols_container[0]:
+            quadro_1 = cols_container[0].container(height = 200, border=True)
+            quadro_1.markdown("### 2.673")
+            quadro_1.markdown("\nindivíduos responderam a pesquisa")
+        with cols_container[1]:
+            quadro_2 = cols_container[1].container(height = 200, border=True)
+            quadro_2.markdown("### 654")
+            quadro_2.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
+        with cols_container[2]:
+            quadro_3 = cols_container[2].container(height = 200, border=True)
+            quadro_3.markdown("### 141.669")
+            quadro_3.markdown("\nquestões respondidas no total")
+
+        cols_container = st.columns(3, gap="small") 
+        with cols_container[0]:
+            quadro_4 = cols_container[0].container(height = 200, border=True)
+            quadro_4.markdown("### 2.673")
+            quadro_4.markdown("\nindivíduos responderam a pesquisa")
+        with cols_container[1]:
+            quadro_5 = cols_container[1].container(height = 200, border=True)
+            quadro_5.markdown("### 654")
+            quadro_5.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
+        with cols_container[2]:
+            quadro_6 = cols_container[2].container(height = 200, border=True)
+            quadro_6.markdown("### 141.669")
+            quadro_6.markdown("\nquestões respondidas no total")
         
     st.markdown ('---')
 
     st.sidebar.title('⚙️ Modelos')
 
-    #seleção de modelo if st.sidebar.button("Pedras"): st.header("Pedras") 
+    #seleção de modelo 
+    if st.sidebar.button("Pedras"): 
+        st.subheader('Pedras', divider='orange') 
+
     if st.sidebar.button("Ponto de Virada"): 
         st.subheader('Ponto de Virada', divider='orange') 
     
