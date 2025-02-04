@@ -485,7 +485,7 @@ elif page == page_1:
 # Dashboard
 elif page == page_2:
     # título
-    st.title('Modelos de Previsão')
+    st.title('Dashboard')
 #     # seleção de modelo
 #     model = st.selectbox('Selecione o modelo:', ['XGBoost', 'Prophet'])
     
