@@ -12,7 +12,7 @@ import numpy as np
 from pandas.tseries.offsets import YearEnd
 from pandas.tseries.holiday import USFederalHolidayCalendar
 
-import pandas_ta as ta
+#import pandas_ta as ta
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
