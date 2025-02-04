@@ -488,14 +488,17 @@ elif page == page_2:
     # título
     st.title('Dashboard :bar_chart:')
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         opcao_ano = st.selectbox("Selecione o ano:",("Todos","2020", "2021", "2022", "2023", "2024"))
 
     with col2:
         matricula = st.selectbox("Selecione a matricula",("Público","Particular"))
-        
+    
+    with col3:
+        pedra = st.selectbox("Seleciona a pedra",("Ágata", "Ametista","Quartzo","Topázio"))
+
     if opcao_ano == "Todos":
         cols_container = st.columns(3, gap="small")
         with cols_container[0]:
