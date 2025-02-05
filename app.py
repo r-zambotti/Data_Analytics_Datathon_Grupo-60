@@ -488,46 +488,109 @@ elif page == page_2:
     # título
     st.title('Dashboard :bar_chart:')
 
+    # Dicionário de dados para diferentes filtros
+    dados = {
+        "Todos": {"individuos": 2673, "domicilios": 654, "questoes": 141669},
+        "2020": {"individuos": 1000, "domicilios": 300, "questoes": 50000},
+        "2021": {"individuos": 1500, "domicilios": 400, "questoes": 80000},
+        "2022": {"individuos": 2000, "domicilios": 500, "questoes": 100000},
+        "2023": {"individuos": 2500, "domicilios": 600, "questoes": 120000},
+        "2024": {"individuos": 2700, "domicilios": 650, "questoes": 140000},
+    }
+
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        opcao_ano = st.selectbox("Selecione o ano:",("Todos","2020", "2021", "2022", "2023", "2024"))
+        opcao_ano = st.selectbox("Selecione o ano:", ("Todos", "2020", "2021", "2022", "2023", "2024"))
 
     with col2:
-        matricula = st.selectbox("Selecione a matricula",("Público","Particular"))
-    
+        matricula = st.selectbox("Selecione a matrícula:", ("Todos","Público", "Particular"))
+
     with col3:
-        pedra = st.selectbox("Seleciona a pedra",("Ágata", "Ametista","Quartzo","Topázio"))
+        pedra = st.selectbox("Selecione a pedra:", ("Todos","Ágata", "Ametista", "Quartzo", "Topázio"))
 
-    if opcao_ano == "Todos":
-        cols_container = st.columns(3, gap="small")
-        with cols_container[0]:
-            quadro_1 = cols_container[0].container(height = 200, border=True)
-            quadro_1.markdown("### 2.673")
-            quadro_1.markdown("\nindivíduos responderam a pesquisa")
-        with cols_container[1]:
-            quadro_2 = cols_container[1].container(height = 200, border=True)
-            quadro_2.markdown("### 654")
-            quadro_2.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
-        with cols_container[2]:
-            quadro_3 = cols_container[2].container(height = 200, border=True)
-            quadro_3.markdown("### 141.669")
-            quadro_3.markdown("\nquestões respondidas no total")
-
-        cols_container = st.columns(3, gap="small") 
-        with cols_container[0]:
-            quadro_4 = cols_container[0].container(height = 200, border=True)
-            quadro_4.markdown("### 2.673")
-            quadro_4.markdown("\nindivíduos responderam a pesquisa")
-        with cols_container[1]:
-            quadro_5 = cols_container[1].container(height = 200, border=True)
-            quadro_5.markdown("### 654")
-            quadro_5.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
-        with cols_container[2]:
-            quadro_6 = cols_container[2].container(height = 200, border=True)
-            quadro_6.markdown("### 141.669")
-            quadro_6.markdown("\nquestões respondidas no total")
+    # Função para atualizar os quadros com base no filtro selecionado
+    def atualizar_quadros(opcao):
+        cols_container = st.columns(2, gap="small")
         
+        with cols_container[0]:
+            quadro = cols_container[0].container(height=315, border=True)
+            quadro.markdown(f'''
+                            <p style="font-size: 40px; text-align: center;">
+                            <br> {dados[opcao]['individuos']}
+                            </p>
+                            ''', unsafe_allow_html=True)
+            
+            quadro.markdown('''
+                            <p style="font-size: 26px; text-align: center;">
+                            Alunos Matriculados
+                            </p>
+                            ''',unsafe_allow_html=True)
+        
+        with cols_container[1]:
+           # quadro = cols_container[1].container(height=200, border=True)
+
+            cols_container1 = st.columns(2, gap="small")
+            with cols_container1[0]:
+                quadro = cols_container1[0].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 36px; text-align: center;">
+                                {dados[opcao]['domicilios']}<br>
+                                👩🏼‍🎓
+                                </p>
+                                ''', unsafe_allow_html=True)
+                
+            with cols_container1[1]:
+                quadro = cols_container1[1].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 36px; text-align: center;">
+                                {dados[opcao]['domicilios']}<br>
+                                👨🏻‍🎓
+                                </p>
+                                ''', unsafe_allow_html=True)
+
+            cols_container2 = st.columns(2, gap="small")
+            with cols_container2[0]:
+                quadro = cols_container2[0].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center;">
+                                {dados[opcao]['domicilios']} % Feminimo
+                                </p>
+                                ''', unsafe_allow_html=True)    
+                    
+            with cols_container2[1]:
+                quadro = cols_container2[1].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center;">
+                                {dados[opcao]['domicilios']} % Feminimo
+                                </p>
+                                ''', unsafe_allow_html=True)
+        
+        # with cols_container[2]:
+        #     quadro = cols_container[2].container(height=315, border=True)
+        #     quadro.markdown(f"### {dados[opcao]['questoes']}")
+        #     quadro.markdown("\nquestões respondidas no total")
+        
+        cols_container = st.columns(3, gap="small")
+        
+        with cols_container[0]:
+            quadro = cols_container[0].container(height=200, border=True)
+            quadro.markdown(f"### {dados[opcao]['individuos']}")
+            quadro.markdown("\nindivíduos responderam a pesquisa")
+        
+        with cols_container[1]:
+            quadro = cols_container[1].container(height=200, border=True)
+            quadro.markdown(f"### {dados[opcao]['domicilios']}")
+            quadro.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
+        
+        with cols_container[2]:
+            quadro = cols_container[2].container(height=200, border=True)
+            quadro.markdown(f"### {dados[opcao]['questoes']}")
+            quadro.markdown("\nquestões respondidas no total")
+
+    # Atualiza os quadros de acordo com a seleção do filtro
+    atualizar_quadros(opcao_ano)
+
     st.markdown ('---')
 
     st.sidebar.title('⚙️ Modelos')
