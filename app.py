@@ -522,8 +522,8 @@ elif page == page_2:
                             ''', unsafe_allow_html=True)
             
             quadro.markdown('''
-                            <p style="font-size: 26px; text-align: center;">
-                            Alunos Matriculados
+                            <p style="font-size: 34px; text-align: center;">
+                            Alunos Matriculados<br>
                             </p>
                             ''',unsafe_allow_html=True)
         
@@ -534,7 +534,7 @@ elif page == page_2:
             with cols_container1[0]:
                 quadro = cols_container1[0].container(height=150, border=True)
                 quadro.markdown(f'''
-                                <p style="font-size: 36px; text-align: center;">
+                                <p style="font-size: 36px; text-align: center; color: pink;">
                                 {dados[opcao]['domicilios']}<br>
                                 👩🏼‍🎓
                                 </p>
@@ -543,7 +543,7 @@ elif page == page_2:
             with cols_container1[1]:
                 quadro = cols_container1[1].container(height=150, border=True)
                 quadro.markdown(f'''
-                                <p style="font-size: 36px; text-align: center;">
+                                <p style="font-size: 36px; text-align: center; color: lightblue;">
                                 {dados[opcao]['domicilios']}<br>
                                 👨🏻‍🎓
                                 </p>
@@ -553,7 +553,7 @@ elif page == page_2:
             with cols_container2[0]:
                 quadro = cols_container2[0].container(height=150, border=True)
                 quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center;">
+                                <p style="font-size: 30px; text-align: center; color: pink;">
                                 {dados[opcao]['domicilios']} % Feminimo
                                 </p>
                                 ''', unsafe_allow_html=True)    
@@ -561,8 +561,8 @@ elif page == page_2:
             with cols_container2[1]:
                 quadro = cols_container2[1].container(height=150, border=True)
                 quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center;">
-                                {dados[opcao]['domicilios']} % Feminimo
+                                <p style="font-size: 30px; text-align: center; color: lightblue;">
+                                {dados[opcao]['domicilios']} % Masculino
                                 </p>
                                 ''', unsafe_allow_html=True)
         
@@ -571,23 +571,60 @@ elif page == page_2:
         #     quadro.markdown(f"### {dados[opcao]['questoes']}")
         #     quadro.markdown("\nquestões respondidas no total")
         
-        cols_container = st.columns(3, gap="small")
-        
-        with cols_container[0]:
-            quadro = cols_container[0].container(height=200, border=True)
-            quadro.markdown(f"### {dados[opcao]['individuos']}")
-            quadro.markdown("\nindivíduos responderam a pesquisa")
-        
-        with cols_container[1]:
-            quadro = cols_container[1].container(height=200, border=True)
-            quadro.markdown(f"### {dados[opcao]['domicilios']}")
-            quadro.markdown("\ndomicílios diferentes. Todos localizados no município de Embu-Guaçu-SP")
-        
-        with cols_container[2]:
-            quadro = cols_container[2].container(height=200, border=True)
-            quadro.markdown(f"### {dados[opcao]['questoes']}")
-            quadro.markdown("\nquestões respondidas no total")
+        cols_container3 = st.columns(2, gap="small")
+        with cols_container3[0]:
 
+            cols_container4 = st.columns(2, gap="small")
+            quadro = cols_container4[0].container(height=150, border=True)
+            quadro.markdown(f'''
+                                <p style="font-size: 36px; text-align: center; color: gold;">
+                                {dados[opcao]['domicilios']}<br>
+                                Ágata
+                                </p>
+                                ''', unsafe_allow_html=True)
+                
+            with cols_container4[1]:
+                quadro = cols_container4[1].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 36px; text-align: center; color: silver;">
+                                {dados[opcao]['domicilios']}<br>
+                                Ametista
+                                </p>
+                                ''', unsafe_allow_html=True)
+
+            cols_container5 = st.columns(2, gap="small")
+            with cols_container5[0]:
+                quadro = cols_container5[0].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center; color: violet;">
+                                {dados[opcao]['domicilios']} 
+                                Quartzo
+                                </p>
+                                ''', unsafe_allow_html=True)    
+                    
+            with cols_container5[1]:
+                quadro = cols_container5[1].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center; color: magenta;">
+                                {dados[opcao]['domicilios']} 
+                                Topázio
+                                </p>
+                                ''', unsafe_allow_html=True)
+
+        with cols_container3[1]:
+            quadro = cols_container3[1].container(height=315, border=True)
+            quadro.markdown(f'''
+                            <p style="font-size: 40px; text-align: center;">
+                            <br> {dados[opcao]['individuos']}%<br>
+                            </p>
+                            ''', unsafe_allow_html=True)
+            
+            quadro.markdown('''
+                            <p style="font-size: 34px; text-align: center;">
+                            Média Geral - INDE
+                            </p>
+                            ''',unsafe_allow_html=True)
+                
     # Atualiza os quadros de acordo com a seleção do filtro
     atualizar_quadros(opcao_ano)
 
