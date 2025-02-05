@@ -625,27 +625,196 @@ elif page == page_2:
 
     st.markdown ('---')
 
-    st.sidebar.title('⚙️ Modelos')
+    df = pd.read_csv("https://github.com/wesleyesantos/StreamlitDatathon/raw/refs/heads/main/assets/df_aluno.csv")
+    df['ANO'] = df['ANO'].astype(str) 
 
-    #seleção de modelo 
-    if st.sidebar.button("Pedras"): 
-        st.subheader('Pedras', divider='orange') 
+    st.markdown('## ⚙️ Modelos de Insight')
 
-    if st.sidebar.button("Ponto de Virada"): 
-        st.subheader('Ponto de Virada', divider='orange') 
+    # seleção de modelo
+    model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Desempenho Acadêmico', 'Desempenho Psicopedagógica', 'Desempenho Psicossocial', 'Pedras', 'Ponto de Virada'])
+    # st.sidebar.title('⚙️ Modelos')
+
+    st.markdown('<br>', unsafe_allow_html=True)
+         # texto
+
     
-    if st.sidebar.button("Desempenho Acadêmico"): 
-        st.subheader('Desempenho Acadêmico', divider='orange')
-        
-    if st.sidebar.button("Desempenho Psicossocial"): 
-        st.subheader('Desempenho Psicossocial', divider='orange') 
-    
-    if st.sidebar.button("Desempenho Psicopedagógica"): 
-        st.subheader('Desempenho Psicopedagógica', divider='orange') 
-    
-    if st.sidebar.button("Análise por Aluno"): 
+    if model == 'Análise por Aluno':
         st.subheader('Análise por Aluno', divider='orange')
 
+        st.markdown('''
+            <p style="font-size: 18px">
+                O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                <br>
+            </p>
+            ''', unsafe_allow_html=True)
+
+        if 'multi' not in st.session_state: 
+            st.session_state['multi'] = []
+
+        if 'ano_selecionado' not in st.session_state:
+            st.session_state['ano_selecionado'] = None
+
+        if 'turma_selecionada' not in st.session_state:
+            st.session_state['turma_selecionada'] = None
+
+        if 'fase_selecionada' not in st.session_state:
+            st.session_state['fase_selecionada'] = None
+
+        if 'comparador_inde' not in st.session_state:
+            st.session_state['comparador_inde'] = 'Nenhum'
+
+        if 'valor_inde' not in st.session_state:
+            st.session_state['valor_inde'] = 0
+
+        df_aluno = df.set_index('NOME')
+        
+        col7, col8= st.columns([3,1])
+        with col7:
+            def clear_multi():
+                st.session_state.multiselect = []
+                return
+                
+            multi = st.multiselect('Selecione um ou mais alunos', df_aluno.index.unique(), key='multiselect')
+            st.button("Limpar alunos", on_click=clear_multi)
+                            
+        with col8:
+            anos_disponiveis = df['ANO'].unique()
+            ano_selecionado = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado')
+
+        col9, col10, col11, col12 = st.columns(4)
+        with col9:
+            turmas_disponiveis = df['TURMA'].unique()
+            turma_selecionada = st.selectbox('Selecione a turma', [None] + list(turmas_disponiveis), key='turma_selecionada')
+
+        with col10:
+            fases_disponiveis = df['FASE'].unique()
+            fase_selecionada = st.selectbox('Selecione a fase', [None] + list(fases_disponiveis), key='fase_selecionada')
+
+        with col11:
+            comparador_inde = st.selectbox('Filtrar INDE por', ['Nenhum', 'Maior que', 'Menor que'], key='comparador_inde')
+
+        with col12:
+            valor_inde = st.number_input('Digite o valor para o INDE', step=1, key='valor_inde')
+
+        df_filtrado = df_aluno.copy()
+        df_filtrado['PONTO_VIRADA'] = df_filtrado['PONTO_VIRADA'].replace({0: 'Não', 1: 'Sim'})
+
+
+        def reset_filters():
+            st.session_state['aluno_selecionado'] = []
+            st.session_state['ano_selecionado'] = None
+            st.session_state['turma_selecionada'] = None
+            st.session_state['fase_selecionada'] = None
+            st.session_state['comparador_inde'] = 'Nenhum'
+            st.session_state['valor_inde'] = 0
+        st.button('Limpar Filtros', on_click=reset_filters)
+
+        if multi:
+            df_filtrado = df_filtrado[df_filtrado.index.isin(multi)]
+
+        if ano_selecionado:
+            df_filtrado = df_filtrado[df_filtrado['ANO'] == ano_selecionado]
+
+        if turma_selecionada:
+            df_filtrado = df_filtrado[df_filtrado['TURMA'] == turma_selecionada]
+
+        if fase_selecionada:
+            df_filtrado = df_filtrado[df_filtrado['FASE'] == fase_selecionada]
+
+        if comparador_inde == 'Maior que':
+            df_filtrado = df_filtrado[df_filtrado['INDE'] > valor_inde]
+        elif comparador_inde == 'Menor que':
+            df_filtrado = df_filtrado[df_filtrado['INDE'] < valor_inde]
+       
+        # Estilo CSS para ajustar a largura da tabela
+        st.markdown(
+            """
+            <style>
+            .dataframe-container {
+                width: 100%;
+                display: block;
+                margin: 0;
+            }
+            .dataframe table {
+                width: 100%;
+                margin: 0;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+
+        # Contêiner para aplicar o estilo apenas à tabela
+        st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+        st.dataframe(df_filtrado)
+        st.markdown('</div>', unsafe_allow_html=True) 
+
+
+    elif model == 'Desempenho Acadêmico':
+        st.subheader('Desempenho Acadêmico', divider='orange')
+
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)        
+    
+    elif model == 'Desempenho Psicopedagógica':
+        st.subheader('Desempenho Psicopedagógica', divider='orange')
+
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)
+        
+    elif model == 'Desempenho Psicossocial':
+        st.subheader('Desempenho Psicossocial', divider='orange')
+
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)
+        
+    elif model == 'Pedras':
+        st.subheader('Pedras', divider='orange')
+
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)
+        
+    else:
+        st.subheader('Ponto de Virada', divider='orange')
+
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)
+    
 
 #     # seleção de modelo
 #     model = st.selectbox('Selecione o modelo:', ['XGBoost', 'Prophet'])
