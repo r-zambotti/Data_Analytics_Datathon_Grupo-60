@@ -507,7 +507,7 @@ elif page == page_2:
         matricula = st.selectbox("Selecione a matrícula:", ("Todos","Público", "Particular"))
 
     with col3:
-        pedra = st.selectbox("Selecione a pedra:", ("Todos","Ágata", "Ametista", "Quartzo", "Topázio"))
+        indicador = st.selectbox("Selecione o indicador:", ("INDE","IAA", "IEG", "IPS", "IDA","IPP","IAN","IPV"))
 
     # Função para atualizar os quadros com base no filtro selecionado
     def atualizar_quadros(opcao):
@@ -528,7 +528,6 @@ elif page == page_2:
                             ''',unsafe_allow_html=True)
         
         with cols_container[1]:
-           # quadro = cols_container[1].container(height=200, border=True)
 
             cols_container1 = st.columns(2, gap="small")
             with cols_container1[0]:
@@ -566,10 +565,6 @@ elif page == page_2:
                                 </p>
                                 ''', unsafe_allow_html=True)
         
-        # with cols_container[2]:
-        #     quadro = cols_container[2].container(height=315, border=True)
-        #     quadro.markdown(f"### {dados[opcao]['questoes']}")
-        #     quadro.markdown("\nquestões respondidas no total")
         
         cols_container3 = st.columns(2, gap="small")
         with cols_container3[0]:
@@ -577,7 +572,7 @@ elif page == page_2:
             cols_container4 = st.columns(2, gap="small")
             quadro = cols_container4[0].container(height=150, border=True)
             quadro.markdown(f'''
-                                <p style="font-size: 36px; text-align: center; color: gold;">
+                                <p style="font-size: 30px; text-align: center;">
                                 {dados[opcao]['domicilios']}<br>
                                 Ágata
                                 </p>
@@ -586,7 +581,7 @@ elif page == page_2:
             with cols_container4[1]:
                 quadro = cols_container4[1].container(height=150, border=True)
                 quadro.markdown(f'''
-                                <p style="font-size: 36px; text-align: center; color: silver;">
+                                <p style="font-size: 30px; text-align: center;">
                                 {dados[opcao]['domicilios']}<br>
                                 Ametista
                                 </p>
@@ -596,7 +591,7 @@ elif page == page_2:
             with cols_container5[0]:
                 quadro = cols_container5[0].container(height=150, border=True)
                 quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center; color: violet;">
+                                <p style="font-size: 30px; text-align: center;">
                                 {dados[opcao]['domicilios']} 
                                 Quartzo
                                 </p>
@@ -605,7 +600,7 @@ elif page == page_2:
             with cols_container5[1]:
                 quadro = cols_container5[1].container(height=150, border=True)
                 quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center; color: magenta;">
+                                <p style="font-size: 30px; text-align: center;">
                                 {dados[opcao]['domicilios']} 
                                 Topázio
                                 </p>
@@ -615,13 +610,13 @@ elif page == page_2:
             quadro = cols_container3[1].container(height=315, border=True)
             quadro.markdown(f'''
                             <p style="font-size: 40px; text-align: center;">
-                            <br> {dados[opcao]['individuos']}%<br>
+                            <br> {dados[opcao]['individuos']}%
                             </p>
                             ''', unsafe_allow_html=True)
             
-            quadro.markdown('''
+            quadro.markdown(f'''
                             <p style="font-size: 34px; text-align: center;">
-                            Média Geral - INDE
+                            Média do indicador {indicador}
                             </p>
                             ''',unsafe_allow_html=True)
                 
