@@ -60,7 +60,7 @@ page_4 = 'Referências'
 st.sidebar.title('Menu')
 page = st.sidebar.radio('Selecione a página:', 
                         [page_0, page_1, page_2, page_3, page_4])
-     
+        
 # Introdução
 if page == page_0:
     
@@ -484,1042 +484,502 @@ elif page == page_1:
 
 # Dashboard
 elif page == page_2:
+
     # título
-    st.title('Dashboard')
-#     # seleção de modelo
-#     model = st.selectbox('Selecione o modelo:', ['XGBoost', 'Prophet'])
+    st.title('Dashboard :bar_chart:')
+
+    # Dicionário de dados para diferentes filtros
+    dados = {
+        "Todos": {"individuos": 2673, "domicilios": 654, "questoes": 141669},
+        "2020": {"individuos": 1000, "domicilios": 300, "questoes": 50000},
+        "2021": {"individuos": 1500, "domicilios": 400, "questoes": 80000},
+        "2022": {"individuos": 2000, "domicilios": 500, "questoes": 100000},
+        "2023": {"individuos": 2500, "domicilios": 600, "questoes": 120000},
+        "2024": {"individuos": 2700, "domicilios": 650, "questoes": 140000},
+    }
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        opcao_ano = st.selectbox("Selecione o ano:", ("Todos", "2020", "2021", "2022", "2023", "2024"))
+
+    with col2:
+        matricula = st.selectbox("Selecione a matrícula:", ("Todos","Público", "Particular"))
+
+    with col3:
+        indicador = st.selectbox("Selecione o indicador:", ("INDE","IAA", "IEG", "IPS", "IDA","IPP","IAN","IPV"))
+
+    # Função para atualizar os quadros com base no filtro selecionado
+    def atualizar_quadros(opcao):
+        cols_container = st.columns(2, gap="small")
+        
+        with cols_container[0]:
+            quadro = cols_container[0].container(height=315, border=True)
+            quadro.markdown(f'''
+                            <p style="font-size: 40px; text-align: center;">
+                            <br> {dados[opcao]['individuos']}
+                            </p>
+                            ''', unsafe_allow_html=True)
+            
+            quadro.markdown('''
+                            <p style="font-size: 34px; text-align: center;">
+                            Alunos Matriculados<br>
+                            </p>
+                            ''',unsafe_allow_html=True)
+        
+        with cols_container[1]:
+
+            cols_container1 = st.columns(2, gap="small")
+            with cols_container1[0]:
+                quadro = cols_container1[0].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 36px; text-align: center; color: pink;">
+                                {dados[opcao]['domicilios']}<br>
+                                👩🏼‍🎓
+                                </p>
+                                ''', unsafe_allow_html=True)
+                
+            with cols_container1[1]:
+                quadro = cols_container1[1].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 36px; text-align: center; color: lightblue;">
+                                {dados[opcao]['domicilios']}<br>
+                                👨🏻‍🎓
+                                </p>
+                                ''', unsafe_allow_html=True)
+
+            cols_container2 = st.columns(2, gap="small")
+            with cols_container2[0]:
+                quadro = cols_container2[0].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center; color: pink;">
+                                {dados[opcao]['domicilios']} % Feminimo
+                                </p>
+                                ''', unsafe_allow_html=True)    
+                    
+            with cols_container2[1]:
+                quadro = cols_container2[1].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center; color: lightblue;">
+                                {dados[opcao]['domicilios']} % Masculino
+                                </p>
+                                ''', unsafe_allow_html=True)
+        
+        
+        cols_container3 = st.columns(2, gap="small")
+        with cols_container3[0]:
+
+            cols_container4 = st.columns(2, gap="small")
+            quadro = cols_container4[0].container(height=150, border=True)
+            quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center;">
+                                {dados[opcao]['domicilios']}<br>
+                                Ágata
+                                </p>
+                                ''', unsafe_allow_html=True)
+                
+            with cols_container4[1]:
+                quadro = cols_container4[1].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center;">
+                                {dados[opcao]['domicilios']}<br>
+                                Ametista
+                                </p>
+                                ''', unsafe_allow_html=True)
+
+            cols_container5 = st.columns(2, gap="small")
+            with cols_container5[0]:
+                quadro = cols_container5[0].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center;">
+                                {dados[opcao]['domicilios']} 
+                                Quartzo
+                                </p>
+                                ''', unsafe_allow_html=True)    
+                    
+            with cols_container5[1]:
+                quadro = cols_container5[1].container(height=150, border=True)
+                quadro.markdown(f'''
+                                <p style="font-size: 30px; text-align: center;">
+                                {dados[opcao]['domicilios']} 
+                                Topázio
+                                </p>
+                                ''', unsafe_allow_html=True)
+
+        with cols_container3[1]:
+            quadro = cols_container3[1].container(height=315, border=True)
+            quadro.markdown(f'''
+                            <p style="font-size: 40px; text-align: center;">
+                            <br> {dados[opcao]['individuos']}%
+                            </p>
+                            ''', unsafe_allow_html=True)
+            
+            quadro.markdown(f'''
+                            <p style="font-size: 34px; text-align: center;">
+                            Média do indicador {indicador}
+                            </p>
+                            ''',unsafe_allow_html=True)
+                
+    # Atualiza os quadros de acordo com a seleção do filtro
+    atualizar_quadros(opcao_ano)
+
+    st.markdown ('---')
+
+    df = pd.read_csv("https://github.com/wesleyesantos/StreamlitDatathon/raw/refs/heads/main/assets/df_aluno.csv")
+    df['ANO'] = df['ANO'].astype(str) 
+
+    st.markdown('## ⚙️ Modelos de Insight')
+
+    # seleção de modelo
+    model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Desempenho Acadêmico', 'Desempenho Psicopedagógica', 'Desempenho Psicossocial', 'Pedras', 'Ponto de Virada'])
+    # st.sidebar.title('⚙️ Modelos')
+
+    st.markdown('<br>', unsafe_allow_html=True)
+         # texto
+
     
-#     st.markdown('<br>', unsafe_allow_html=True)
+    if model == 'Análise por Aluno':
+        st.subheader('Análise por Aluno', divider='orange')
+
+        st.markdown('''
+            <p style="font-size: 18px">
+                O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                <br>
+            </p>
+            ''', unsafe_allow_html=True)
+
+        if 'multi' not in st.session_state: 
+            st.session_state['multi'] = []
+
+        if 'ano_selecionado' not in st.session_state:
+            st.session_state['ano_selecionado'] = None
+
+        if 'turma_selecionada' not in st.session_state:
+            st.session_state['turma_selecionada'] = None
+
+        if 'fase_selecionada' not in st.session_state:
+            st.session_state['fase_selecionada'] = None
+
+        if 'comparador_inde' not in st.session_state:
+            st.session_state['comparador_inde'] = 'Nenhum'
+
+        if 'valor_inde' not in st.session_state:
+            st.session_state['valor_inde'] = 0
+
+        df_aluno = df.set_index('NOME')
+        
+        col7, col8= st.columns([3,1])
+
+        with col7:
+            def clear_multi():
+                st.session_state.multiselect = []
+                return
+                
+            multi = st.multiselect('Selecione um ou mais alunos', df_aluno.index.unique(), key='multiselect')
+            st.button("Limpar alunos", on_click=clear_multi)
+                            
+        with col8:
+            anos_disponiveis = df['ANO'].unique()
+            ano_selecionado = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado')
+
+        col9, col10, col11, col12 = st.columns(4)
+
+        with col9:
+            turmas_disponiveis = df['TURMA'].unique()
+            turma_selecionada = st.selectbox('Selecione a turma', [None] + list(turmas_disponiveis), key='turma_selecionada')
+
+        with col10:
+            fases_disponiveis = df['FASE'].unique()
+            fase_selecionada = st.selectbox('Selecione a fase', [None] + list(fases_disponiveis), key='fase_selecionada')
+
+        with col11:
+            comparador_inde = st.selectbox('Filtrar INDE por', ['Nenhum', 'Maior que', 'Menor que'], key='comparador_inde')
+
+        with col12:
+            valor_inde = st.number_input('Digite o valor para o INDE', step=1, key='valor_inde')
+
+        df_filtrado = df_aluno.copy()
+        df_filtrado['PONTO_VIRADA'] = df_filtrado['PONTO_VIRADA'].replace({0: 'Não', 1: 'Sim'})
+
+        def reset_filters():
+            st.session_state['aluno_selecionado'] = []
+            st.session_state['ano_selecionado'] = None
+            st.session_state['turma_selecionada'] = None
+            st.session_state['fase_selecionada'] = None
+            st.session_state['comparador_inde'] = 'Nenhum'
+            st.session_state['valor_inde'] = 0
+
+        st.button('Limpar Filtros', on_click=reset_filters)
+
+        if multi:
+            df_filtrado = df_filtrado[df_filtrado.index.isin(multi)]
+
+        if ano_selecionado:
+            df_filtrado = df_filtrado[df_filtrado['ANO'] == ano_selecionado]
+
+        if turma_selecionada:
+            df_filtrado = df_filtrado[df_filtrado['TURMA'] == turma_selecionada]
+
+        if fase_selecionada:
+            df_filtrado = df_filtrado[df_filtrado['FASE'] == fase_selecionada]
+
+        if comparador_inde == 'Maior que':
+            df_filtrado = df_filtrado[df_filtrado['INDE'] > valor_inde]
+        elif comparador_inde == 'Menor que':
+            df_filtrado = df_filtrado[df_filtrado['INDE'] < valor_inde]
+       
+        # Estilo CSS para ajustar a largura da tabela
+        st.markdown(
+            """
+            <style>
+            .dataframe-container {
+                display: flex;
+                justify-content: flex-start;
+                width: 100%;
+            }
+            .dataframe-container > div {
+                width: 100%;
+            }
+            </style>
+            """, unsafe_allow_html=True
+        )
+
+        # Contêiner para aplicar o estilo apenas à tabela
+        st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+        st.dataframe(df_filtrado)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+
+    elif model == 'Desempenho Acadêmico':
+        st.subheader('Desempenho Acadêmico', divider='orange')
+
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)        
     
-#     if model == 'XGBoost':
-#         # texto
-#         st.markdown('''
-#                     <p style="font-size: 18px">
-#                         O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-#                         O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-#                         amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
-#                         <br>
-#                     </p>
-#                     ''', unsafe_allow_html=True)
-        
-#         with st.expander('🐍 Exibir código Python'):
-#             # código
-#             st.code('''
-#                     # importar o XGBoost
-#                     !pip install xgboost                 # instalar biblioteca
-#                     import xgboost as xgb                # importar biblioteca
-#                     ''')
-        
-#         # markdown
-#         st.markdown('''
-#                     <p style="font-size: 18px">
-#                         <br>
-#                         As colunas categóricas devem ser transformadas em variáveis numéricas antes de treinar o modelo.
-#                         Para isso, podemos utilizar a técnica <i>One-Hot Encoding</i>.<br>
-#                     </p>
-#                     ''', unsafe_allow_html=True)
-        
-#         # código
-#         with st.expander('🐍 Exibir código Python'):
-#             st.code('''
-#                         # One-Hot Encoding
-#                         df = pd.get_dummies(df_baseline, 
-#                                 columns=['month', 'year', 'weekday'],
-#                                 drop_first=True)
-                        
-#                         # caracteres minúsculos
-#                         df.columns = df.columns.str.lower()
-                        
-#                         print(f'Quantidade de colunas: {df.shape[1]}')
-#                         ''')
-        
-#         # divider
-#         st.markdown('---')
-        
-#         # selecione o modelo
-#         model_type = st.radio('Selecione o modelo:', ['Baseline', 'Final'])
-#         if model_type == 'Baseline':
-#             # texto
-#             # preparação dos dados - título
-#             st.markdown('''#### Preparação dos dados''')
-#             st.markdown(r'''
-#                         <p style="font-size: 18px">
-#                         Para o modelo baseline, utilizamos 80% dos dados para treino e 20% para teste.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # baseline - divisão dos dados
-#                         X = df_baseline.drop(columns=['brent'])
-#                         y = df_baseline['brent']
+    elif model == 'Desempenho Psicopedagógica':
+        st.subheader('Desempenho Psicopedagógica', divider='orange')
 
-#                         # train test split
-#                         train_baseline_size = int(df_baseline.shape[0] * 0.8)
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)
+        
+    elif model == 'Desempenho Psicossocial':
+        st.subheader('Desempenho Psicossocial', divider='orange')
 
-#                         # 80% treino, 20% teste
-#                         X_train_baseline, X_test_baseline = X[:train_baseline_size], X[train_baseline_size:]
-#                         y_train_baseline, y_test_baseline = y[:train_baseline_size], y[train_baseline_size:]
-#                         ''')
-                
-#             # gráfico com divisão dos dados
-#             baseline_xgb_df = pd.read_parquet(r'data/xgboost_baseline_train_test.parquet')
-#             fig = px.line(baseline_xgb_df, x='date', y='brent', 
-#                 title='XGBoost Baseline - Treino e Teste', 
-#                 color='set', 
-#                 color_discrete_map={'train': '#4089FF', 
-#                                     'test': '#f6c409'},
-#                 template='plotly_dark')
-#             # adicionar linha para divisão
-#             train_baseline_size = int(baseline_xgb_df.shape[0] * 0.8)
-#             fig.add_shape(type='line', 
-#                         x0=baseline_xgb_df.iloc[train_baseline_size]['date'],
-#                         y0=0, x1=baseline_xgb_df.iloc[train_baseline_size]['date'],
-#                         y1=baseline_xgb_df['brent'].max()*1.1,
-#                         line=dict(color='white', width=1, dash='dash'))
-                            
-#             fig.update_layout(title_font_size=20)
-#             fig.update_xaxes(title=None)
-#             fig.update_yaxes(title='Preço (U$D )')
-#             st.plotly_chart(fig, use_container_width=True)
-                
-#             st.markdown('''#### Treinamento do modelo''')
-#             # selecionar modelo baseline ou final - colocar isso para cima e mudar o código
-#             # texto
-#             st.markdown('''<p style="font-size: 18px">
-#                         Com os dados preparados, podemos treinar o modelo XGBoost. 
-#                         Como vamos prever valores de preço, utilizamos a classe XGBRegressor. 
-#                         Para o treinamento do modelo baseline, não utilizamos
-#                         colunas de indicadores técnicos, como EMA, MACD e RSI.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # Construção do modelo baseline
-#                         xgb_baseline = xgb.XGBRegressor(n_estimators=1000,                 # número de árvores
-#                                                         max_depth=3,                       # profundidade máxima = 3 níveis
-#                                                         booster='gbtree',                  # default
-#                                                         early_stopping_rounds=50,          # cessa após 50 iterações sem melhorar
-#                                                         objective='reg:squarederror' ,     # função objetivo = erro quadrático
-#                                                         learning_rate=0.01,               # taxa de aprendizado menor, para evitar o overfitting
-#                                                         random_state=19)                   # para reprodução
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)
+        
+    elif model == 'Pedras':
+        st.subheader('Pedras', divider='orange')
 
-#                         # Treinamento do modelo baseline
-#                         xgb_baseline.fit(X_train_baseline, y_train_baseline,
-#                                         eval_set=[(X_train_baseline, y_train_baseline),    # avaliação no treino
-#                                                     (X_test_baseline, y_test_baseline)],   # avaliação no teste
-#                                                     verbose=True)                          # exibir resultados durante o treino
-#                         ''')
-                
-#             st.markdown('''<br>''', unsafe_allow_html=True)
-                
-#             # importância das features
-#             importance_baseline_df = pd.read_parquet(r'data/xgboost_baseline_importance.parquet')
-            
-#             # texto
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Exxon Mobil, o índice SP500 e o ano de 2012 são as features mais importantes no modelo baseline.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # code
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # Importância das features
-#                         importance_baseline_df = pd.DataFrame({'feature': X_train_baseline.columns,
-#                                                                 'importance': xgb_baseline.feature_importances_})
-                        
-#                         # Ordenar
-#                         importance_baseline_df = importance_baseline_df.sort_values('importance', ascending=False)
-#                         ''')
-            
-#             st.markdown('''<br>''', unsafe_allow_html=True)
-            
-#             # plot
-#             fig = px.bar(importance_baseline_df, x='importance', y='feature',
-#                         title='10 Features mais importantes',
-#                         labels={'importance': 'Importância', 'feature': 'Feature'},
-#                         template='plotly_dark')
-#             fig.update_layout(title_font_size=20)
-#             fig.update_xaxes(title=None, showgrid=True,
-#                              range=[0, importance_baseline_df['importance'].max() * 1.2])
-#             fig.update_yaxes(title=None)
-#             st.plotly_chart(fig, use_container_width=True)
-            
-#             # realizar previsões
-#             st.markdown('''#### Previsões''')
-#             # texto
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Com o modelo treinado, podemos realizar previsões para o preço do petróleo Brent.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # previsões
-#                         y_pred_baseline = xgb_baseline.predict(X_test_baseline)
-                        
-#                         # dataframe com previsões
-#                         predictions_baseline_df = pd.DataFrame({'date': X_test_baseline.index,
-#                                                                 'brent': y_test_baseline,
-#                                                                 'brent_pred': y_pred_baseline})
-                        
-#                         ''')
-#             # plotar previsões
-#             baseline_xgb_pred_df = pd.read_parquet(r'data/xgboost_baseline_prediction.parquet')
-            
-#             fig = px.line(baseline_xgb_pred_df, x='date', y=['brent', 'prediction'],
-#                 title='XGBoost Baseline - Predição vs Real', 
-#                 color_discrete_map={'brent': '#4089FF', 
-#                                     'prediction': '#e34592'},
-#                 labels={'variable': 'variável', 'value': 'preço (U$D )'},
-#                 template='plotly_dark')
-#             fig.update_layout(title_font_size=20)
-#             fig.update_xaxes(title=None)
-#             fig.update_yaxes(title='Preço (U$D )')
-#             st.plotly_chart(fig, use_container_width=True)
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)
         
-#             # métricas
-#             st.markdown('''#### Avaliação do modelo''')
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Para avaliar o modelo, utilizamos as métricas RMSE, MAE e MAPE.<br>
-#                         </p>
-#                         ''', unsafe_allow_html=True)  
-#             # RMSE  
-#             st.markdown('''
-#                         - **RMSE** - *Root Mean Squared Error*, ou Raiz do Erro Quadrático Médio:
-#                         ''')
-#             st.latex(r'''
-#                     RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2}
-#                     ''')
-#             # MAE
-#             st.markdown('''
-#                         - **MAE** - *Mean Absolute Error*, ou Erro Médio Absoluto:
-#                         ''')
-#             st.latex(r'''
-#                     MAE = \frac{1}{n} \sum_{i=1}^{n} |y_{true} - y_{pred}|
-#                     ''')
-#             # MAPE
-#             st.markdown('''
-#                         - **MAPE** - *Mean Absolute Percentage Error*, ou Erro Percentual Absoluto Médio:
-#                         ''')
-#             st.latex(r'''
-#                     MAPE = \frac{1}{n} \sum_{i=1}^{n} \left| \frac{y_{true} - y_{pred}}{y_{true}} \right| \times 100
-#                     ''')
-            
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # importar métricas
-#                         from sklearn.metrics import mean_absolute_error, mean_squared_error
-                        
-#                         # função para calcular MAPE
-#                         def mean_absolute_percentage_error(y_true, y_pred) -> float:
-#                             return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
-                        
-#                         # métricas
-#                         rmse_baseline = np.sqrt(mean_squared_error(y_test_baseline, y_pred_baseline))
-#                         mae_baseline = mean_absolute_error(y_test_baseline, y_pred_baseline)
-#                         mape_baseline = mean_absolute_percentage_error(y_test_baseline, y_pred_baseline)
-                        
-#                         # print
-#                         print(f'RMSE: {rmse_baseline:.2f}')
-#                         print(f'MAE: {mae_baseline:.2f}')
-#                         print(f'MAPE: {mape_baseline:.2f}')
-#                         ''')
-            
-#             st.markdown('<br>', unsafe_allow_html=True)
-            
-#             # botão para exibir scores
-#             if st.button('📊 Exibir Scores'):
-#                 scores_baseline_df = pd.read_parquet(r'data/xgboost_baseline_scores.parquet')
-#                 scores_baseline_df = scores_baseline_df.T
-#                 scores_baseline_df.columns = scores_baseline_df.iloc[0]
-#                 # drop first row
-#                 scores_baseline_df = scores_baseline_df[1:]
-#                 # mostrar dataframe
-#                 st.dataframe(scores_baseline_df)
-            
-#             st.markdown('<br>', unsafe_allow_html=True)
-            
-#             baseline_metrics_text = r'''
-#                         A RMSE é dada na mesma unidade de medida do dataset original e mostra que o modelo baseline está errando, em média, U$D 23.52.<br>
-#                         A MAE é uma métrica absoluta e indica que as previsões do modelo estão desviando, em média, U$D 17.1 do valor real.<br>
-#                         A diferença entre RMSE e MAE é que a primeira dá mais peso para erros maiores, 
-#                         enquanto a segunda trata todos os erros de forma igual.<br>
-#                         A MAPE é uma porcentagem e indica que as previsões do modelo estão desviando, em média, 22.96% do valor real.
-#                         '''
-#             create_analysis('Resultados do Modelo Baseline', baseline_metrics_text)
-            
-#             st.markdown('<br>', unsafe_allow_html=True)
+    else:
+        st.subheader('Ponto de Virada', divider='orange')
 
-                
-#         else:
-#             # preparação dos dados - título
-#             st.markdown('''#### Preparação dos dados''')
-#             # texto
-#             st.markdown(r'''
-#                         <p style="font-size: 18px">
-#                         Para a divisão dos dados em treino e teste, a classe TimeSeriesSplit do Scikit-Learn se utiliza do 
-#                         método de validação cruzada (ou cross validation), que segmenta os dados de treino em K grupos 
-#                         (chamados <i>folds</i>), consecutivos e ordenados. Em seguida, treina o modelo em etapas, a partir 
-#                         de um pequeno conjunto inicial, que se expande com mais dados de treino - em direção ao futuro. 
-#                         Se K é igual a 5, por exemplo, o modelo é treinado 5 vezes, com volume incremental de dados, onde  
-#                         cada nova dobra incorpora os dados da dobra anterior e expande o conjunto de treino. 
-#                         Após cada treinamento, o modelo executa previsões, a serem avaliadas pela métrica escolhida pelo usuário.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # modelo final - divisão dos dados
-#                         X = df.drop(columns=['brent'])
-#                         y = df['brent']
-                        
-#                         # time series split
-#                         tscv = TimeSeriesSplit(n_splits=5)
-                        
-#                         # iterar sobre as divisões
-#                         for train_index, test_index in tscv.split(X):
-#                             X_train, X_test = X.iloc[train_index], X.iloc[test_index]
-#                             y_train, y_test = y.iloc[train_index], y.iloc[test_index]
-#                         ''')
-                
-#             # gráfico com divisão dos dados
-#             df = pd.read_parquet(r'data/data_w_indicators.parquet')
-#             X = df.drop(columns=['brent'])
-#             y = df['brent']
-#             # time series split
-#             tscv = TimeSeriesSplit(n_splits=5)
-#             # iterar sobre as divisões
-#             i = 1
-#             for train_index, test_index in tscv.split(X):
-#                 X_train, X_test = X.iloc[train_index], X.iloc[test_index]
-#                 y_train, y_test = y.iloc[train_index], y.iloc[test_index]
-#                 # dataframe com divisões
-#                 df_split = df.iloc[test_index]
-#                 df_split['set'] = f'set_{i}'
-#                 if i == 1:
-#                     df_final = df_split
-#                 else:
-#                     df_final = pd.concat([df_final, df_split])
-#                 i += 1
-#             # plotar gráfico
-#             fig = px.line(df_final, x=df_final.index, y='brent',
-#                         title='XGBoost Final - Divisão dos Dados',
-#                         color='set', 
-#                         template='plotly_dark')
-#             fig.update_layout(title_font_size=20)
-#             fig.update_xaxes(title=None)
-#             fig.update_yaxes(title='Preço (U$D )')
-#             st.plotly_chart(fig, use_container_width=True)
-            
-#             st.markdown('''#### Treinamento do modelo''')
-#             # texto
-#             st.markdown('''<p style="font-size: 18px">
-#                         A melhor escolha pode ser encontrada através da técnica Grid Search, 
-#                         que itera sobre as opções listadas pelo usuário e treina modelos únicos, 
-#                         gerados a partir da combinação de todos os parâmetros. 
-#                         Vale ressaltar que, quanto mais opções são fornecidas, mais tempo será consumido na execução.
-#                         ''', unsafe_allow_html=True)
-            
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # Importar Grid Search
-#                         from sklearn.model_selection import GridSearchCV
-                                                
-#                         # Converter X e y para numpy arrays
-#                         X = np.array(X)
-#                         y = np.array(y)
-                        
-#                         # Grid Search
-#                         params = {'n_estimators': [100, 500, 1000, 2000],
-#                                   'max_depth': [3, 5, 7, 9],
-#                                   'learning_rate': [0.001, 0.01, 0.1]
-                        
-#                         xgb_final = xgb.XGBRegressor(objective='reg:squarederror', 
-#                                                      random_state=19)
-                        
-#                         grid_search = GridSearchCV(estimator=xgb_final, 
-#                                                 param_grid=params, 
-#                                                 scoring='neg_mean_squared_error', 
-#                                                 cv=tscv, 
-#                                                 verbose=1)
-                        
-#                         grid_search.fit(X, y)
-                        
-#                         # Melhores parâmetros
-#                         best_params = grid_search.best_params_
-#                         # Melhor modelo
-#                         best_model = grid_search.best_estimator_
-#                         # Melhor score
-#                         best_score = grid_search.best_score_
-                        
-#                         # Criar dataframe com resultados
-#                         results_df = pd.DataFrame(grid_search.cv_results_)
-#                         results_df = results_df.sort_values(by='rank_test_score')
-#                         ''')
-#             # plotar importância das features
-#             # importância das features
-#             importance_final_df = pd.read_parquet(r'data/xgboost_best_importance.parquet')
-#             # plot
-#             fig = px.bar(importance_final_df, x='importance', y='feature',
-#                         title='10 Features mais importantes',
-#                         labels={'importance': 'Importância', 'feature': 'Feature'},
-#                         template='plotly_dark')
-#             fig.update_layout(title_font_size=20)
-#             fig.update_xaxes(title=None, showgrid=True,
-#                              range=[0, importance_final_df['importance'].max() * 1.2])
-#             fig.update_yaxes(title=None)
-#             st.plotly_chart(fig, use_container_width=True)
-            
-#             # texto
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Os anos de 2012, 2011 e 2013 são as features mais importantes para o modelo final.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # resultados
-#             st.markdown('''<br>''', unsafe_allow_html=True)
-#             st.markdown('''#### Avaliação do modelo''')
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Com isso, treinamos 48 modelos e o melhor foi obtido com os parâmetros:<br>
-#                         - <b>n_estimators</b>: 1000<br>
-#                         - <b>max_depth</b>: 3<br>
-#                         - <b>learning_rate</b>: 0.1<br>
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-#             # previsões
-#             st.markdown('''#### Previsões''')
-#             # texto
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Com o modelo treinado, realizamos previsões para o preço do petróleo Brent.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-#             # plotar
-#             final_xgb_pred_df = pd.read_parquet(r'data/xgboost_best_prediction.parquet')
-#             fig = px.line(final_xgb_pred_df, x='date', y=['brent', 'prediction'],
-#                 title='XGBoost Final - Predição vs Real', 
-#                 color_discrete_map={'brent': '#4089FF', 
-#                                     'prediction': '#e34592'},
-#                 labels={'variable': 'variável', 'value': 'preço (U$D )'},
-#                 template='plotly_dark')
-#             fig.update_layout(title_font_size=20)
-#             fig.update_xaxes(title=None)
-#             fig.update_yaxes(title='Preço (U$D )')
-#             st.plotly_chart(fig, use_container_width=True)
-            
-#             # métricas
-#             st.markdown('''#### Avaliação do modelo''')
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Para avaliar o modelo, utilizamos as métricas:<br>
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-#             # RMSE
-#             st.markdown('''
-#                         - **RMSE** - *Root Mean Squared Error*, ou Raiz do Erro Quadrático Médio:
-#                         ''')
-#             st.latex(r'''
-#                     RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2}
-#                     ''')
-#             # MAE
-#             st.markdown('''
-#                         - **MAE** - *Mean Absolute Error*, ou Erro Médio Absoluto:
-#                         ''')
-#             st.latex(r'''
-#                     MAE = \frac{1}{n} \sum_{i=1}^{n} |y_{true} - y_{pred}|
-#                     ''')
-#             # MAPE
-#             st.markdown('''
-#                         - **MAPE** - *Mean Absolute Percentage Error*, ou Erro Percentual Absoluto Médio:
-#                         ''')
-#             st.latex(r'''
-#                     MAPE = \frac{1}{n} \sum_{i=1}^{n} \left| \frac{y_{true} - y_{pred}}{y_{true}} \right| \times 100
-#                     ''')
-            
-#             st.markdown('<br>', unsafe_allow_html=True)
-            
-#             # botão para exibir scores
-#             if st.button('📊 Exibir Scores'):
-#                 scores_best_df = pd.read_parquet(r'data/xgboost_best_scores.parquet')
-#                 scores_best_df = scores_best_df.iloc[[-1]]
-#                 scores_best_df = scores_best_df.T
-#                 scores_best_df.columns = scores_best_df.iloc[0]
-#                 scores_best_df = scores_best_df[1:]
-#                 scores_best_df = scores_best_df.rename(columns={'XGBoost Best5': 'XGBoost Best'})
-#                 # mostrar dataframe
-#                 st.dataframe(scores_best_df)
-            
-#             st.markdown('<br>', unsafe_allow_html=True)
-            
-#             create_analysis('Resultados do Modelo Final', 
-#                             r'''
-#                                 Em comparação com modelo baseline, houve melhora considerável nas métricas de avaliação:<br>
-#                                 A RMSE melhorou em 38.08%, a MAE melhorou em 37.51% e a MAPE melhorou em 38.5%
-#                              ''')
-            
-#             st.markdown('<br>', unsafe_allow_html=True)
-            
-#     else:
-#         # modelo Prophet
-#         # texto
-#         st.markdown('''
-#                     <p style="font-size: 18px">
-#                     O Prophet, criado pelo Facebook em 2008 sob autoria dos cientistas de dados Sean J. Taylor e Ben Letham, 
-#                     é uma biblioteca open-source baseada em modelos decomponíveis de séries temporais. 
-#                     A ferramenta lida bem com dados ausentes e outliers, e foi projetada para ser fácil de usar. 
-#                     O Prophet usa 3 componentes principais para a decomposição: tendência (<i>trend</i>), 
-#                     sazonalidade (<i>seasonality</i>) e feriados (<i>holidays</i>). 
-#                     Assim, pode ser expressado através da equação:
-#                     </p>
-#                     ''', unsafe_allow_html=True)
-        
-#         st.latex(r'''
-#                     y(t) = g(t) + s(t) + h(t) + e(t)
-#                   ''')
-        
-#         # text
-#         st.markdown('''
-#                     Em que:
-#                     - Growth g(t): representa a curva de crescimento linear ou logística, para modelar mudanças não periódicas em séries temporais. Por padrão, o Prophet usa o modelo de crescimento linear para as previsões.
-#                     - Seasonality s(t): a série de Fourier é usada para modelar efeitos sazonais ou mudanças periódicas (por exemplo: o ciclo semanal, mensal e anual). Para aprender e prever tais efeitos, o Prophet depende da série de Fourier para fornecer um modelo flexível.
-#                     - Feriados e eventos h(t): o Prophet considera o efeito de feriados e permite adicionar os parâmetro supper_window e lower_window, que estendem os efeitos dos feriados em torno de suas datas.
-#                     - Termo de erro e(t): o termo de erro leva em conta quaisquer mudanças incomuns não acomodadas pelo modelo.
-#                     ''')
-        
-#         # código
-#         with st.expander('🐍 Exibir código Python'):
-#             st.code('''
-#                     # importar o Prophet
-#                     !pip install prophet                 # instalar biblioteca
-#                     from prophet import Prophet          # importar biblioteca
-#                     ''')
-        
-#         st.markdown('<br>', unsafe_allow_html=True)
-        
-#         # markdown
-#         st.markdown('''
-#                     <p style="font-size: 18px">
-#                     Para utilizar o Prophet, é necessário criar um dataframe com duas colunas: ds (data) e y (valor).
-#                     Em seguida, instanciamos o modelo Prophet, ajustamos os dados de treino e realizamos previsões.
-#                     </p>
-#                     ''', unsafe_allow_html=True)
-        
-#         # código
-#         with st.expander('🐍 Exibir código Python'):
-#             st.code('''
-#                     # criar dataframe
-#                     df_prophet = df[['date', 'brent']].copy()
-#                     df_prophet.columns = ['ds', 'y']
-#                     ''')
-        
-#         # divider
-#         st.markdown('---')   
-        
-#         # selecione o modelo
-#         model_type = st.radio('Selecione o modelo:', ['Baseline', 'Final'])
-#         if model_type == 'Baseline':
-#             # preparação dos dados - título
-#             st.markdown('''#### Preparação dos dados''')
-#             # texto
-#             st.markdown(r'''
-#                         <p style="font-size: 18px">
-#                         Para o modelo baseline, utilizaremos as colunas sp500, exxon e bp como regressores. Além disso,
-#                         utilizaremos 80% dos dados para treino e 20% para teste.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # baseline - divisão dos dados
-#                         baseline_train_size = int(len(df_baseline) * 0.8)
-
-#                         baseline_train = df_baseline.iloc[:baseline_train_size].copy()
-#                         baseline_test = df_baseline.iloc[baseline_train_size:].copy()
-#                         ''')
-            
-#             # gráfico com divisão dos dados
-#             prophet_baseline_train_df = pd.read_parquet(r'data/prophet_baseline_train.parquet')
-#             prophet_baseline_test_df = pd.read_parquet(r'data/prophet_baseline_test.parquet')
-            
-#             fig = go.Figure()
-#             fig.add_trace(go.Scatter
-#                         (x=prophet_baseline_train_df['ds'], y=prophet_baseline_train_df['y'],
-#                         mode='lines', name='Treino', line=dict(color='#4089FF')))
-#             fig.add_trace(go.Scatter
-#                         (x=prophet_baseline_test_df['ds'], y=prophet_baseline_test_df['y'],
-#                         mode='lines', name='Teste', line=dict(color='#f6c409')))
-#             fig.update_layout(title='Prophet Baseline - Treino e Teste',
-#                             title_font_size=20, template='plotly_dark')
-#             fig.update_xaxes(title=None)
-#             fig.update_yaxes(title='Preço (U$D )')
-#             st.plotly_chart(fig, use_container_width=True)
-            
-#             # markdown
-#             st.markdown('''#### Treinamento do modelo''')
-#             # texto
-#             st.markdown('''<p style="font-size: 18px">
-#                         Com os dados preparados, podemos treinar o modelo Prophet.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # Instanciar o modelo Prophet
-#                         baseline_model = Prophet()     # parâmetros default
-                        
-#                         # Ajustar o modelo
-#                         baseline_model.fit(baseline_train)
-#                         ''')
-            
-#             # previsões
-#             st.markdown('''#### Previsões''')
-#             # texto
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Com o modelo treinado, realizamos previsões para o preço do petróleo Brent.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         from prophet.make_future_dataframe import make_future_dataframe
-                        
-#                         # Criar dataframe futuro
-#                         future_baseline = baseline_model.make_future_dataframe(periods=len(baseline_test),
-#                                                                                 freq='B')     # dias úteis
-                        
-#                         # Realizar previsões
-#                         forecast_baseline = baseline_model.predict(future_baseline)
-#                         ''')
-                
-#             # previsões
-#             prophet_baseline_forecast_df = pd.read_parquet(r'data/prophet_baseline_forecast.parquet')
-#             # carregar modelo baseline com pickle
-#             with open(r'models/prophet_baseline_model.pkl', 'rb') as file:
-#                 prophet_baseline = pickle.load(file)
-            
-#             fig = plot_plotly(prophet_baseline, prophet_baseline_forecast_df)
-#             fig.update_layout(title='Prophet Baseline - Predição vs. Real', title_font_size=20)
-#             fig.update_xaxes(title=None)
-#             fig.update_yaxes(title='Preço (U$D )')
-#             # scatter to blue
-#             fig.for_each_trace(lambda t: t.update(marker=dict(color='#4089FF')))
-#             # line to pink
-#             fig.for_each_trace(lambda t: t.update(line=dict(color='#e34592')))
-#             st.plotly_chart(fig, use_container_width=True)
-            
-#             # avaliação com cross-validation
-#             st.markdown('''#### Avaliação do modelo''')
-#             # texto
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Para avaliar o modelo, utilizamos a técnica de validação cruzada (cross-validation).
-#                         O Prophet possui uma função interna para realizar a validação cruzada, que divide os dados em
-#                         janelas temporais e treina o modelo em cada uma delas.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         from prophet.diagnostics import cross_validation
-#                         from prophet.diagnostics import performance_metrics
-                        
-#                         # Realizar cross-validation
-#                         cv_baseline = cross_validation(baseline_model,
-#                                                         initial='200 days',
-#                                                         period='60 days',
-#                                                         horizon='30 days')
-                        
-#                         # Métricas
-#                         metrics_baseline = performance_metrics(cv_baseline)
-#                         ''')
-            
-#             # botão para exibir scores
-#             if st.button('📊 Exibir Scores'):
-#                 # dataframe com scores
-#                 prophet_baseline_dict = {'Horizonte': '3 dias',
-#                                         'RMSE': 15.2261,
-#                                         'MAE': 8.9039,
-#                                         'MAPE': 0.1953}
-#                 st.write(prophet_baseline_dict)
-            
-#             st.markdown('<br>', unsafe_allow_html=True)
-            
-#             prophet_metrics_text = r'''
-#                         Para um horizonte de previsão de 3 dias, o modelo atingiu<br> 
-#                         RMSE de 15.22, MAE de 8.90 e MAPE de 19.53%.
-#                         '''
-            
-#             create_analysis('Resultados do Modelo Baseline', prophet_metrics_text)
-            
-#             st.markdown('<br>', unsafe_allow_html=True)
-            
-#         else:
-#             # preparação dos dados - título
-#             st.markdown('''#### Preparação dos dados''')
-#             # texto
-#             st.markdown(r'''
-#                         <p style="font-size: 18px">
-#                         Para o modelo final, utilizaremos todas as colunas do dataset como regressores. Além disso,
-#                         utilizaremos a função Grid Search para encontrar os melhores parâmetros para o modelo.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # final - divisão dos dados
-#                         final_train_size = int(len(df_final) * 0.8)
-
-#                         final_train = df_final.iloc[:final_train_size].copy()
-#                         final_test = df_final.iloc[final_train_size:].copy()
-#                         ''')
-            
-#             # gráfico com divisão dos dados
-#             prophet_final_train_df = pd.read_parquet(r'data/prophet_final_train.parquet')
-#             prophet_final_test_df = pd.read_parquet(r'data/prophet_final_test.parquet')
-            
-#             fig = go.Figure()
-#             fig.add_trace(go.Scatter
-#                         (x=prophet_final_train_df['ds'], y=prophet_final_train_df['y'],
-#                         mode='lines', name='Treino', line=dict(color='#4089FF')))
-#             fig.add_trace(go.Scatter
-#                         (x=prophet_final_test_df['ds'], y=prophet_final_test_df['y'],
-#                         mode='lines', name='Teste', line=dict(color='#f6c409')))
-#             fig.update_layout(title='Prophet Final - Treino e Teste',
-#                             title_font_size=20, template='plotly_dark')
-#             fig.update_xaxes(title=None)
-#             fig.update_yaxes(title='Preço (U$D )')
-#             st.plotly_chart(fig, use_container_width=True)
-            
-#             # markdown
-#             st.markdown('''#### Treinar o modelo''')
-#             # texto
-#             st.markdown('''<p style="font-size: 18px">
-#                         Com os dados preparados, podemos criar a lista de parâmetros e realizar a busca dos melhores parâmetros, 
-#                         com base na métrica MAPE.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         import itertools
-#                         from prophet.make_holidays import make_holidays
-                        
-#                         # Criar lista de parâmetros
-#                         param_grid = {
-#                                         'changepoint_prior_scale': np.linspace(0.001, 0.5, 3),
-#                                         'seasonality_prior_scale': np.linspace(0.01, 10, 3),
-#                                         'holidays_prior_scale': [0.1, 10],
-#                                      }
-                        
-#                         # Combinar parâmetros
-#                         all_params = [dict(zip(param_grid.keys(), v)) for v in itertools.product(*param_grid.values())]
-                        
-#                         results = []
-#                         periods=252
-                        
-#                         # Iterar sobre os parâmetros
-#                         for i, params in enumerate(all_params):
-#                             # Instanciar o modelo
-#                             model = Prophet(**params)
-                            
-#                             # Adicionar regressores
-#                             for regressor in regressors.columns:
-#                                 model.add_regressor(regressor)
-                                
-#                             # Adicionar feriados
-#                             model.add_country_holidays(country_name='US')
-                            
-#                             # Ajustar o modelo
-#                             model.fit(train)
-                            
-#                             # Criar dataframe futuro
-#                             future = model.make_future_dataframe(periods=periods, 
-#                                                                 freq='B', 
-#                                                                 include_history=True)
-                                                                
-#                             # Adicionar regressores
-#                             for regressor in regressors.columns:
-#                                 future[regressor] = df[regressor]
-                                
-#                             # Realizar previsões
-#                             forecast = model.predict(future)
-                            
-#                             # predictions
-#                             predictions = forecast[['ds', 'yhat']].tail(periods)
-#                             # calculate the error
-#                             error = mape(df['y'], forecast['yhat'])
-#                             # append the results
-#                             results.append([params, error])
-                            
-#                         results = pd.DataFrame(results, columns=['params', 'mape'])
-#                         results = results.sort_values('mape', ascending=True)
-                        
-#                         best_params = results.iloc[0, 0]
-#                         ''')
-                
-#             # markdown
-#             st.markdown('''
-#                         <p style="font-size: 18px"><br>
-#                         O melhor modelo, com MAPE de 12.13%, foi obtido com os seguintes parâmetros:<br>
-#                         - <b>changepoint_prior_scale</b>: 0.5<br>
-#                         - <b>seasonality_prior_scale</b>: 0.01<br>
-#                         - <b>holidays_prior_scale</b>: 0.01
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # markdown
-#             st.markdown('''#### Avaliação do modelo''')
-#             # texto
-#             st.markdown('''
-#                         <p style="font-size: 18px">
-#                         Agora, modelos treinar o melhor modelo e realizar previsões.
-#                         Com isso, podemos avaliar o modelo com a validação cruzada.
-#                         </p>
-#                         ''', unsafe_allow_html=True)
-            
-#             # código
-#             with st.expander('🐍 Exibir código Python'):
-#                 st.code('''
-#                         # Instanciar o modelo
-#                         best_model = Prophet(**best_params)
-                        
-#                         # Adicionar regressores
-#                         for regressor in regressors.columns:
-#                             final_model.add_regressor(regressor)
-                        
-#                         # Adicionar feriados
-#                         final_model.add_country_holidays(country_name='US')
-                        
-#                         # Ajustar o modelo
-#                         final_model.fit(final_train)
-                        
-#                         # Realizar cross-validation
-#                         cv_final = cross_validation(final_model,
-#                                                     initial='200 days',
-#                                                     period='60 days',
-#                                                     horizon='30 days')
-                        
-#                         # Métricas
-#                         metrics_final = performance_metrics(cv_final)
-#                         ''')
-            
-#             # plotar
-#             prophet_final_forecast_df = pd.read_parquet(r'data/prophet_final_forecast.parquet')
-#             # carregar modelo final com pickle
-#             with open(r'models/prophet_final_model.pkl', 'rb') as file:
-#                 prophet_final = pickle.load(file)
-                
-#             fig = plot_plotly(prophet_final, prophet_final_forecast_df)
-#             fig.update_layout(title='Prophet Final - Predição vs. Real', title_font_size=20)
-#             fig.update_xaxes(title=None)
-#             fig.update_yaxes(title='Preço (U$D )')
-#             # scatter to blue
-#             fig.for_each_trace(lambda t: t.update(marker=dict(color='#4089FF')))
-#             # line to pink
-#             fig.for_each_trace(lambda t: t.update(line=dict(color='#e34592')))
-#             st.plotly_chart(fig, use_container_width=True)
-            
-#             # botão para exibir scores
-#             if st.button('📊 Exibir Scores'):
-#                 # dataframe com scores
-#                 prophet_final_dict = {'Horizonte': '3 dias',
-#                                       'RMSE': 10.7325,
-#                                       'MAE': 6.1403,
-#                                       'MAPE': 0.1211}
-#                 st.write(prophet_final_dict)
-
-#             st.markdown('<br>', unsafe_allow_html=True)
-            
-#             prophet_metrics_text = r'''
-#                         Para um horizonte de previsão de 3 dias, o modelo atingiu<br>
-#                         RMSE de 10.73, MAE de 6.14 e MAPE de 12.11%.<br>
-#                         Em comparação com o modelo baseline, houve melhora de<br>15.22% sobre a métrica RMSE, 8.9% sobre a MAE e 
-#                         37.97% sobre a MAPE.
-#                         '''
-
-#             create_analysis('Resultados do Modelo Final', prophet_metrics_text)
+         # texto
+        st.markdown('''
+                    <p style="font-size: 18px">
+                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                        <br>
+                    </p>
+                    ''', unsafe_allow_html=True)
 
 # conclusão
-# elif page == page_3:
-#     # título
-#     st.title('Conclusão')
-#     # separador
-#     st.markdown('<br>', unsafe_allow_html=True)
-#     # texto
-#     st.markdown('''
-#                 <p style="font-size: 20px">
-#                     Neste projeto, foram treinados dois modelos para prever o preço do petróleo Brent: XGBoost e Prophet.
-#                     <br><br>
-#                     O modelo XGBoost obteve <b>RMSE de 15.89</b>, <b>MAE de 12.31</b> e <b>MAPE de 16.06%</b>, 
-#                     o modelo Prophet obteve <b>RMSE de 10.73</b>, <b>MAE de 6.14</b> e <b>MAPE de 12.11%</b>. 
-#                     Com base nas configurações atuais, o modelo Prophet obteve melhores métricas de avaliação.
-#                     <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)
+elif page == page_3:
+    # título
+    st.title('Conclusão')
+    # separador
+    st.markdown('<br>', unsafe_allow_html=True)
+    # texto
+    st.markdown('''
+                <p style="font-size: 20px">
+                    Neste projeto, foram treinados dois modelos para prever o preço do petróleo Brent: XGBoost e Prophet.
+                    <br><br>
+                    O modelo XGBoost obteve <b>RMSE de 15.89</b>, <b>MAE de 12.31</b> e <b>MAPE de 16.06%</b>, 
+                    o modelo Prophet obteve <b>RMSE de 10.73</b>, <b>MAE de 6.14</b> e <b>MAPE de 12.11%</b>. 
+                    Com base nas configurações atuais, o modelo Prophet obteve melhores métricas de avaliação.
+                    <br>
+                </p>
+                ''', unsafe_allow_html=True)
 
-#     st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<br>', unsafe_allow_html=True)
     
-#     st.markdown('---')
+    st.markdown('---')
     
-#     # próximos passos
-#     st.markdown('''## Principais Insights''')
+    # próximos passos
+    st.markdown('''## Principais Insights''')
     
-#     # texto
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     Os principais <i>insights</i> e respectivas etapas de melhorias ao projeto,
-#                     obtidos durante os processos de análise dos dados e construção dos modelos, são retratados a seguir:
-#                     <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True) 
+    # texto
+    st.markdown('''
+                <p style="font-size: 18px">
+                    Os principais <i>insights</i> e respectivas etapas de melhorias ao projeto,
+                    obtidos durante os processos de análise dos dados e construção dos modelos, são retratados a seguir:
+                    <br>
+                </p>
+                ''', unsafe_allow_html=True) 
                 
-#     # melhoria do modelo XGBoost
-#     st.markdown('''#### Melhoria do Modelo XGBoost''')
-#     # texto
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     - <b>Próximo passo:</b> utilizar outros modelos para que o XGBoost possa extrapolar previsões para 
-#                       além dos limites dos dados de treinamento.
-#                 <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)    
+    # melhoria do modelo XGBoost
+    st.markdown('''#### Melhoria do Modelo XGBoost''')
+    # texto
+    st.markdown('''
+                <p style="font-size: 18px">
+                    - <b>Próximo passo:</b> utilizar outros modelos para que o XGBoost possa extrapolar previsões para 
+                      além dos limites dos dados de treinamento.
+                <br>
+                </p>
+                ''', unsafe_allow_html=True)    
     
-#     create_insight(
-#                     'Extrapolação de Dados na Previsão',
-#                     '''
-#                         O modelo XGBoost, assim como quaisquer algoritmos baseados em árvore, 
-#                         possui uma desvantagem para tarefas de regressão: suas predições respeitarão os 
-#                         limites dos dados utilizados no treinamento. Ou seja, existe dificuldade em <b>extrapolar</b> os 
-#                         valores máximo e mínimo do intervalo de dados de treinamento. Por isso, se faz interessante 
-#                         combinar esse modelo a outros, como modelos lineares ou mesmo Redes Neurais Recorrentes, 
-#                         como <i>Long Short-Term Memory</i> (LSTM).
-#                     '''
-#                     )
+    create_insight(
+                    'Extrapolação de Dados na Previsão',
+                    '''
+                        O modelo XGBoost, assim como quaisquer algoritmos baseados em árvore, 
+                        possui uma desvantagem para tarefas de regressão: suas predições respeitarão os 
+                        limites dos dados utilizados no treinamento. Ou seja, existe dificuldade em <b>extrapolar</b> os 
+                        valores máximo e mínimo do intervalo de dados de treinamento. Por isso, se faz interessante 
+                        combinar esse modelo a outros, como modelos lineares ou mesmo Redes Neurais Recorrentes, 
+                        como <i>Long Short-Term Memory</i> (LSTM).
+                    '''
+                    )
 
-#     st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<br>', unsafe_allow_html=True)
 
-#     # título
-#     st.markdown('''#### Modelos de *Ensemble Learning*''')
-#     # texto
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     O preço do petróleo é influenciado por diversos fatores, como oferta e demanda.
-#                     Além disso, eventos globais, como guerras e desastres naturais, também podem afetá-lo.
-#                     Logo, essa série temporal não é estacionária e possui comportamento não linear. Fatos inesperados, 
-#                     como os apresentados na seção "Análise", não são facilmente capturados por um único modelo.<br><br>
-#                     - <b>Próximo passo:</b> empregar a técnica de <i>ensemble learning</i> para combinar modelos.
-#                     <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)
+    # título
+    st.markdown('''#### Modelos de *Ensemble Learning*''')
+    # texto
+    st.markdown('''
+                <p style="font-size: 18px">
+                    O preço do petróleo é influenciado por diversos fatores, como oferta e demanda.
+                    Além disso, eventos globais, como guerras e desastres naturais, também podem afetá-lo.
+                    Logo, essa série temporal não é estacionária e possui comportamento não linear. Fatos inesperados, 
+                    como os apresentados na seção "Análise", não são facilmente capturados por um único modelo.<br><br>
+                    - <b>Próximo passo:</b> empregar a técnica de <i>ensemble learning</i> para combinar modelos.
+                    <br>
+                </p>
+                ''', unsafe_allow_html=True)
     
-#     # criar insight
-#     create_insight('Complexidade do Preço do Petróleo', 
-#                    '''
-#                         Sugere-se a utilização de <i>ensemble learning</i> para combinar modelos de previsão.
-#                         Esses modelos não precisam se voltar apenas ao preço do petróleo, mas também a outros fatores fundamentais - como produção e mercado.<br>
-#                         Um modelo de classificação para prever "alta" ou "baixa" do preço do petróleo pode compor uma <i>feature</i> adicional.<br>
-#                         Redes Neurais Convolucionais, ou <i>Convolutional Neural Networks</i> (CNN) são eficazes para análise de imagens de satélite e previsão de eventos climáticos.
-#                         CNNs também podem ser usadas para previsão, a partir de gráficos de <i>candlestick</i>, utilizados por <i>traders</i> para análise técnica.
-#                     ''')
+    # criar insight
+    create_insight('Complexidade do Preço do Petróleo', 
+                   '''
+                        Sugere-se a utilização de <i>ensemble learning</i> para combinar modelos de previsão.
+                        Esses modelos não precisam se voltar apenas ao preço do petróleo, mas também a outros fatores fundamentais - como produção e mercado.<br>
+                        Um modelo de classificação para prever "alta" ou "baixa" do preço do petróleo pode compor uma <i>feature</i> adicional.<br>
+                        Redes Neurais Convolucionais, ou <i>Convolutional Neural Networks</i> (CNN) são eficazes para análise de imagens de satélite e previsão de eventos climáticos.
+                        CNNs também podem ser usadas para previsão, a partir de gráficos de <i>candlestick</i>, utilizados por <i>traders</i> para análise técnica.
+                    ''')
     
-#     st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<br>', unsafe_allow_html=True)
     
-#     st.markdown('''#### Análise de Sentimentos & Mercado Futuro''')
+    st.markdown('''#### Análise de Sentimentos & Mercado Futuro''')
 
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     A análise de sentimentos é uma técnica de Processamento de Linguagem Natural,
-#                     ou <i>Natural Language Processing</i> (NLP), que visa identificar e classificar a polaridade 
-#                     emocional de um texto. Ela utiliza algoritmos e modelos de aprendizado de máquina para 
-#                     atribuir uma pontuação de sentimento a cada trecho, indicando se é positivo, negativo ou neutro.
-#                     Para melhoria do modelo, um passo importante é a construção de uma <i>feature</i> que 
-#                     capture a opinião pública sobre o mercado de petróleo em tempo real, a partir de notícias e redes sociais. 
-#                     Implementar esses sentimentos no modelo ajuda a incorporar tendências emergentes e 
-#                     mudanças de humor que não seriam capturadas apenas por dados históricos de preços.<br><br>
-#                     - <b>Próximo passo:</b> integrar o modelo com outras fontes de dados sobre o mercado de futuro.
-#                     <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)
+    st.markdown('''
+                <p style="font-size: 18px">
+                    A análise de sentimentos é uma técnica de Processamento de Linguagem Natural,
+                    ou <i>Natural Language Processing</i> (NLP), que visa identificar e classificar a polaridade 
+                    emocional de um texto. Ela utiliza algoritmos e modelos de aprendizado de máquina para 
+                    atribuir uma pontuação de sentimento a cada trecho, indicando se é positivo, negativo ou neutro.
+                    Para melhoria do modelo, um passo importante é a construção de uma <i>feature</i> que 
+                    capture a opinião pública sobre o mercado de petróleo em tempo real, a partir de notícias e redes sociais. 
+                    Implementar esses sentimentos no modelo ajuda a incorporar tendências emergentes e 
+                    mudanças de humor que não seriam capturadas apenas por dados históricos de preços.<br><br>
+                    - <b>Próximo passo:</b> integrar o modelo com outras fontes de dados sobre o mercado de futuro.
+                    <br>
+                </p>
+                ''', unsafe_allow_html=True)
 
-#     create_insight('Mercado Futuro & Análise de Sentimento', 
-#                      '''
-#                         A análise de sentimento também contribui para a estabilidade das previsões, 
-#                         conforme medido pelo EV (<i>Error Variance</i>, ou Variância do Erro). A adição de sentimentos extraídos por textos 
-#                         tende a estabilizar os resultados, reduzindo a variabilidade das previsões e tornando-as mais confiáveis.<br>
-#                         Além disso, criar features baseadas em contratos futuros de petróleo e ajudará a 
-#                         entender dados de extração e estoque. Também, o volume de transações no mercado de futuro é componente essencial para o cálculo 
-#                         de outros indicadores técnicos, como o <i>Open Interest</i>, que mede o número de contratos em aberto.
-#                       ''')
+    create_insight('Mercado Futuro & Análise de Sentimento', 
+                     '''
+                        A análise de sentimento também contribui para a estabilidade das previsões, 
+                        conforme medido pelo EV (<i>Error Variance</i>, ou Variância do Erro). A adição de sentimentos extraídos por textos 
+                        tende a estabilizar os resultados, reduzindo a variabilidade das previsões e tornando-as mais confiáveis.<br>
+                        Além disso, criar features baseadas em contratos futuros de petróleo e ajudará a 
+                        entender dados de extração e estoque. Também, o volume de transações no mercado de futuro é componente essencial para o cálculo 
+                        de outros indicadores técnicos, como o <i>Open Interest</i>, que mede o número de contratos em aberto.
+                      ''')
     
-#     st.markdown('<br>', unsafe_allow_html=True)    
+    st.markdown('<br>', unsafe_allow_html=True)    
     
-#     # título
-#     st.markdown('''#### Database na Nuvem''')
-#     # texto
-#     st.markdown('''
-#                 <p style="font-size: 18px">
-#                     MLOps é uma prática que visa integrar o desenvolvimento de modelos de Machine Learning 
-#                     com a operação de sistemas. Para essa etapa, é importante criar um pipeline de dados.<br><br>
-#                     - <b>Próximo passo:</b> <i>deploy</i> da aplicação na nuvem, com a Amazon Web Services (AWS).<br>
-#                         * <b>Amazon S3</b> para armazenamento do modelo<br>
-#                         * <b>Amazon Redshift</b> para armazenamento dos dados estruturados<br>
-#                         * <b>Amazon Glue</b> para ETL - <i>Extract Transform Load</i><br>
-#                         * <b>Amazon SageMaker</b> para treinamento de modelos de Machine Learning<br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)
+    # título
+    st.markdown('''#### Database na Nuvem''')
+    # texto
+    st.markdown('''
+                <p style="font-size: 18px">
+                    MLOps é uma prática que visa integrar o desenvolvimento de modelos de Machine Learning 
+                    com a operação de sistemas. Para essa etapa, é importante criar um pipeline de dados.<br><br>
+                    - <b>Próximo passo:</b> <i>deploy</i> da aplicação na nuvem, com a Amazon Web Services (AWS).<br>
+                        * <b>Amazon S3</b> para armazenamento do modelo<br>
+                        * <b>Amazon Redshift</b> para armazenamento dos dados estruturados<br>
+                        * <b>Amazon Glue</b> para ETL - <i>Extract Transform Load</i><br>
+                        * <b>Amazon SageMaker</b> para treinamento de modelos de Machine Learning<br>
+                </p>
+                ''', unsafe_allow_html=True)
 
-#     # criar insight
-#     create_insight(
-#                     'Vantagens de um Database na Nuvem',
-#                    '''
-#                         - Escalabilidade: aumenta ou diminui a capacidade de armazenamento conforme a demanda.<br>
-#                         - Segurança: os dados são armazenados em servidores seguros e protegidos por criptografia.<br>
-#                         - Acessibilidade: os dados podem ser acessados de qualquer lugar e a qualquer momento.<br>
-#                         - Backup: salvamento automático de dados, que podem ser recuperados em caso de falhas.<br>
-#                         - Integração: integração com outras ferramentas, como pipelines de dados e APIs.
-#                         '''
-#                      )
+    # criar insight
+    create_insight(
+                    'Vantagens de um Database na Nuvem',
+                   '''
+                        - Escalabilidade: aumenta ou diminui a capacidade de armazenamento conforme a demanda.<br>
+                        - Segurança: os dados são armazenados em servidores seguros e protegidos por criptografia.<br>
+                        - Acessibilidade: os dados podem ser acessados de qualquer lugar e a qualquer momento.<br>
+                        - Backup: salvamento automático de dados, que podem ser recuperados em caso de falhas.<br>
+                        - Integração: integração com outras ferramentas, como pipelines de dados e APIs.
+                        '''
+                     )
     
-#     st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<br>', unsafe_allow_html=True)
     
-#     st.markdown('''#### Desenvolver API''')
+    st.markdown('''#### Desenvolver API''')
 
-#     st.markdown('''<p style="font-size: 18px">
-#                 API, ou <i>Application Programming Interface</i>, é um conjunto de regras e protocolos que 
-#                 permitem a comunicação entre sistemas.<br><br>
-#                 - <b>Próximo passo:</b> criar API para disponibilizar o modelo para usuários e outras aplicações.
-#                 <br>
-#                 </p>
-#                 ''', unsafe_allow_html=True)
+    st.markdown('''<p style="font-size: 18px">
+                API, ou <i>Application Programming Interface</i>, é um conjunto de regras e protocolos que 
+                permitem a comunicação entre sistemas.<br><br>
+                - <b>Próximo passo:</b> criar API para disponibilizar o modelo para usuários e outras aplicações.
+                <br>
+                </p>
+                ''', unsafe_allow_html=True)
                         
-#     # criar insight
-#     create_insight('API', 
-#                    '''
-#                         - Facilita o acesso às previsões do modelo, permitindo que outras aplicações e sistemas consumam os dados.<br>
-#                         - Pode ser utilizada para criar dashboards, relatórios e aplicações web que consomem as previsões do modelo.<br>
-#                         - Permite integração com outros sistemas, como CRMs (<i>Customer Relationship Management</i>) e 
-#                           ERPs (<i>Enterprise Resource Planning).
-#                     ''')
+    # criar insight
+    create_insight('API', 
+                   '''
+                        - Facilita o acesso às previsões do modelo, permitindo que outras aplicações e sistemas consumam os dados.<br>
+                        - Pode ser utilizada para criar dashboards, relatórios e aplicações web que consomem as previsões do modelo.<br>
+                        - Permite integração com outros sistemas, como CRMs (<i>Customer Relationship Management</i>) e 
+                          ERPs (<i>Enterprise Resource Planning).
+                    ''')
     
-#     st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('<br>', unsafe_allow_html=True)
     
     
 # referências        
