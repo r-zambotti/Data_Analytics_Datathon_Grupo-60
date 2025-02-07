@@ -488,8 +488,15 @@ elif page == page_2:
     # título
     st.title('Dashboard :bar_chart:')
     
-    df = pd.read_csv("https://github.com/wesleyesantos/StreamlitDatathon/raw/refs/heads/main/assets/df_aluno.csv")
+    # Carregar o DataFrame com tratamento de possíveis issues
+    df = pd.read_csv('https://github.com/wesleyesantos/StreamlitDatathon/raw/refs/heads/main/assets/df_aluno.csv', encoding='utf-8')  # Ajuste a codificação se necessário
     df['ANO'] = df['ANO'].astype(str) 
+    # Remover espaços extras e padronizar os nomes das colunas
+    df.columns = df.columns.str.strip()
+    df.columns = df.columns.str.upper()
+
+    # Verificar os nomes das colunas
+    st.write("Colunas do DataFrame:", df.columns.tolist())
 
     # Definir a coluna 'NOME' como índice (se necessário)
     df_aluno1 = df.set_index('NOME')
@@ -509,14 +516,15 @@ elif page == page_2:
 
     with col1:
         anos_disponiveis = sorted(df['ANO'].unique())
-        ano_selecionado = st.selectbox('Selecione o ano', [None] + anos_disponiveis, key='ano_selecionado')
+        ano_selecionado = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado')
 
     with col2:
+        # Use o nome de coluna padronizado
         matriculas_disponiveis = sorted(df['MATRICULA'].unique())
-        matricula_selecionada = st.selectbox('Selecione a matrícula', [None] + matriculas_disponiveis, key='matricula_selecionada')
+        matricula_selecionada = st.selectbox('Selecione a matrícula', [None] + list(matriculas_disponiveis), key='matricula_selecionada')
 
     with col3:
-        indicadores_disponiveis = ["INDE","IAA", "IEG", "IPS", "IDA","IPP","IAN","IPV"]
+        indicadores_disponiveis = ["INDE", "IAA", "IEG", "IPS", "IDA", "IPP", "IAN", "IPV"]
         indicador_selecionado = st.selectbox('Selecione o indicador', [None] + indicadores_disponiveis, key='indicador_selecionado')
 
     # Função para limpar os filtros
@@ -668,7 +676,7 @@ elif page == page_2:
                                 ''', unsafe_allow_html=True)
         else:
             quadro = cols_container3[1].container()
-            quadro.markdown(f'''
+            quadro.markdown('''
                             <p style="font-size: 34px; text-align: center;">
                             <b>Selecione um indicador para ver a média</b>
                             </p>
