@@ -1,7 +1,7 @@
 # Importar bibliotecas
 import streamlit as st
 import pandas as pd
-# import numpy as np
+import numpy as np
 # import matplotlib.pyplot as plt
 # import statsmodels.api as sm
 # import seaborn as sns
@@ -53,8 +53,8 @@ file_data = response1.content
 page_0 = 'Introdução ✨'
 page_1 = 'Análise Exploratória 🎲'
 page_2 = 'Dashboard 📈'
-page_3 = 'Conclusão'
-page_4 = 'Referências'
+page_3 = 'Conclusão 📌'
+page_4 = 'Referências 📖'
 
 # menu lateral
 st.sidebar.title('Menu')
@@ -487,146 +487,260 @@ elif page == page_2:
 
     # título
     st.title('Dashboard :bar_chart:')
+    
+    # Carregar o DataFrame com tratamento de possíveis issues
+    # df = pd.read_csv('https://github.com/wesleyesantos/StreamlitDatathon/raw/refs/heads/main/assets/df_aluno.csv', encoding='utf-8')  # Ajuste a codificação se necessário
+    # df['ANO'] = df['ANO'].astype(str) 
 
-    # Dicionário de dados para diferentes filtros
-    dados = {
-        "Todos": {"individuos": 2673, "domicilios": 654, "questoes": 141669},
-        "2020": {"individuos": 1000, "domicilios": 300, "questoes": 50000},
-        "2021": {"individuos": 1500, "domicilios": 400, "questoes": 80000},
-        "2022": {"individuos": 2000, "domicilios": 500, "questoes": 100000},
-        "2023": {"individuos": 2500, "domicilios": 600, "questoes": 120000},
-        "2024": {"individuos": 2700, "domicilios": 650, "questoes": 140000},
-    }
+    # Dados fornecidos
+    data = '''NOME,ANO,PONTO_VIRADA,FASE,TURMA,PEDRA,INDE,IAA,IEG,IPS,IDA,IPP,IPV,IAN,IDADE
+    ALUNO-1,2020,0,2,H,Ametista,7.88,8.5,8.7,7.5,7.0,5.94,7.75,10.0,11.0
+    ALUNO-3,2020,0,3,H,Ametista,7.86,7.92,8.9,7.5,5.5,8.12,8.11,10.0,12.0
+    ALUNO-4,2020,0,1,D,Quartzo,5.08,8.0,4.1,6.88,0.0,7.19,7.75,5.0,10.0
+    ALUNO-5,2020,0,2,M,Ametista,8.08,7.5,8.0,7.5,7.5,8.44,8.17,10.0,10.0
+    ALUNO-8,2020,1,4,L,Ametista,8.38,8.33,9.9,4.38,7.33,8.75,8.94,10.0,14.0
+    ALUNO-10,2020,0,3,B,Quartzo,5.16,5.83,5.2,3.75,0.0,7.97,6.83,10.0,13.0
+    ALUNO-11,2020,1,0,A,Topázio,9.71,9.0,10.0,8.12,10.0,10.0,10.0,10.0,8.0
+    ALUNO-12,2020,0,3,G,Quartzo,5.84,6.25,6.0,5.62,6.67,5.62,5.28,5.0,14.0
+    ALUNO-14,2020,0,2,M,Ágata,6.43,8.0,7.6,6.88,0.0,8.44,7.92,10.0,11.0
+    ALUNO-15,2020,0,2,D,Quartzo,5.16,8.5,4.0,7.5,0.0,8.12,7.25,5.0,12.0
+    ALUNO-17,2020,0,1,G,Ametista,7.77,9.5,6.8,7.5,10.0,6.56,7.75,5.0,13.0
+    ALUNO-18,2020,0,3,E,Ágata,7.21,9.58,7.0,7.5,6.5,7.08,7.94,5.0,14.0
+    ALUNO-28,2020,1,3,J,Topázio,9.35,9.58,9.6,6.88,9.0,10.0,9.94,10.0,13.0
+    ALUNO-30,2020,0,0,C,Ágata,7.13,7.92,10.0,7.5,4.75,2.5,6.92,10.0,7.0
+    ALUNO-33,2020,0,3,E,Ágata,7.01,6.67,4.5,7.5,8.67,7.08,6.28,10.0,13.0
+    ALUNO-34,2020,0,2,C,Ametista,7.7,8.5,9.3,6.88,7.0,8.12,7.94,5.0,12.0
+    ALUNO-35,2020,0,7,B,Ágata,6.64,8.75,6.1,6.25,5.0,7.66,8.29,5.0,18.0
+    ALUNO-36,2020,0,3,C,Ametista,8.31,9.58,9.9,7.5,8.0,8.75,8.22,5.0,14.0
+    ALUNO-37,2020,0,2,N,Ágata,6.68,10.0,7.7,4.38,2.5,6.46,7.78,10.0,10.0
+    ALUNO-39,2020,0,3,F,Ametista,8.13,6.25,9.4,7.5,8.33,8.54,6.78,10.0,13.0
+    ALUNO-41,2020,0,1,D,Ametista,7.46,8.0,8.3,7.5,7.25,7.5,7.75,5.0,11.0
+    ALUNO-43,2020,0,4,F,Ametista,7.81,7.5,7.5,7.5,7.0,7.97,8.04,10.0,13.0
+    ALUNO-44,2020,0,1,M,Ágata,6.22,9.0,6.8,7.5,0.0,6.25,7.92,10.0,9.0
+    ALUNO-45,2020,0,1,G,Ágata,6.63,8.5,1.0,7.5,10.0,7.81,7.75,5.0,11.0
+    ALUNO-46,2020,0,0,C,Ágata,6.97,9.5,10.0,7.5,0.0,7.5,7.58,10.0,8.0
+    ALUNO-51,2020,0,0,D,Topázio,8.96,9.5,9.8,7.5,10.0,8.12,7.42,10.0,8.0
+    ALUNO-52,2020,0,2,F,Ametista,8.18,10.0,8.6,6.25,7.0,7.92,8.22,10.0,10.0
+    ALUNO-53,2020,0,5,X,Topázio,8.7,9.17,10.0,7.5,8.2,0.0,0.0,10.0,15.0
+    ALUNO-55,2020,1,6,C,Ágata,6.88,0.0,9.0,7.5,6.33,8.28,8.67,5.0,17.0
+    ALUNO-57,2020,0,6,B,Ametista,7.31,8.33,7.1,6.25,5.83,7.5,7.58,10.0,16.0
+    ALUNO-59,2020,0,3,E,Ágata,6.56,8.75,3.6,7.5,6.0,7.29,6.44,10.0,13.0
+    ALUNO-60,2020,0,5,F,Ametista,7.68,7.5,9.7,6.88,6.67,8.44,8.12,5.0,17.0
+    ALUNO-61,2020,0,1,N,Quartzo,5.6,9.0,6.5,7.5,0.0,6.88,7.33,5.0,10.0
+    ALUNO-62,2020,0,2,L,Ágata,6.33,7.92,6.9,7.5,3.5,7.08,7.5,5.0,12.0
+    ALUNO-68,2020,0,1,F,Quartzo,5.99,9.0,7.6,7.5,0.0,7.19,8.0,5.0,10.0
+    ALUNO-71,2020,0,0,A,Ametista,7.55,8.5,10.0,5.0,9.5,2.5,7.75,5.0,10.0
+    ALUNO-75,2020,1,3,L,Topázio,9.69,10.0,10.0,10.0,9.0,9.38,9.75,10.0,11.0
+    ALUNO-76,2020,0,0,B,Topázio,8.96,8.92,10.0,10.0,10.0,7.5,6.58,10.0,7.0
+    ALUNO-78,2020,0,1,A,Ametista,7.35,9.5,9.0,7.5,5.5,7.19,7.67,5.0,10.0
+    ALUNO-80,2020,0,2,N,Ágata,6.5,6.92,9.2,7.5,0.0,7.29,7.44,10.0,10.0
+    ALUNO-81,2020,1,4,L,Ametista,7.39,5.42,8.8,7.5,6.0,8.12,9.11,5.0,15.0
+    ALUNO-82,2020,0,0,D,Ametista,7.95,8.5,10.0,7.5,8.5,6.88,7.33,5.0,9.0
+    ALUNO-83,2020,1,4,B,Ametista,8.16,9.17,9.4,5.62,5.33,8.96,9.17,10.0,14.0
+    ALUNO-84,2020,0,0,B,Topázio,8.75,9.0,10.0,10.0,8.5,7.5,7.0,10.0,8.0
+    ALUNO-85,2020,0,0,D,Ágata,7.26,9.5,9.9,2.5,10.0,2.5,6.67,5.0,9.0
+    ALUNO-86,2020,0,6,A,Quartzo,5.69,8.33,4.9,7.5,3.67,7.5,5.71,5.0,17.0
+    ALUNO-87,2020,1,4,L,Ametista,8.19,8.33,9.2,5.62,6.67,8.75,8.72,10.0,14.0
+    ALUNO-88,2020,1,2,D,Topázio,9.04,10.0,9.4,7.5,9.5,5.94,9.58,10.0,11.0
+    ALUNO-89,2020,0,0,G,Ametista,7.94,10.0,10.0,7.5,7.5,6.88,7.5,5.0,9.0
+    ALUNO-90,2020,0,3,M,Ágata,7.07,8.33,5.8,7.5,7.67,7.97,7.5,5.0,14.0
+    ALUNO-91,2020,0,2,H,Ágata,6.85,9.0,6.4,6.88,4.5,5.62,7.58,10.0,10.0
+    ALUNO-94,2020,0,3,B,Ágata,6.76,7.08,6.0,7.5,4.0,7.97,7.5,10.0,12.0
+    ALUNO-95,2020,0,3,A,Ametista,7.34,9.58,8.2,7.5,6.67,7.97,6.79,5.0,15.0
+    ALUNO-96,2020,1,7,A,Ágata,6.43,9.17,6.1,6.88,3.0,7.5,8.79,5.0,18.0
+    ALUNO-97,2020,0,2,D,Ametista,7.39,9.5,8.0,7.5,6.0,8.44,7.75,5.0,12.0
+    ALUNO-100,2020,0,1,M,Ágata,6.91,9.0,6.5,4.38,7.5,6.88,7.92,5.0,12.0'''
 
+    # Converter os dados em um DataFrame
+    from io import StringIO
+    # Ler os dados para um DataFrame
+    df = pd.read_csv(StringIO(data))
+
+    # Fixar a semente do gerador aleatório (opcional na primeira vez)
+    np.random.seed(42)
+
+    # Gerar valores aleatórios para 'MATRICULA' e 'SEXO' uma única vez
+    df['MATRICULA'] = np.random.choice(['Publico', 'Privado', 'Outros'], size=len(df))
+    df['SEXO'] = np.random.choice(['Masculino', 'Feminino'], size=len(df))
+
+    # Salvar o DataFrame atualizado
+    df.to_csv('dados_atualizados.csv', index=False)
+
+    # Carregar o DataFrame atualizado
+    df = pd.read_csv('dados_atualizados.csv')
+
+    # Padronizar os nomes das colunas (se necessário)
+    df.columns = df.columns.str.strip().str.upper()
+
+    # Continuar com o restante do código utilizando 'df'
+    # Definir a coluna 'NOME' como índice (opcional)
+    df_aluno1 = df.set_index('NOME')
+                            
+    # Iniciar o estado dos filtros se ainda não estiverem definidos
+    if 'ano_selecionado' not in st.session_state:
+        st.session_state['ano_selecionado'] = None
+
+    if 'matricula_selecionada' not in st.session_state:
+        st.session_state['matricula_selecionada'] = None
+
+    if 'indicador_selecionado' not in st.session_state:
+        st.session_state['indicador_selecionado'] = None
+
+    # Criar os widgets de filtro
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        opcao_ano = st.selectbox("Selecione o ano:", ("Todos", "2020", "2021", "2022", "2023", "2024"))
+        anos_disponiveis = sorted(df['ANO'].unique())
+        ano_selecionado = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado')
 
     with col2:
-        matricula = st.selectbox("Selecione a matrícula:", ("Todos","Público", "Particular"))
+        # Use o nome de coluna padronizado
+        matriculas_disponiveis = sorted(df['MATRICULA'].unique())
+        matricula_selecionada = st.selectbox('Selecione a matrícula', [None] + list(matriculas_disponiveis), key='matricula_selecionada')
 
     with col3:
-        indicador = st.selectbox("Selecione o indicador:", ("INDE","IAA", "IEG", "IPS", "IDA","IPP","IAN","IPV"))
+        indicadores_disponiveis = ["INDE", "IAA", "IEG", "IPS", "IDA", "IPP", "IAN", "IPV"]
+        indicador_selecionado = st.selectbox('Selecione o indicador', [None] + indicadores_disponiveis, key='indicador_selecionado')
 
-    # Função para atualizar os quadros com base no filtro selecionado
-    def atualizar_quadros(opcao):
-        cols_container = st.columns(2, gap="small")
-        
-        with cols_container[0]:
-            quadro = cols_container[0].container(height=315, border=True)
+    # # Função para limpar os filtros
+    # def reset_filters():
+    #     st.session_state['ano_selecionado'] = None
+    #     st.session_state['matricula_selecionada'] = None
+    #     st.session_state['indicador_selecionado'] = None
+
+    # st.button('Limpar Filtros', on_click=reset_filters)
+
+    # Aplicar os filtros selecionados
+    df_filtrado1 = df_aluno1.copy()
+
+    if ano_selecionado:
+        df_filtrado1 = df_filtrado1[df_filtrado1['ANO'] == ano_selecionado]
+
+    if matricula_selecionada:
+        df_filtrado1 = df_filtrado1[df_filtrado1['MATRICULA'] == matricula_selecionada]
+
+    # Função para criar containers personalizados
+    def criar_container_titulo(conteudo_html):
+        return st.markdown(conteudo_html, unsafe_allow_html=True)
+
+    # Atualizar os quadros com base no filtro selecionado
+
+    # Criação dos containers
+    cols_container = st.columns(2, gap="small")
+
+    with cols_container[0]:
+        quadro = cols_container[0].container(height=315, border=True)
+        total_alunos = len(df_filtrado1)
+        quadro.markdown(f'''
+                        <p style="font-size: 50px; text-align: center; margin: 0;">
+                        <br><b>{total_alunos}</b><br>
+                        </p>
+                        ''', unsafe_allow_html=True)
+
+        quadro.markdown('''
+                        <p style="font-size: 34px; text-align: center;">
+                        <b>Alunos Matriculados</b>
+                        </p>
+                        ''', unsafe_allow_html=True)
+
+    with cols_container[1]:
+
+        cols_container1 = st.columns(2, gap="small")
+        with cols_container1[0]:
+            # Calcular o total Masculino
+            total_masculino = df_filtrado1[df_filtrado1['SEXO'] == 'Masculino']['SEXO'].count()
+            quadro = cols_container1[0].container(height=150, border=True)
             quadro.markdown(f'''
-                            <p style="font-size: 40px; text-align: center;">
-                            <br> {dados[opcao]['individuos']}
+                            <p style="font-size: 36px; text-align: center; color: lightblue;">
+                            👨🏻‍🎓<br>
+                            <b>{total_masculino}</b>
                             </p>
                             ''', unsafe_allow_html=True)
-            
+
+        with cols_container1[1]:
+            # Calcular o total Feminino
+            total_feminino = df_filtrado1[df_filtrado1['SEXO'] == 'Feminino']['SEXO'].count()
+            quadro = cols_container1[1].container(height=150, border=True)
+            quadro.markdown(f'''
+                            <p style="font-size: 36px; text-align: center; color: pink;">
+                            👩🏼‍🎓<br>
+                            <b>{total_feminino}</b>
+                            </p>
+                            ''', unsafe_allow_html=True)
+
+        cols_container2 = st.columns(2, gap="small")
+        with cols_container2[0]:
+            # Calcular a porcentagem de alunos masculinos
+            if total_alunos > 0:
+                perc_masculino = (total_masculino / total_alunos) * 100
+            else:
+                perc_masculino = 0
+            quadro = cols_container2[0].container(height=150, border=True)
+            quadro.markdown(f'''
+                            <p style="font-size: 30px; text-align: center; color: lightblue;">
+                            <b>{perc_masculino:.2f}% Masculino</b>
+                            </p>
+                            ''', unsafe_allow_html=True)    
+
+        with cols_container2[1]:
+            # Calcular a porcentagem de alunos femininos
+            if total_alunos > 0:
+                perc_feminino = (total_feminino / total_alunos) * 100
+            else:
+                perc_feminino = 0
+            quadro = cols_container2[1].container(height=150, border=True)
+            quadro.markdown(f'''
+                            <p style="font-size: 30px; text-align: center; color: pink;">
+                            <b>{perc_feminino:.2f}% Feminino</b>
+                            </p>
+                            ''', unsafe_allow_html=True)
+
+    # Criar duas colunas principais para organizar os containers
+    col_pedras, col_indicador = st.columns([1, 1], gap="small")
+
+    # Exibir a contagem de alunos por tipo de PEDRA dentro da primeira coluna
+    with col_pedras:
+        tipos_pedra = df_filtrado1['PEDRA'].unique()
+        num_colunas = 2
+        rows = [tipos_pedra[i:i + num_colunas] for i in range(0, len(tipos_pedra), num_colunas)]
+
+        for row in rows:
+            cols_pedra = st.columns(num_colunas, gap="small")
+            for i, tipo in enumerate(row):
+                total_tipo = len(df_filtrado1[df_filtrado1['PEDRA'] == tipo])
+                with cols_pedra[i]:
+                    quadro = cols_pedra[i].container(height=150, border=True)
+                    quadro.markdown(f'''
+                        <p style="font-size: 30px; text-align: center;">
+                        <b>{total_tipo}<br>
+                        {tipo}</b>
+                        </p>
+                    ''', unsafe_allow_html=True)
+
+    # Exibir a média do indicador na segunda coluna
+    with col_indicador:
+        if indicador_selecionado and indicador_selecionado in df_filtrado1.columns:
+            media_indicador = df_filtrado1[indicador_selecionado].mean()
+            quadro = st.container(height=315, border=True)
+            quadro.markdown(f'''
+                            <p style="font-size: 40px; text-align: center;">
+                            <br><b>{media_indicador:.2f}%</b>
+                            </p>
+                            ''', unsafe_allow_html=True)
+            quadro.markdown(f'''
+                            <p style="font-size: 30px; text-align: center;">
+                            <b>Média do indicador {indicador_selecionado}</b>
+                            </p>
+                            ''', unsafe_allow_html=True)
+        else:
+            quadro = st.container(height=315, border=True)
             quadro.markdown('''
                             <p style="font-size: 34px; text-align: center;">
-                            Alunos Matriculados<br>
-                            </p>
-                            ''',unsafe_allow_html=True)
-        
-        with cols_container[1]:
-
-            cols_container1 = st.columns(2, gap="small")
-            with cols_container1[0]:
-                quadro = cols_container1[0].container(height=150, border=True)
-                quadro.markdown(f'''
-                                <p style="font-size: 36px; text-align: center; color: pink;">
-                                {dados[opcao]['domicilios']}<br>
-                                👩🏼‍🎓
-                                </p>
-                                ''', unsafe_allow_html=True)
-                
-            with cols_container1[1]:
-                quadro = cols_container1[1].container(height=150, border=True)
-                quadro.markdown(f'''
-                                <p style="font-size: 36px; text-align: center; color: lightblue;">
-                                {dados[opcao]['domicilios']}<br>
-                                👨🏻‍🎓
-                                </p>
-                                ''', unsafe_allow_html=True)
-
-            cols_container2 = st.columns(2, gap="small")
-            with cols_container2[0]:
-                quadro = cols_container2[0].container(height=150, border=True)
-                quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center; color: pink;">
-                                {dados[opcao]['domicilios']} % Feminimo
-                                </p>
-                                ''', unsafe_allow_html=True)    
-                    
-            with cols_container2[1]:
-                quadro = cols_container2[1].container(height=150, border=True)
-                quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center; color: lightblue;">
-                                {dados[opcao]['domicilios']} % Masculino
-                                </p>
-                                ''', unsafe_allow_html=True)
-        
-        
-        cols_container3 = st.columns(2, gap="small")
-        with cols_container3[0]:
-
-            cols_container4 = st.columns(2, gap="small")
-            quadro = cols_container4[0].container(height=150, border=True)
-            quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center;">
-                                {dados[opcao]['domicilios']}<br>
-                                Ágata
-                                </p>
-                                ''', unsafe_allow_html=True)
-                
-            with cols_container4[1]:
-                quadro = cols_container4[1].container(height=150, border=True)
-                quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center;">
-                                {dados[opcao]['domicilios']}<br>
-                                Ametista
-                                </p>
-                                ''', unsafe_allow_html=True)
-
-            cols_container5 = st.columns(2, gap="small")
-            with cols_container5[0]:
-                quadro = cols_container5[0].container(height=150, border=True)
-                quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center;">
-                                {dados[opcao]['domicilios']} 
-                                Quartzo
-                                </p>
-                                ''', unsafe_allow_html=True)    
-                    
-            with cols_container5[1]:
-                quadro = cols_container5[1].container(height=150, border=True)
-                quadro.markdown(f'''
-                                <p style="font-size: 30px; text-align: center;">
-                                {dados[opcao]['domicilios']} 
-                                Topázio
-                                </p>
-                                ''', unsafe_allow_html=True)
-
-        with cols_container3[1]:
-            quadro = cols_container3[1].container(height=315, border=True)
-            quadro.markdown(f'''
-                            <p style="font-size: 40px; text-align: center;">
-                            <br> {dados[opcao]['individuos']}%
+                            <br><b>Selecione um indicador para ver a média</b>
                             </p>
                             ''', unsafe_allow_html=True)
-            
-            quadro.markdown(f'''
-                            <p style="font-size: 34px; text-align: center;">
-                            Média do indicador {indicador}
-                            </p>
-                            ''',unsafe_allow_html=True)
-                
-    # Atualiza os quadros de acordo com a seleção do filtro
-    atualizar_quadros(opcao_ano)
-
+          
     st.markdown ('---')
-
-    df = pd.read_csv("https://github.com/wesleyesantos/StreamlitDatathon/raw/refs/heads/main/assets/df_aluno.csv")
-    df['ANO'] = df['ANO'].astype(str) 
 
     st.markdown('## ⚙️ Modelos de Insight')
 
@@ -653,8 +767,8 @@ elif page == page_2:
         if 'multi' not in st.session_state: 
             st.session_state['multi'] = []
 
-        if 'ano_selecionado' not in st.session_state:
-            st.session_state['ano_selecionado'] = None
+        if 'ano_selecionado2' not in st.session_state:
+            st.session_state['ano_selecionado2'] = None
 
         if 'turma_selecionada' not in st.session_state:
             st.session_state['turma_selecionada'] = None
@@ -682,7 +796,7 @@ elif page == page_2:
                             
         with col8:
             anos_disponiveis = df['ANO'].unique()
-            ano_selecionado = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado')
+            ano_selecionado2 = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado2')
 
         col9, col10, col11, col12 = st.columns(4)
 
@@ -705,7 +819,7 @@ elif page == page_2:
 
         def reset_filters():
             st.session_state['aluno_selecionado'] = []
-            st.session_state['ano_selecionado'] = None
+            st.session_state['ano_selecionado2'] = None
             st.session_state['turma_selecionada'] = None
             st.session_state['fase_selecionada'] = None
             st.session_state['comparador_inde'] = 'Nenhum'
@@ -716,8 +830,8 @@ elif page == page_2:
         if multi:
             df_filtrado = df_filtrado[df_filtrado.index.isin(multi)]
 
-        if ano_selecionado:
-            df_filtrado = df_filtrado[df_filtrado['ANO'] == ano_selecionado]
+        if ano_selecionado2:
+            df_filtrado = df_filtrado[df_filtrado['ANO'] == ano_selecionado2]
 
         if turma_selecionada:
             df_filtrado = df_filtrado[df_filtrado['TURMA'] == turma_selecionada]
