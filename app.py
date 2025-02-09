@@ -489,92 +489,13 @@ elif page == page_2:
     st.title('Dashboard :bar_chart:')
     
     # Carregar o DataFrame com tratamento de possíveis issues
-    # df = pd.read_csv('https://github.com/wesleyesantos/StreamlitDatathon/raw/refs/heads/main/assets/df_aluno.csv', encoding='utf-8')  # Ajuste a codificação se necessário
-    # df['ANO'] = df['ANO'].astype(str) 
+    df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv", sep=";")
 
-    # Dados fornecidos
-    data = '''NOME,ANO,PONTO_VIRADA,FASE,TURMA,PEDRA,INDE,IAA,IEG,IPS,IDA,IPP,IPV,IAN,IDADE
-    ALUNO-1,2020,0,2,H,Ametista,7.88,8.5,8.7,7.5,7.0,5.94,7.75,10.0,11.0
-    ALUNO-3,2020,0,3,H,Ametista,7.86,7.92,8.9,7.5,5.5,8.12,8.11,10.0,12.0
-    ALUNO-4,2020,0,1,D,Quartzo,5.08,8.0,4.1,6.88,0.0,7.19,7.75,5.0,10.0
-    ALUNO-5,2020,0,2,M,Ametista,8.08,7.5,8.0,7.5,7.5,8.44,8.17,10.0,10.0
-    ALUNO-8,2020,1,4,L,Ametista,8.38,8.33,9.9,4.38,7.33,8.75,8.94,10.0,14.0
-    ALUNO-10,2020,0,3,B,Quartzo,5.16,5.83,5.2,3.75,0.0,7.97,6.83,10.0,13.0
-    ALUNO-11,2020,1,0,A,Topázio,9.71,9.0,10.0,8.12,10.0,10.0,10.0,10.0,8.0
-    ALUNO-12,2020,0,3,G,Quartzo,5.84,6.25,6.0,5.62,6.67,5.62,5.28,5.0,14.0
-    ALUNO-14,2020,0,2,M,Ágata,6.43,8.0,7.6,6.88,0.0,8.44,7.92,10.0,11.0
-    ALUNO-15,2020,0,2,D,Quartzo,5.16,8.5,4.0,7.5,0.0,8.12,7.25,5.0,12.0
-    ALUNO-17,2020,0,1,G,Ametista,7.77,9.5,6.8,7.5,10.0,6.56,7.75,5.0,13.0
-    ALUNO-18,2020,0,3,E,Ágata,7.21,9.58,7.0,7.5,6.5,7.08,7.94,5.0,14.0
-    ALUNO-28,2020,1,3,J,Topázio,9.35,9.58,9.6,6.88,9.0,10.0,9.94,10.0,13.0
-    ALUNO-30,2020,0,0,C,Ágata,7.13,7.92,10.0,7.5,4.75,2.5,6.92,10.0,7.0
-    ALUNO-33,2020,0,3,E,Ágata,7.01,6.67,4.5,7.5,8.67,7.08,6.28,10.0,13.0
-    ALUNO-34,2020,0,2,C,Ametista,7.7,8.5,9.3,6.88,7.0,8.12,7.94,5.0,12.0
-    ALUNO-35,2020,0,7,B,Ágata,6.64,8.75,6.1,6.25,5.0,7.66,8.29,5.0,18.0
-    ALUNO-36,2020,0,3,C,Ametista,8.31,9.58,9.9,7.5,8.0,8.75,8.22,5.0,14.0
-    ALUNO-37,2020,0,2,N,Ágata,6.68,10.0,7.7,4.38,2.5,6.46,7.78,10.0,10.0
-    ALUNO-39,2020,0,3,F,Ametista,8.13,6.25,9.4,7.5,8.33,8.54,6.78,10.0,13.0
-    ALUNO-41,2020,0,1,D,Ametista,7.46,8.0,8.3,7.5,7.25,7.5,7.75,5.0,11.0
-    ALUNO-43,2020,0,4,F,Ametista,7.81,7.5,7.5,7.5,7.0,7.97,8.04,10.0,13.0
-    ALUNO-44,2020,0,1,M,Ágata,6.22,9.0,6.8,7.5,0.0,6.25,7.92,10.0,9.0
-    ALUNO-45,2020,0,1,G,Ágata,6.63,8.5,1.0,7.5,10.0,7.81,7.75,5.0,11.0
-    ALUNO-46,2020,0,0,C,Ágata,6.97,9.5,10.0,7.5,0.0,7.5,7.58,10.0,8.0
-    ALUNO-51,2020,0,0,D,Topázio,8.96,9.5,9.8,7.5,10.0,8.12,7.42,10.0,8.0
-    ALUNO-52,2020,0,2,F,Ametista,8.18,10.0,8.6,6.25,7.0,7.92,8.22,10.0,10.0
-    ALUNO-53,2020,0,5,X,Topázio,8.7,9.17,10.0,7.5,8.2,0.0,0.0,10.0,15.0
-    ALUNO-55,2020,1,6,C,Ágata,6.88,0.0,9.0,7.5,6.33,8.28,8.67,5.0,17.0
-    ALUNO-57,2020,0,6,B,Ametista,7.31,8.33,7.1,6.25,5.83,7.5,7.58,10.0,16.0
-    ALUNO-59,2020,0,3,E,Ágata,6.56,8.75,3.6,7.5,6.0,7.29,6.44,10.0,13.0
-    ALUNO-60,2020,0,5,F,Ametista,7.68,7.5,9.7,6.88,6.67,8.44,8.12,5.0,17.0
-    ALUNO-61,2020,0,1,N,Quartzo,5.6,9.0,6.5,7.5,0.0,6.88,7.33,5.0,10.0
-    ALUNO-62,2020,0,2,L,Ágata,6.33,7.92,6.9,7.5,3.5,7.08,7.5,5.0,12.0
-    ALUNO-68,2020,0,1,F,Quartzo,5.99,9.0,7.6,7.5,0.0,7.19,8.0,5.0,10.0
-    ALUNO-71,2020,0,0,A,Ametista,7.55,8.5,10.0,5.0,9.5,2.5,7.75,5.0,10.0
-    ALUNO-75,2020,1,3,L,Topázio,9.69,10.0,10.0,10.0,9.0,9.38,9.75,10.0,11.0
-    ALUNO-76,2020,0,0,B,Topázio,8.96,8.92,10.0,10.0,10.0,7.5,6.58,10.0,7.0
-    ALUNO-78,2020,0,1,A,Ametista,7.35,9.5,9.0,7.5,5.5,7.19,7.67,5.0,10.0
-    ALUNO-80,2020,0,2,N,Ágata,6.5,6.92,9.2,7.5,0.0,7.29,7.44,10.0,10.0
-    ALUNO-81,2020,1,4,L,Ametista,7.39,5.42,8.8,7.5,6.0,8.12,9.11,5.0,15.0
-    ALUNO-82,2020,0,0,D,Ametista,7.95,8.5,10.0,7.5,8.5,6.88,7.33,5.0,9.0
-    ALUNO-83,2020,1,4,B,Ametista,8.16,9.17,9.4,5.62,5.33,8.96,9.17,10.0,14.0
-    ALUNO-84,2020,0,0,B,Topázio,8.75,9.0,10.0,10.0,8.5,7.5,7.0,10.0,8.0
-    ALUNO-85,2020,0,0,D,Ágata,7.26,9.5,9.9,2.5,10.0,2.5,6.67,5.0,9.0
-    ALUNO-86,2020,0,6,A,Quartzo,5.69,8.33,4.9,7.5,3.67,7.5,5.71,5.0,17.0
-    ALUNO-87,2020,1,4,L,Ametista,8.19,8.33,9.2,5.62,6.67,8.75,8.72,10.0,14.0
-    ALUNO-88,2020,1,2,D,Topázio,9.04,10.0,9.4,7.5,9.5,5.94,9.58,10.0,11.0
-    ALUNO-89,2020,0,0,G,Ametista,7.94,10.0,10.0,7.5,7.5,6.88,7.5,5.0,9.0
-    ALUNO-90,2020,0,3,M,Ágata,7.07,8.33,5.8,7.5,7.67,7.97,7.5,5.0,14.0
-    ALUNO-91,2020,0,2,H,Ágata,6.85,9.0,6.4,6.88,4.5,5.62,7.58,10.0,10.0
-    ALUNO-94,2020,0,3,B,Ágata,6.76,7.08,6.0,7.5,4.0,7.97,7.5,10.0,12.0
-    ALUNO-95,2020,0,3,A,Ametista,7.34,9.58,8.2,7.5,6.67,7.97,6.79,5.0,15.0
-    ALUNO-96,2020,1,7,A,Ágata,6.43,9.17,6.1,6.88,3.0,7.5,8.79,5.0,18.0
-    ALUNO-97,2020,0,2,D,Ametista,7.39,9.5,8.0,7.5,6.0,8.44,7.75,5.0,12.0
-    ALUNO-100,2020,0,1,M,Ágata,6.91,9.0,6.5,4.38,7.5,6.88,7.92,5.0,12.0'''
+  # Ajuste a codificação se necessário
+    df['ano_letivo'] = df['ano_letivo'].astype(str) 
 
-    # Converter os dados em um DataFrame
-    from io import StringIO
-    # Ler os dados para um DataFrame
-    df = pd.read_csv(StringIO(data))
-
-    # Fixar a semente do gerador aleatório (opcional na primeira vez)
-    np.random.seed(42)
-
-    # Gerar valores aleatórios para 'MATRICULA' e 'SEXO' uma única vez
-    df['MATRICULA'] = np.random.choice(['Publico', 'Privado', 'Outros'], size=len(df))
-    df['SEXO'] = np.random.choice(['Masculino', 'Feminino'], size=len(df))
-
-    # Salvar o DataFrame atualizado
-    df.to_csv('dados_atualizados.csv', index=False)
-
-    # Carregar o DataFrame atualizado
-    df = pd.read_csv('dados_atualizados.csv')
-
-    # Padronizar os nomes das colunas (se necessário)
-    df.columns = df.columns.str.strip().str.upper()
-
-    # Continuar com o restante do código utilizando 'df'
     # Definir a coluna 'NOME' como índice (opcional)
-    df_aluno1 = df.set_index('NOME')
+    df_aluno1 = df.set_index('nome')
                             
     # Iniciar o estado dos filtros se ainda não estiverem definidos
     if 'ano_selecionado' not in st.session_state:
@@ -590,7 +511,7 @@ elif page == page_2:
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        anos_disponiveis = sorted(df['ANO'].unique())
+        anos_disponiveis = sorted(df['ano_letivo'].unique())
         ano_selecionado = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado')
 
     with col2:
