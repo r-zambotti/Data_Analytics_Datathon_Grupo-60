@@ -492,10 +492,10 @@ elif page == page_2:
     df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv")
 
   # Ajuste a codificação se necessário
-    df['ano_letivo'] = df['ano_letivo'].astype(str) 
+    df['ANO_LETIVO'] = df['ANO_LETIVO'].astype(str) 
 
     # Definir a coluna 'NOME' como índice (opcional)
-    df_aluno1 = df.set_index('nome')
+    df_aluno1 = df.set_index('NOME')
                             
     # Iniciar o estado dos filtros se ainda não estiverem definidos
     if 'ano_selecionado' not in st.session_state:
@@ -511,16 +511,16 @@ elif page == page_2:
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        anos_disponiveis = sorted(df['ano_letivo'].unique())
+        anos_disponiveis = sorted(df['ANO_LETIVO'].unique())
         ano_selecionado = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado')
 
     with col2:
         # Use o nome de coluna padronizado
-        matriculas_disponiveis = sorted(df['inst_ensino'].unique())
+        matriculas_disponiveis = sorted(df['INST_ENSINO'].unique())
         matricula_selecionada = st.selectbox('Selecione a modalidade de ensino', [None] + list(matriculas_disponiveis), key='matricula_selecionada')
 
     with col3:
-        indicadores_disponiveis = ["inde", "iaa", "ieg", "ips", "ida", "ipp", "ian", "ipv"]
+        indicadores_disponiveis = ["INDE", "IAA", "IEG", "IPS", "IDA", "IPP", "IAN", "IPV"]
         indicador_selecionado = st.selectbox('Selecione o indicador', [None] + indicadores_disponiveis, key='indicador_selecionado')
 
     # # Função para limpar os filtros
@@ -535,10 +535,10 @@ elif page == page_2:
     df_filtrado1 = df_aluno1.copy()
 
     if ano_selecionado:
-        df_filtrado1 = df_filtrado1[df_filtrado1['ano_letivo'] == ano_selecionado]
+        df_filtrado1 = df_filtrado1[df_filtrado1['ANO_LETIVO'] == ano_selecionado]
 
     if matricula_selecionada:
-        df_filtrado1 = df_filtrado1[df_filtrado1['inst_ensino'] == matricula_selecionada]
+        df_filtrado1 = df_filtrado1[df_filtrado1['INST_ENSINO'] == matricula_selecionada]
 
     # Função para criar containers personalizados
     def criar_container_titulo(conteudo_html):
@@ -569,7 +569,7 @@ elif page == page_2:
         cols_container1 = st.columns(2, gap="small")
         with cols_container1[0]:
             # Calcular o total Masculino
-            total_masculino = df_filtrado1[df_filtrado1['genero'] == 'Masculino']['genero'].count()
+            total_masculino = df_filtrado1[df_filtrado1['GENERO'] == 'Masculino']['GENERO'].count()
             quadro = cols_container1[0].container(height=150, border=True)
             quadro.markdown(f'''
                             <p style="font-size: 36px; text-align: center; color: lightblue;">                           
@@ -580,7 +580,7 @@ elif page == page_2:
 
         with cols_container1[1]:
             # Calcular o total Feminino
-            total_feminino = df_filtrado1[df_filtrado1['genero'] == 'Feminino']['genero'].count()
+            total_feminino = df_filtrado1[df_filtrado1['GENERO'] == 'Feminino']['GENERO'].count()
             quadro = cols_container1[1].container(height=150, border=True)
             quadro.markdown(f'''
                             <p style="font-size: 36px; text-align: center; color: pink;">
@@ -621,7 +621,7 @@ elif page == page_2:
 
     # Exibir a contagem de alunos por tipo de PEDRA dentro da primeira coluna
     with col_pedras:
-        tipos_pedra = df_filtrado1.loc[df_filtrado1['pedra'].notna() & (df_filtrado1['pedra'] != "nao_informado"), 'pedra'].unique()
+        tipos_pedra = df_filtrado1.loc[df_filtrado1['PEDRA'].notna() & (df_filtrado1['PEDRA'] != "nao_informado"), 'PEDRA'].unique()
 
         num_colunas = 2
         rows = [tipos_pedra[i:i + num_colunas] for i in range(0, len(tipos_pedra), num_colunas)]
@@ -629,7 +629,7 @@ elif page == page_2:
         for row in rows:
             cols_pedra = st.columns(num_colunas, gap="small")
             for i, tipo in enumerate(row):
-                total_tipo = len(df_filtrado1[df_filtrado1['pedra'] == tipo])
+                total_tipo = len(df_filtrado1[df_filtrado1['PEDRA'] == tipo])
                 with cols_pedra[i]:
                     quadro = cols_pedra[i].container(height=150, border=True)
                     quadro.markdown(f'''
@@ -717,7 +717,7 @@ elif page == page_2:
             st.button("Limpar alunos", on_click=clear_multi)
                             
         with col8:
-            anos_disponiveis = df['ano_letivo'].unique()
+            anos_disponiveis = df['ANO_LETIVO'].unique()
             ano_selecionado2 = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado2')
 
         col9, col10, col11, col12 = st.columns(4)
@@ -753,7 +753,7 @@ elif page == page_2:
             df_filtrado = df_filtrado[df_filtrado.index.isin(multi)]
 
         if ano_selecionado2:
-            df_filtrado = df_filtrado[df_filtrado['ano_letivo'] == ano_selecionado2]
+            df_filtrado = df_filtrado[df_filtrado['ANO_LETIVO'] == ano_selecionado2]
 
         if turma_selecionada:
             df_filtrado = df_filtrado[df_filtrado['turma'] == turma_selecionada]
