@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 # import statsmodels.api as sm
 # import seaborn as sns
 # import plotly.graph_objects as go
@@ -666,7 +666,7 @@ elif page == page_2:
                                 <br><b>Selecione um indicador para ver a média</b>
                                 </p>
                                 ''', unsafe_allow_html=True)
-            
+
     st.markdown ('---')
 
     # Início dos Insight's
@@ -677,11 +677,11 @@ elif page == page_2:
     # st.sidebar.title('⚙️ Modelos')
 
     st.markdown('<br>', unsafe_allow_html=True)
-        # texto 
 
     if model == 'Análise por Aluno':
         st.subheader('Análise por Aluno', divider='orange')
 
+        # texto 
         st.markdown('''
             <p style="font-size: 18px">
                 O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
@@ -833,6 +833,10 @@ elif page == page_2:
                     ''', unsafe_allow_html=True)
         
     elif model == 'Pedras':
+            
+        df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_pedra_geral.csv")
+
+
         st.subheader('Pedras', divider='orange')
 
          # texto
@@ -845,6 +849,85 @@ elif page == page_2:
                     </p>
                     ''', unsafe_allow_html=True)
         
+        df['ano_letivo'] = df['ano_letivo'].astype(str) 
+        
+        df_pedra = df.set_index('ano_letivo')
+
+        # Criar sessão de estado para os filtros se ainda não existirem
+        for key in ['ano_selecionado3', 'pedra_selecionada', 'genero_selecionado']:
+            if key not in st.session_state:
+                st.session_state[key] = None
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            anos_disponiveis3 = sorted(df['ano_letivo'].unique())
+            ano_selecionado3 = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis3), key='ano_selecionado3')     
+
+        with col2:
+            pedras_disponiveis = sorted(df['pedra'].unique())
+            pedra_selecionada = st.selectbox('Selecione a pedra', [None] + list(pedras_disponiveis), key='pedra_selecionada')    
+
+        with col3:
+            generos_disponiveis = sorted(df['genero'].unique())
+            genero_selecionado = st.selectbox('Selecione o gênero', [None] + list(generos_disponiveis), key='genero_selecionado')    
+
+        # Aplicar filtros
+        df_filtrado = df.copy()
+        if ano_selecionado3:
+            df_filtrado = df_filtrado[df_filtrado['ano_letivo'] == ano_selecionado3]
+        if pedra_selecionada:
+            df_filtrado = df_filtrado[df_filtrado['pedra'] == pedra_selecionada]
+        if genero_selecionado:
+            df_filtrado = df_filtrado[df_filtrado['genero'] == genero_selecionado]
+
+        # Criar dataframe de contagem
+        df_pedra_contagem = df_filtrado.groupby(['ano_letivo', 'pedra']).size().unstack(fill_value=0)
+
+        # Cores para o gráfico
+        cores = {
+            'Quartzo': 'red',
+            'Agata': 'yellow',
+            'Ametista': 'lightblue',
+            'Topazio': 'lightgreen'
+        }   
+
+        # Criar o gráfico
+        st.subheader("Alunos separados por PEDRA")
+        fig, ax = plt.subplots(figsize=(12, 6))
+
+        if ano_selecionado3:
+            # Se um único ano for selecionado, usar gráfico de barras
+            df_pedra_contagem = df_filtrado['pedra'].value_counts()
+            ax.bar(df_pedra_contagem.index, df_pedra_contagem.values, color=[cores.get(p, 'gray') for p in df_pedra_contagem.index])
+            ax.set_ylabel("Total de Pedras")
+            ax.set_xlabel("Pedra")
+            for i, v in enumerate(df_pedra_contagem.values):
+                ax.text(i, v + 0.5, str(v), ha='center')
+        else:
+            # Se nenhum ano for selecionado, manter o gráfico de linhas
+            for pedra in df_pedra_contagem.columns:
+                ax.plot(
+                    df_pedra_contagem.index,
+                    df_pedra_contagem[pedra],
+                    marker='o',
+                    label=pedra,
+                    color=cores.get(pedra, 'gray')
+                )
+                for i, count in enumerate(df_pedra_contagem[pedra]):
+                    ax.text(df_pedra_contagem.index[i], count, str(count), ha='center', va='bottom')
+            ax.set_xlabel("Ano da Pesquisa")
+            ax.legend(title="Pedra")
+
+        # Configurações do gráfico
+        ax.set_title("Alunos separados por PEDRA")
+        ax.grid(True)
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+
+        # Exibir no Streamlit
+        st.pyplot(fig)        
+
     else:
         st.subheader('Ponto de Virada', divider='orange')
 
