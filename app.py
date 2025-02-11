@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 # import statsmodels.api as sm
-# import seaborn as sns
+import seaborn as sns
 # import plotly.graph_objects as go
 # import plotly.express as px
 # import pmdarima as pm
@@ -52,7 +52,7 @@ file_data = response1.content
 # paginação
 page_0 = 'Introdução ✨'
 page_1 = 'Análise Exploratória 🎲'
-page_2 = 'Dashboard 📈'
+page_2 = 'Aplicação Analítica 📈'
 page_3 = 'Conclusão 📌'
 page_4 = 'Referências 📖'
 
@@ -467,33 +467,39 @@ elif page == page_1:
                     - Os alunos saberão que podem superar obstáculos com esforço contínuo.
                     ''')
 
-    # carregar dados
-    # data = pd.read_parquet(r'data/data_w_indicators.parquet')
-    # # sidebar - adicionar filtros
-    # st.sidebar.title('⚙️ Filtros')
-    # # filtros de ano com slider
-    # min_year = data.index.year.min()
-    # min_year = int(min_year)
-    # max_year = data.index.year.max()
-    # max_year = int(max_year)
-    # # filtro de preço com slider
-    # min_price = data['brent'].min()
-    # min_price = int(min_price)
-    # max_price = data['brent'].max()
-    # max_price = int(max_price)
-
 # Dashboard
 elif page == page_2:
 
-    # título
-    st.title('Dashboard :bar_chart:')
-
-    # Carregar o DataFrame com tratamento de possíveis issues
     df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv")
 
-    #IF para melhor exibição e tratamento do código - DASHBOARD DINÂMICO
-    if page == page_2:
-    
+    # Estilizando o título e centralizando
+    st.markdown("<h1 style='text-align: center;'>📈 Aplicação Analítica</h1>", unsafe_allow_html=True)
+
+    # CSS para centralizar o rádio
+    st.markdown(
+        """
+        <style>
+        
+            div[role="radiogroup"] {
+                display: flex;
+                justify-content: center;
+            }
+
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Criando o menu centralizado
+    menu = st.radio("", ["Dashboard", "Insight", "Análise Preditiva"], horizontal=True)
+
+    st.markdown('---', unsafe_allow_html=True)
+
+    # Renderizando a opção escolhida
+    if menu == "Dashboard":
+        st.subheader("📊 Dashboard")
+      #  st.write("Aqui você pode visualizar os principais KPIs.")
+
         # Ajuste a codificação se necessário
         df['ANO_LETIVO'] = df['ANO_LETIVO'].astype(str) 
 
@@ -666,280 +672,459 @@ elif page == page_2:
                                 <br><b>Selecione um indicador para ver a média</b>
                                 </p>
                                 ''', unsafe_allow_html=True)
-
-    st.markdown ('---')
-
-    # Início dos Insight's
-    st.markdown('## ⚙️ Modelos de Insight')
-
-    # seleção de modelo
-    model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Desempenho Acadêmico', 'Desempenho Psicopedagógica', 'Desempenho Psicossocial', 'Pedras', 'Ponto de Virada'])
-    # st.sidebar.title('⚙️ Modelos')
-
-    st.markdown('<br>', unsafe_allow_html=True)
-
-    if model == 'Análise por Aluno':
-        st.subheader('Análise por Aluno', divider='orange')
-
-        # texto 
-        st.markdown('''
-            <p style="font-size: 18px">
-                O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-                O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-                amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
-                <br>
-            </p>
-            ''', unsafe_allow_html=True)
-
-        if 'multi' not in st.session_state: 
-            st.session_state['multi'] = []
-
-        if 'ano_selecionado2' not in st.session_state:
-            st.session_state['ano_selecionado2'] = None
-
-        if 'turma_selecionada' not in st.session_state:
-            st.session_state['turma_selecionada'] = None
-
-        if 'fase_selecionada' not in st.session_state:
-            st.session_state['fase_selecionada'] = None
-
-        if 'comparador_inde' not in st.session_state:
-            st.session_state['comparador_inde'] = 'Nenhum'
-
-        if 'valor_inde' not in st.session_state:
-            st.session_state['valor_inde'] = 0
-
-        df_aluno = df.set_index('NOME')
-        
-        col7, col8= st.columns([3,1])
-
-        with col7:
-            def clear_multi():
-                st.session_state.multiselect = []
-                return
                 
-            multi = st.multiselect('Selecione um ou mais alunos', df_aluno.index.unique(), key='multiselect')
-            st.button("Limpar alunos", on_click=clear_multi)
-                            
-        with col8:
-            anos_disponiveis = df['ANO_LETIVO'].unique()
-            ano_selecionado2 = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado2')
+    elif menu == "Insight":
+        st.subheader("💡 Insights")
 
-        col9, col10, col11, col12 = st.columns(4)
+        # seleção de modelo
+        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Pedras', 'Ponto de Virada'])
 
-        with col9:
-            turmas_disponiveis = df['TURMA'].unique()
-            turma_selecionada = st.selectbox('Selecione a turma', [None] + list(turmas_disponiveis), key='turma_selecionada')
+        st.markdown('<br>', unsafe_allow_html=True)
 
-        with col10:
-            fases_disponiveis = df['FASE'].unique()
-            fase_selecionada = st.selectbox('Selecione a fase', [None] + list(fases_disponiveis), key='fase_selecionada')
+        if model == 'Análise por Aluno':
+            st.subheader('Análise por Aluno', divider='orange')
 
-        with col11:
-            comparador_inde = st.selectbox('Filtrar INDE por', ['Nenhum', 'Maior que', 'Menor que'], key='comparador_inde')
+            # texto 
+            st.markdown('''
+                <p style="font-size: 18px">
+                    O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                    O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                    amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                    <br>
+                </p>
+                ''', unsafe_allow_html=True)
 
-        with col12:
-            valor_inde = st.number_input('Digite o valor para o INDE', step=1, key='valor_inde')
+            if 'multi' not in st.session_state: 
+                st.session_state['multi'] = []
 
-        df_filtrado = df_aluno.copy()
-        df_filtrado['ATINGIU_PV'] = df_filtrado['ATINGIU_PV']
+            if 'ano_selecionado2' not in st.session_state:
+                st.session_state['ano_selecionado2'] = None
 
-        def reset_filters():
-            st.session_state['aluno_selecionado'] = []
-            st.session_state['ano_selecionado2'] = None
-            st.session_state['turma_selecionada'] = None
-            st.session_state['fase_selecionada'] = None
-            st.session_state['comparador_inde'] = 'Nenhum'
-            st.session_state['valor_inde'] = 0
+            if 'turma_selecionada' not in st.session_state:
+                st.session_state['turma_selecionada'] = None
 
-        st.button('Limpar Filtros', on_click=reset_filters)
+            if 'fase_selecionada' not in st.session_state:
+                st.session_state['fase_selecionada'] = None
 
-        if multi:
-            df_filtrado = df_filtrado[df_filtrado.index.isin(multi)]
+            if 'comparador_inde' not in st.session_state:
+                st.session_state['comparador_inde'] = 'Nenhum'
 
-        if ano_selecionado2:
-            df_filtrado = df_filtrado[df_filtrado['ANO_LETIVO'] == ano_selecionado2]
+            if 'valor_inde' not in st.session_state:
+                st.session_state['valor_inde'] = 0
 
-        if turma_selecionada:
-            df_filtrado = df_filtrado[df_filtrado['TURMA'] == turma_selecionada]
-
-        if fase_selecionada:
-            df_filtrado = df_filtrado[df_filtrado['FASE'] == fase_selecionada]
-
-        if comparador_inde == 'Maior que':
-            df_filtrado = df_filtrado[df_filtrado['INDE'] > valor_inde]
-        elif comparador_inde == 'Menor que':
-            df_filtrado = df_filtrado[df_filtrado['INDE'] < valor_inde]
-    
-        # Estilo CSS para ajustar a largura da tabela
-        st.markdown(
-            """
-            <style>
-            .dataframe-container {
-                display: flex;
-                justify-content: flex-start;
-                width: 100%;
-            }
-            .dataframe-container > div {
-                width: 100%;
-            }
-            </style>
-            """, unsafe_allow_html=True
-        )
-
-        # Contêiner para aplicar o estilo apenas à tabela
-        st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-        st.dataframe(df_filtrado)
-        st.markdown('</div>', unsafe_allow_html=True)
-
-
-    elif model == 'Desempenho Acadêmico':
-        st.subheader('Desempenho Acadêmico', divider='orange')
-
-         # texto
-        st.markdown('''
-                    <p style="font-size: 18px">
-                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
-                        <br>
-                    </p>
-                    ''', unsafe_allow_html=True)        
-    
-    elif model == 'Desempenho Psicopedagógica':
-        st.subheader('Desempenho Psicopedagógica', divider='orange')
-
-         # texto
-        st.markdown('''
-                    <p style="font-size: 18px">
-                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
-                        <br>
-                    </p>
-                    ''', unsafe_allow_html=True)
-        
-    elif model == 'Desempenho Psicossocial':
-        st.subheader('Desempenho Psicossocial', divider='orange')
-
-         # texto
-        st.markdown('''
-                    <p style="font-size: 18px">
-                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
-                        <br>
-                    </p>
-                    ''', unsafe_allow_html=True)
-        
-    elif model == 'Pedras':
+            df_aluno = df.set_index('NOME')
             
-        df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_pedra_geral.csv")
+            col7, col8= st.columns([3,1])
 
+            with col7:
+                def clear_multi():
+                    st.session_state.multiselect = []
+                    return
+                    
+                multi = st.multiselect('Selecione um ou mais alunos', df_aluno.index.unique(), key='multiselect')
+                st.button("Limpar alunos", on_click=clear_multi)
+                                
+            with col8:
+                anos_disponiveis = df['ANO_LETIVO'].unique()
+                ano_selecionado2 = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis), key='ano_selecionado2')
 
-        st.subheader('Pedras', divider='orange')
+            col9, col10, col11, col12 = st.columns(4)
 
-         # texto
-        st.markdown('''
-                    <p style="font-size: 18px">
-                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
-                        <br>
-                    </p>
-                    ''', unsafe_allow_html=True)
+            with col9:
+                turmas_disponiveis = df['TURMA'].unique()
+                turma_selecionada = st.selectbox('Selecione a turma', [None] + list(turmas_disponiveis), key='turma_selecionada')
+
+            with col10:
+                fases_disponiveis = df['FASE'].unique()
+                fase_selecionada = st.selectbox('Selecione a fase', [None] + list(fases_disponiveis), key='fase_selecionada')
+
+            with col11:
+                comparador_inde = st.selectbox('Filtrar INDE por', ['Nenhum', 'Maior que', 'Menor que'], key='comparador_inde')
+
+            with col12:
+                valor_inde = st.number_input('Digite o valor para o INDE', step=1, key='valor_inde')
+
+            df_filtrado = df_aluno.copy()
+            df_filtrado['ATINGIU_PV'] = df_filtrado['ATINGIU_PV']
+
+            def reset_filters():
+                st.session_state['aluno_selecionado'] = []
+                st.session_state['ano_selecionado2'] = None
+                st.session_state['turma_selecionada'] = None
+                st.session_state['fase_selecionada'] = None
+                st.session_state['comparador_inde'] = 'Nenhum'
+                st.session_state['valor_inde'] = 0
+
+            st.button('Limpar Filtros', on_click=reset_filters)
+
+            if multi:
+                df_filtrado = df_filtrado[df_filtrado.index.isin(multi)]
+
+            if ano_selecionado2:
+                df_filtrado = df_filtrado[df_filtrado['ANO_LETIVO'] == ano_selecionado2]
+
+            if turma_selecionada:
+                df_filtrado = df_filtrado[df_filtrado['TURMA'] == turma_selecionada]
+
+            if fase_selecionada:
+                df_filtrado = df_filtrado[df_filtrado['FASE'] == fase_selecionada]
+
+            if comparador_inde == 'Maior que':
+                df_filtrado = df_filtrado[df_filtrado['INDE'] > valor_inde]
+            elif comparador_inde == 'Menor que':
+                df_filtrado = df_filtrado[df_filtrado['INDE'] < valor_inde]
         
-        df['ano_letivo'] = df['ano_letivo'].astype(str) 
-        
-        df_pedra = df.set_index('ano_letivo')
+            # Estilo CSS para ajustar a largura da tabela
+            st.markdown(
+                """
+                <style>
+                .dataframe-container {
+                    display: flex;
+                    justify-content: flex-start;
+                    width: 100%;
+                }
+                .dataframe-container > div {
+                    width: 100%;
+                }
+                </style>
+                """, unsafe_allow_html=True
+            )
 
-        # Criar sessão de estado para os filtros se ainda não existirem
-        for key in ['ano_selecionado3', 'pedra_selecionada', 'genero_selecionado']:
-            if key not in st.session_state:
-                st.session_state[key] = None
+            # Contêiner para aplicar o estilo apenas à tabela
+            st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+            st.dataframe(df_filtrado)
+            st.markdown('</div>', unsafe_allow_html=True)
 
-        col1, col2, col3 = st.columns(3)
+        elif model == 'Indicadores':
 
-        with col1:
-            anos_disponiveis3 = sorted(df['ano_letivo'].unique())
-            ano_selecionado3 = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis3), key='ano_selecionado3')     
+            st.subheader('Indicadores', divider='orange')
 
-        with col2:
-            pedras_disponiveis = sorted(df['pedra'].unique())
-            pedra_selecionada = st.selectbox('Selecione a pedra', [None] + list(pedras_disponiveis), key='pedra_selecionada')    
+            # texto
+            st.markdown('''
+                        - INDE - Indice do Desenvolvimento Educacional
+                        - IAA - Indicador de Auto Avaliçao
+                        - IEG - Indicador de Engajamento
+                        - IPS - Indicador Psicossocial
+                        - IDA - Indicador de Aprendizagem
+                        - IPP - Indicador Psicopedagogico
+                        - IPV - Indicador de Ponto de Virada
+                        ''')        
+            
+            # # Carregar o DataFrame com tratamento de possíveis issues
+            # df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv")  
 
-        with col3:
-            generos_disponiveis = sorted(df['genero'].unique())
-            genero_selecionado = st.selectbox('Selecione o gênero', [None] + list(generos_disponiveis), key='genero_selecionado')    
+            # # Definindo os bins do histograma
+            # bins = [3.03, 3.67, 4.31, 4.96, 5.60, 6.24, 6.88, 7.52, 8.16, 8.80, 9.44]
 
-        # Aplicar filtros
-        df_filtrado = df.copy()
-        if ano_selecionado3:
-            df_filtrado = df_filtrado[df_filtrado['ano_letivo'] == ano_selecionado3]
-        if pedra_selecionada:
-            df_filtrado = df_filtrado[df_filtrado['pedra'] == pedra_selecionada]
-        if genero_selecionado:
-            df_filtrado = df_filtrado[df_filtrado['genero'] == genero_selecionado]
+            # # Filtros interativos no Streamlit
+            # st.title('Distribuição de Indicadores Escolares')
 
-        # Criar dataframe de contagem
-        df_pedra_contagem = df_filtrado.groupby(['ano_letivo', 'pedra']).size().unstack(fill_value=0)
+            # anos_disponiveis = sorted(df['ANO_LETIVO'].unique())
+            # ano_selecionado = st.selectbox('Selecione o ano', [None] + anos_disponiveis)
 
-        # Cores para o gráfico
-        cores = {
-            'Quartzo': 'red',
-            'Agata': 'yellow',
-            'Ametista': 'lightblue',
-            'Topazio': 'lightgreen'
-        }   
+            # indicadores_disponiveis = ["INDE", "IAA", "IEG", "IPS", "IDA", "IPP"]
+            # indicador_selecionado = st.selectbox('Selecione o indicador', [None] + indicadores_disponiveis)
 
-        # Criar o gráfico
-        st.subheader("Alunos separados por PEDRA")
-        fig, ax = plt.subplots(figsize=(12, 6))
+            # tipo_calculo = st.selectbox("Selecione o cálculo", ["Média", "Total"])
 
-        if ano_selecionado3:
-            # Se um único ano for selecionado, usar gráfico de barras
-            df_pedra_contagem = df_filtrado['pedra'].value_counts()
-            ax.bar(df_pedra_contagem.index, df_pedra_contagem.values, color=[cores.get(p, 'gray') for p in df_pedra_contagem.index])
-            ax.set_ylabel("Total de Pedras")
-            ax.set_xlabel("Pedra")
-            for i, v in enumerate(df_pedra_contagem.values):
-                ax.text(i, v + 0.5, str(v), ha='center')
-        else:
-            # Se nenhum ano for selecionado, manter o gráfico de linhas
-            for pedra in df_pedra_contagem.columns:
-                ax.plot(
-                    df_pedra_contagem.index,
-                    df_pedra_contagem[pedra],
-                    marker='o',
-                    label=pedra,
-                    color=cores.get(pedra, 'gray')
+            # # Aplicar filtros
+            # df_filtrado = df.copy()
+            # if ano_selecionado:
+            #     df_filtrado = df_filtrado[df_filtrado['ANO_LETIVO'] == ano_selecionado]
+
+            # # Cálculo da Média ou Total
+            # if indicador_selecionado:
+            #     if tipo_calculo == "Média":
+            #         resultado = df_filtrado[indicador_selecionado].mean()
+            #     elif tipo_calculo == "Total":
+            #         resultado = df_filtrado[indicador_selecionado].sum()
+                
+            #     st.metric(label=f"{tipo_calculo} do {indicador_selecionado}", value=round(resultado, 2))
+
+            #     # Criar categorias para o histograma
+            #     df_filtrado[f'{indicador_selecionado}_bin'] = pd.cut(df_filtrado[indicador_selecionado], bins=bins)
+
+            #     # Agrupar por ano letivo e bin
+            #     counts = df_filtrado.groupby(['ANO_LETIVO', f'{indicador_selecionado}_bin']).size().reset_index(name='frequencia')
+
+            #     # Gráfico de barras
+            #     plt.figure(figsize=(14, 7))
+            #     ax = sns.barplot(x=f'{indicador_selecionado}_bin', y='frequencia', hue='ANO_LETIVO', data=counts, palette='viridis')
+
+            #     # Anotações no gráfico
+            #     for p in ax.patches:
+            #         if p.get_height() > 0:
+            #             ax.annotate(f'{int(p.get_height())}', 
+            #                         (p.get_x() + p.get_width() / 2., p.get_height()),
+            #                         ha='center', va='center', fontsize=10, color='black',
+            #                         xytext=(0, 5), textcoords='offset points')
+
+            #     plt.xlabel(f'Intervalos do {indicador_selecionado}', fontsize=12)
+            #     plt.ylabel('Frequência', fontsize=12)
+            #     plt.title(f'Distribuição do {indicador_selecionado} por Ano Letivo', fontsize=14, fontweight='bold')
+            #     plt.xticks(rotation=45, ha='right')
+            #     plt.legend(title='Ano Letivo', fontsize=10, title_fontsize=12)
+            #     plt.tight_layout()
+            #     st.pyplot(plt)
+
+            # Carregar o DataFrame com tratamento de possíveis issues
+            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv")
+
+            # Definindo os bins do histograma
+            bins = [3.03, 3.67, 4.31, 4.96, 5.60, 6.24, 6.88, 7.52, 8.16, 8.80, 9.44]
+
+            col1, col2= st.columns(2)
+
+            with col1:
+                anos_disponiveis = sorted(df['ANO_LETIVO'].unique())
+                ano_selecionado = st.selectbox('Selecione o ano', [None] + anos_disponiveis)
+
+            with col2:
+                indicadores_disponiveis = ["INDE", "IAA", "IEG", "IPS", "IDA", "IPP", "IPV"]
+                indicador_selecionado = st.selectbox('Selecione o indicador', [None] + indicadores_disponiveis)
+
+            # Aplicar filtros
+            df_filtrado = df.copy()
+            if ano_selecionado:
+                df_filtrado = df_filtrado[df_filtrado['ANO_LETIVO'] == ano_selecionado]
+
+            # Cálculo dos valores Mínimo, Médio e Máximo
+            if indicador_selecionado and not df_filtrado.empty:
+                valores_ordenados = df_filtrado[indicador_selecionado].sort_values().values
+                minimo = next((val for val in valores_ordenados if val > 0), valores_ordenados[0] if len(valores_ordenados) > 0 else 0)
+                media = df_filtrado[indicador_selecionado].mean()
+                maximo = df_filtrado[indicador_selecionado].max()
+
+                with st.container():
+                    st.markdown("""
+                        <style>
+                            .metric-container {
+                                font-size: 20px;
+                                border: 1px solid #808080;
+                                padding: 05px;
+                                border-radius: 6px;
+                                text-align: center;
+                            }
+                        </style>
+                    """, unsafe_allow_html=True)
+
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.markdown(f'<div class="metric-container">Mínimo do {indicador_selecionado}<br><b>{round(minimo, 2)}</b></div>', unsafe_allow_html=True)
+                    with col2:
+                        st.markdown(f'<div class="metric-container">Média do {indicador_selecionado}<br><b>{round(media, 2)}</b></div>', unsafe_allow_html=True)
+                    with col3:
+                        st.markdown(f'<div class="metric-container">Máximo do {indicador_selecionado}<br><b>{round(maximo, 2)}</b></div>', unsafe_allow_html=True)
+
+                st.markdown('---')
+                # Criar categorias para o histograma
+                df_filtrado[f'{indicador_selecionado}_bin'] = pd.cut(df_filtrado[indicador_selecionado], bins=bins)
+
+                # Agrupar por ano letivo e bin
+                counts = df_filtrado.groupby(['ANO_LETIVO', f'{indicador_selecionado}_bin']).size().reset_index(name='frequencia')
+
+                # Gráfico de barras
+                plt.figure(figsize=(14, 7))
+                ax = sns.barplot(x=f'{indicador_selecionado}_bin', y='frequencia', hue='ANO_LETIVO', data=counts, palette='viridis')
+
+                # Anotações no gráfico
+                for p in ax.patches:
+                    if p.get_height() > 0:
+                        ax.annotate(f'{int(p.get_height())}', 
+                                    (p.get_x() + p.get_width() / 2., p.get_height()),
+                                    ha='center', va='center', fontsize=10, color='black',
+                                    xytext=(0, 5), textcoords='offset points')
+
+                plt.xlabel(f'Intervalos do {indicador_selecionado}', fontsize=12)
+                plt.ylabel('Alunos', fontsize=12)
+                plt.title(f'Distribuição do {indicador_selecionado} por Ano Letivo', fontsize=14, fontweight='bold')
+                plt.xticks(rotation=45, ha='right')
+                plt.legend(title='Ano Letivo', fontsize=10, title_fontsize=12)
+                plt.tight_layout()
+                st.pyplot(plt)
+
+            else:
+                st.markdown(
+                    """
+                    <div style="text-align: center;">
+                        <br>Por favor, selecione um indicador para visualizar os dados.<b>
+                    </div>
+                    """, unsafe_allow_html=True
                 )
-                for i, count in enumerate(df_pedra_contagem[pedra]):
-                    ax.text(df_pedra_contagem.index[i], count, str(count), ha='center', va='bottom')
-            ax.set_xlabel("Ano da Pesquisa")
-            ax.legend(title="Pedra")
 
-        # Configurações do gráfico
-        ax.set_title("Alunos separados por PEDRA")
-        ax.grid(True)
-        plt.xticks(rotation=45)
-        plt.tight_layout()
+        elif model == 'Pedras':
+            
+            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_pedra_geral.csv")
 
-        # Exibir no Streamlit
-        st.pyplot(fig)        
 
-    else:
-        st.subheader('Ponto de Virada', divider='orange')
+            st.subheader('Pedras', divider='orange')
 
-         # texto
-        st.markdown('''
-                    <p style="font-size: 18px">
-                        O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-                        O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-                        amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
-                        <br>
-                    </p>
-                    ''', unsafe_allow_html=True)
+            # texto
+            st.markdown('''
+                        <p style="font-size: 18px">
+                            O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                            O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                            amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                            <br>
+                        </p>
+                        ''', unsafe_allow_html=True)
+            
+            df['ano_letivo'] = df['ano_letivo'].astype(str) 
+            
+            df_pedra = df.set_index('ano_letivo')
+
+            # Criar sessão de estado para os filtros se ainda não existirem
+            for key in ['ano_selecionado3', 'pedra_selecionada', 'genero_selecionado']:
+                if key not in st.session_state:
+                    st.session_state[key] = None
+
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                anos_disponiveis3 = sorted(df['ano_letivo'].unique())
+                ano_selecionado3 = st.selectbox('Selecione o ano', [None] + list(anos_disponiveis3), key='ano_selecionado3')     
+
+            with col2:
+                # Remover "nao_informado" da lista de opções
+                pedras_disponiveis = sorted(df['pedra'].unique())
+                pedras_disponiveis = [p for p in pedras_disponiveis if p != "nao_informado"]
+                
+                pedra_selecionada = st.selectbox('Selecione a pedra', [None] + pedras_disponiveis, key='pedra_selecionada')  
+
+            with col3:
+                generos_disponiveis = sorted(df['genero'].unique())
+                genero_selecionado = st.selectbox('Selecione o gênero', [None] + list(generos_disponiveis), key='genero_selecionado')    
+
+            # Aplicar filtros
+            df_filtrado = df.copy()
+            if ano_selecionado3:
+                df_filtrado = df_filtrado[df_filtrado['ano_letivo'] == ano_selecionado3]
+            if pedra_selecionada:
+                df_filtrado = df_filtrado[df_filtrado['pedra'] == pedra_selecionada]
+            if genero_selecionado:
+                df_filtrado = df_filtrado[df_filtrado['genero'] == genero_selecionado]
+
+            # Remover a categoria "nao_informado" antes de calcular os dados
+            df_filtrado = df_filtrado[df_filtrado['pedra'] != "nao_informado"]
+
+            # Criar dataframe de contagem
+            df_pedra_contagem = df_filtrado.groupby(['ano_letivo', 'pedra']).size().unstack(fill_value=0)
+
+            # Garantir que o total de pedras seja baseado em todos os registros do ano, excluindo "nao_informado"
+            df_total_geral = df[df['pedra'] != "nao_informado"].groupby(['ano_letivo', 'pedra']).size().unstack(fill_value=0)
+            total_pedra_geral = df_total_geral.sum(axis=1)
+
+            # Calcular percentual com base no total original de todas as pedras, sem "nao_informado"
+            df_pedra_percentual = df_pedra_contagem.divide(total_pedra_geral, axis=0) * 100
+            df_pedra_percentual = df_pedra_percentual.fillna(0)  # Substituir NaN por 0 se necessário
+
+            # Cores para o gráfico
+            cores = {
+                'Quartzo': 'red',
+                'Agata': 'yellow',
+                'Ametista': 'lightblue',
+                'Topazio': 'lightgreen'
+            }   
+
+            # Criar o gráfico
+            st.subheader("Gráfico com a quantidade total de alunos")
+            fig, ax = plt.subplots(figsize=(12, 6))
+
+            # Remover fundo branco
+            fig.patch.set_alpha(0)  # Remove fundo do gráfico
+            ax.set_facecolor("none")  # Remove fundo do eixo
+            ax.patch.set_alpha(0)  # Remove fundo interno do gráfico
+
+            if ano_selecionado3:
+                # Se um único ano for selecionado, usar gráfico de barras
+                df_pedra_contagem = df_filtrado['pedra'].value_counts()
+                ax.bar(df_pedra_contagem.index, df_pedra_contagem.values, 
+                    color=[cores.get(p, 'gray') for p in df_pedra_contagem.index])
+                ax.set_ylabel("Total de Pedras", color="white")
+                ax.set_xlabel("Pedra", color="white")
+                
+                for i, v in enumerate(df_pedra_contagem.values):
+                    ax.text(i, v + 0.5, str(v), ha='center', color="white")  # Ajuste de cor do texto
+            else:
+                # Se nenhum ano for selecionado, manter o gráfico de linhas
+                for pedra in df_pedra_contagem.columns:
+                    ax.plot(
+                        df_pedra_contagem.index,
+                        df_pedra_contagem[pedra],
+                        marker='o',
+                        label=pedra,
+                        color=cores.get(pedra, 'gray')
+                    )
+                    for i, count in enumerate(df_pedra_contagem[pedra]):
+                        ax.text(df_pedra_contagem.index[i], count, str(count), ha='center', va='bottom', color="white")
+
+                ax.set_xlabel("Ano da Pesquisa", color="white")
+                ax.legend(title="Pedra")
+
+            # Configurações do gráfico
+            ax.set_title("Alunos separados por PEDRA - Quantidade de alunos", color="white")
+            ax.grid(color='gray', linestyle='--', linewidth=0.5)  # Grid mais suave
+            ax.tick_params(axis='x', colors='white')  # Cor dos valores no eixo X
+            ax.tick_params(axis='y', colors='white')  # Cor dos valores no eixo Y
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+
+            # Exibir no Streamlit
+            st.pyplot(fig)
+
+            # Criar o gráfico de distribuição percentual de alunos por pedra
+            st.subheader("Gráfico de distribuição percentual de alunos por pedra")
+            fig, ax = plt.subplots(figsize=(10, 6))
+
+            # Remover fundo branco do gráfico
+            fig.patch.set_alpha(0)  # Remove o fundo branco do gráfico
+            ax.set_facecolor("none")  # Remove o fundo dos eixos
+            ax.patch.set_alpha(0)  # Remove fundo do plot
+
+            bar_width = 0.15
+            y_pos = np.arange(len(df_pedra_percentual.index))
+
+            barras = []
+            for i, pedra in enumerate(df_pedra_percentual.columns):
+                bars = ax.bar(y_pos + i * bar_width, df_pedra_percentual[pedra], bar_width, color=cores.get(pedra, 'gray'), label=pedra)
+                barras.append((bars, df_pedra_percentual[pedra]))
+
+            # Adicionar porcentagens corretamente
+            for bars, valores in barras:
+                for bar, valor in zip(bars, valores):
+                    height = bar.get_height()
+                    if height > 0:
+                        ax.text(bar.get_x() + bar.get_width()/2., height, f'{valor:.1f}%', ha='center', va='bottom', color='white')  # Cor do texto alterada
+
+            # Ajustes visuais
+            ax.set_xticks(y_pos + 1.5 * bar_width)
+            ax.set_xticklabels(df_pedra_percentual.index, color='white')  # Cor do eixo X
+            ax.set_xlabel("Ano", color='white')
+            ax.set_ylabel("Porcentagem de Alunos", color='white')
+            ax.set_title("Distribuição percentual de alunos por pedra", color='white')
+            ax.legend()
+            ax.set_ylim(0, 70)
+            ax.grid(color='gray', linestyle='--', linewidth=0.5)  # Grid mais suave
+
+            plt.tight_layout()
+            st.pyplot(fig)
+
+        else:
+            st.subheader('Ponto de Virada', divider='orange')
+
+            # texto
+            st.markdown('''
+                        <p style="font-size: 18px">
+                            O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
+                            O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
+                            amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                            <br>
+                        </p>
+                        ''', unsafe_allow_html=True)
+
+    elif menu == "Análise Preditiva":
+        st.subheader("🔮 Análise Preditiva")
+       # st.write("Aqui você pode acessar modelos preditivos.")
 
 # conclusão
 elif page == page_3:
@@ -1104,8 +1289,7 @@ elif page == page_3:
                     ''')
     
     st.markdown('<br>', unsafe_allow_html=True)
-    
-    
+       
 # referências        
 else:
     st.title('Referências')
