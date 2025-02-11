@@ -687,9 +687,8 @@ elif page == page_2:
             # texto 
             st.markdown('''
                 <p style="font-size: 18px">
-                    O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-                    O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-                    amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
+                    Nesse modelo, podemos filtrar de maneira dinâmica cada aluno da associação passos mágicos que estiveram presentes entre os anos de
+                    2022 até 2024. Com base nesse filtro, é possível ter uma visão geral da base e começar a dar os primeiros passos em uma análise exploratória.
                     <br>
                 </p>
                 ''', unsafe_allow_html=True)
@@ -757,6 +756,7 @@ elif page == page_2:
 
             st.button('Limpar Filtros', on_click=reset_filters)
 
+            # Filtragem do dataframe
             if multi:
                 df_filtrado = df_filtrado[df_filtrado.index.isin(multi)]
 
@@ -773,7 +773,14 @@ elif page == page_2:
                 df_filtrado = df_filtrado[df_filtrado['INDE'] > valor_inde]
             elif comparador_inde == 'Menor que':
                 df_filtrado = df_filtrado[df_filtrado['INDE'] < valor_inde]
-        
+
+            # Converter colunas numéricas para inteiros (removendo casas decimais)
+            for col in df_filtrado.select_dtypes(include=['float']).columns:
+                df_filtrado[col] = df_filtrado[col].astype(int)
+
+            # Corrigir exibição removendo separador de milhar
+            df_filtrado = df_filtrado.applymap(lambda x: f"{x}" if isinstance(x, int) else x)
+
             # Estilo CSS para ajustar a largura da tabela
             st.markdown(
                 """
@@ -809,63 +816,6 @@ elif page == page_2:
                         - IPP - Indicador Psicopedagogico
                         - IPV - Indicador de Ponto de Virada
                         ''')        
-            
-            # # Carregar o DataFrame com tratamento de possíveis issues
-            # df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv")  
-
-            # # Definindo os bins do histograma
-            # bins = [3.03, 3.67, 4.31, 4.96, 5.60, 6.24, 6.88, 7.52, 8.16, 8.80, 9.44]
-
-            # # Filtros interativos no Streamlit
-            # st.title('Distribuição de Indicadores Escolares')
-
-            # anos_disponiveis = sorted(df['ANO_LETIVO'].unique())
-            # ano_selecionado = st.selectbox('Selecione o ano', [None] + anos_disponiveis)
-
-            # indicadores_disponiveis = ["INDE", "IAA", "IEG", "IPS", "IDA", "IPP"]
-            # indicador_selecionado = st.selectbox('Selecione o indicador', [None] + indicadores_disponiveis)
-
-            # tipo_calculo = st.selectbox("Selecione o cálculo", ["Média", "Total"])
-
-            # # Aplicar filtros
-            # df_filtrado = df.copy()
-            # if ano_selecionado:
-            #     df_filtrado = df_filtrado[df_filtrado['ANO_LETIVO'] == ano_selecionado]
-
-            # # Cálculo da Média ou Total
-            # if indicador_selecionado:
-            #     if tipo_calculo == "Média":
-            #         resultado = df_filtrado[indicador_selecionado].mean()
-            #     elif tipo_calculo == "Total":
-            #         resultado = df_filtrado[indicador_selecionado].sum()
-                
-            #     st.metric(label=f"{tipo_calculo} do {indicador_selecionado}", value=round(resultado, 2))
-
-            #     # Criar categorias para o histograma
-            #     df_filtrado[f'{indicador_selecionado}_bin'] = pd.cut(df_filtrado[indicador_selecionado], bins=bins)
-
-            #     # Agrupar por ano letivo e bin
-            #     counts = df_filtrado.groupby(['ANO_LETIVO', f'{indicador_selecionado}_bin']).size().reset_index(name='frequencia')
-
-            #     # Gráfico de barras
-            #     plt.figure(figsize=(14, 7))
-            #     ax = sns.barplot(x=f'{indicador_selecionado}_bin', y='frequencia', hue='ANO_LETIVO', data=counts, palette='viridis')
-
-            #     # Anotações no gráfico
-            #     for p in ax.patches:
-            #         if p.get_height() > 0:
-            #             ax.annotate(f'{int(p.get_height())}', 
-            #                         (p.get_x() + p.get_width() / 2., p.get_height()),
-            #                         ha='center', va='center', fontsize=10, color='black',
-            #                         xytext=(0, 5), textcoords='offset points')
-
-            #     plt.xlabel(f'Intervalos do {indicador_selecionado}', fontsize=12)
-            #     plt.ylabel('Frequência', fontsize=12)
-            #     plt.title(f'Distribuição do {indicador_selecionado} por Ano Letivo', fontsize=14, fontweight='bold')
-            #     plt.xticks(rotation=45, ha='right')
-            #     plt.legend(title='Ano Letivo', fontsize=10, title_fontsize=12)
-            #     plt.tight_layout()
-            #     st.pyplot(plt)
 
             # Carregar o DataFrame com tratamento de possíveis issues
             df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv")
@@ -961,12 +911,11 @@ elif page == page_2:
 
             # texto
             st.markdown('''
-                        <p style="font-size: 18px">
-                            O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-                            O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-                            amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
-                            <br>
-                        </p>
+                        Classificação referente a cada tipo de pedra com base no INDE de cada aluno:
+                        - Quartzo – 2,405 a 5,506
+                        - Agata – 5,506 a 6,868
+                        - Ametista – 6,868 a 8,230
+                        - Topazio – 8,230 a 9,294
                         ''', unsafe_allow_html=True)
             
             df['ano_letivo'] = df['ano_letivo'].astype(str) 
@@ -1027,7 +976,7 @@ elif page == page_2:
             }   
 
             # Criar o gráfico
-            st.subheader("Gráfico com a quantidade total de alunos")
+            st.subheader("Gráfico com a quantidade total de alunos por pedra")
             fig, ax = plt.subplots(figsize=(12, 6))
 
             # Remover fundo branco
