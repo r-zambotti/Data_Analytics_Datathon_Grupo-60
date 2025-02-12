@@ -491,7 +491,7 @@ elif page == page_2:
     )
 
     # Criando o menu centralizado
-    menu = st.radio("", ["Dashboard", "Insight", "Análise Preditiva"], horizontal=True)
+    menu = st.radio("", ["Dashboard", "Insight", "Análise Preditiva"], horizontal=True, label_visibility="collapsed")
 
     st.markdown('---', unsafe_allow_html=True)
 
