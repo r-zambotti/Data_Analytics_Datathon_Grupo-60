@@ -25,7 +25,6 @@ import requests
 # from statsmodels.tsa.stattools import adfuller
 
 from PIL import Image
-
 from io import BytesIO
 
 # import pickle
@@ -43,8 +42,9 @@ st.set_page_config(layout='centered',
                    page_title='Associação Passos Mágicos - Tech Challenge - FIAP', 
                    page_icon='🌟', initial_sidebar_state='auto')
 
-# response = requests.get(url)
-# csv_data = response.content
+url = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv"
+response = requests.get(url)
+csv_data = response.content
 
 # paginação
 page_0 = 'Introdução ✨'
@@ -105,33 +105,44 @@ if page == page_0:
         tab0, tab1 = st.tabs(tabs=['Base de Dados', 'Dicionário'])
 
         with tab0:
-            st.markdown('''Base de dados PEDE (Pesquisa Extensiva do Desenvolvimento Educacional)''',unsafe_allow_html=True)
+            # Função para carregar o arquivo Excel com cache
+            @st.cache_data
+            def carregar_dados(url):
+                return pd.read_excel(url, sheet_name=None, engine="openpyxl")
 
-            #Dados
-            url = "https://github.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/raw/refs/heads/main/Bases/PEDE_PASSOS_2024.xlsx"
-            
-            opcao = st.radio("", ["Base de Dados PEDE", "Base de Dados Tratada"], horizontal=True)
+            with st.container():
+                st.markdown('''Base de dados PEDE (Pesquisa Extensiva do Desenvolvimento Educacional)''', unsafe_allow_html=True)
 
-            if opcao == "Base de Dados PEDE":
+                # URL do arquivo
+                url = "https://github.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/raw/refs/heads/main/Bases/PEDE_PASSOS_2024.xlsx"
 
-                df = pd.read_excel(url, engine="openpyxl")
+                opcao = st.radio("Selecione base para download:", ["Base de Dados PEDE", "Base de Dados Tratada"], horizontal=True)
 
-                output = BytesIO()
-                with pd.ExcelWriter(output) as writer:
-                    df.to_excel(writer, index=False, sheet_name='Dados')
+                if opcao == "Base de Dados PEDE":
+                    # Carrega os dados do Excel usando cache
+                    xls = carregar_dados(url)
 
-                excel_data = output.getvalue()
+                    # Criar buffer para download
+                    output = BytesIO()
+                    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+                        for sheet_name, df in xls.items():
+                            df.to_excel(writer, index=False, sheet_name=sheet_name)
 
-                st.download_button(
-                    label="Baixar Base PEDE (xlsx)",
-                    data=excel_data,
-                    file_name="PEDE_PASSOS_2024.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                )
+                    excel_data = output.getvalue()
+
+                    st.download_button(
+                        label="Baixar Base PEDE (xlsx)",
+                        data=excel_data,
+                        file_name="PEDE_PASSOS_2024.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+
+                if opcao == "Base de Dados Tratada":
+                    st.download_button(label="Baixar Base Tratada (csv)",data=csv_data,file_name="df_alunos.csv",mime="text/csv")
 
         with tab1:
             st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
-            #st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
+            st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
 
             st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
             data_dict = {
