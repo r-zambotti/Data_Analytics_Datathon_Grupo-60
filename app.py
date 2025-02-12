@@ -42,9 +42,16 @@ st.set_page_config(layout='centered',
                    page_title='Associação Passos Mágicos - Tech Challenge - FIAP', 
                    page_icon='🌟', initial_sidebar_state='auto')
 
+#Bases
 url = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv"
+url_file_data = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/file/Dicion%C3%A1rio%20Dados%20Datathon.pdf"
+
 response = requests.get(url)
 csv_data = response.content
+
+response = requests.get(url_file_data)
+file_data = response.content
+
 
 # paginação
 page_0 = 'Introdução ✨'
@@ -141,85 +148,29 @@ if page == page_0:
                     st.download_button(label="Baixar Base Tratada (csv)",data=csv_data,file_name="df_alunos.csv",mime="text/csv")
 
         with tab1:
-            st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
+            st.markdown('''                   
+                        ###### Download do dicionário
+                        ''',unsafe_allow_html=True)
+            
             st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
 
-            st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
-            data_dict = {
-            "INSTITUICAO_ENSINO_ALUNO_2020": "Mostra instituição de Ensino do Aluno em 2020",
-            "NOME": "Nome do Aluno (dados estão anonimizados)",
-            "IDADE_ALUNO_2020": "Idade do Aluno em 2020",
-            "PEDRA_2020": "Classificação do Aluno baseado no número do INDE (2020), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
-            "IAA_2020": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2020",
-            "IEG_2020": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2020",
-            "IPS_2020": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2020",
-            "IDA_2020": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2020",
-            "IPP_2020": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2020",
-            "IPV_2020": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2020",
-            "IAN_2020": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2020",
-            "INDE_2020": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2020.",
-            "DESTAQUE_IEG_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Engajamento' em 2020",
-            "DESTAQUE_IDA_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2020",
-            "DESTAQUE_IPV_2020": "Observações dos Avaliadores Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2020",
-            "PONTO_VIRADA_2020": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2020",
-            "PEDRA_2021": "Classificação do Aluno baseado no número do INDE (2021), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
-            "IAA_2021": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2021",
-            "IEG_2021": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2021",
-            "IPS_2021": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2021",
-            "IDA_2021": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2021",
-            "IPP_2021": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2021",
-            "IPV_2021": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2021",
-            "IAN_2021": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2021",
-            "INDE_2021": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2021.",
-            "REC_EQUIPE_1_2021": "Recomendação: da Equipe de Avalição: 1 em 2021",
-            "REC_EQUIPE_2_2021": "Recomendação: da Equipe de Avalição: 2 em 2021",
-            "REC_EQUIPE_3_2021": "Recomendação: da Equipe de Avalição: 3 em 2021",
-            "REC_EQUIPE_4_2021": "Recomendação: da Equipe de Avalição: 4 em 2021",
-            "REC_PSICO_2021": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2021",
-            "PONTO_VIRADA_2021": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2021",
-            "PEDRA_2022": "Classificação do Aluno baseado no número do INDE (2022), o conceito de classificação é dado por: Quartzo – 2,405 a 5,506 / Ágata – 5,506 a 6,868 / Ametista – 6,868 a 8,230 / Topázio – 8,230 a 9,294",
-            "IAA_2022": "Indicador de Auto Avaliação – Média das Notas de Auto Avaliação do Aluno em 2022",
-            "IEG_2022": "Indicador de Engajamento – Média das Notas de Engajamento do Aluno em 2022",
-            "IPS_2022": "Indicador Psicossocial – Média das Notas Psicossociais do Aluno em 2022",
-            "IDA_2022": "Indicador de Aprendizagem - Média das Notas do Indicador de Aprendizagem 2022",
-            "IPP_2022": "Indicador Psicopedagógico – Média das Notas Psicopedagógicas do Aluno em 2022",
-            "IPV_2022": "Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno em 2022",
-            "IAN_2022": "Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual em 2022",
-            "INDE_2022": "Índice do Desenvolvimento Educacional – Métrica de Processo Avaliativo Geral do Aluno, dado pela ponderação dos indicadores: IAN, IDA, IEG, IAA, IPS, IPP e IPV em 2022.",
-            "REC_PSICO_2022": "Mostra qual a recomendação da equipe de psicologia sobre o Aluno em 2022",
-            "REC_AVA_1_2022": "Recomendação da Equipe de Avalição 1 em 2022",
-            "REC_AVAL_2_2022": "Recomendação da Equipe de Avalição: 2 em 2022",
-            "REC_AVAL_3_2022": "Recomendação da Equipe de Avalição: 3 em 2022",
-            "REC_AVAL_4_2022": "Recomendação da Equipe de Avalição: 4 em 2022",
-            "DESTAQUE_IEG_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Engajamento' em 2022",
-            "DESTAQUE_IDA_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Aprendizagem' em 2022",
-            "DESTAQUE_IPV_2022": "Observações dos Mestres Sobre o Aluno referente ao 'Indicador de Ponto de Virada' em 2022",
-            "PONTO_VIRADA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno atingiu o 'Ponto de Virada' em 2022",
-            "INDICADO_BOLSA_2022": "Campo do Tipo Booleano que sinaliza se o Aluno foi indicado para alguma Bolsa no Ano de 2022"
-            }
-
-            df = pd.DataFrame(list(data_dict.items()), columns=["Nome da Coluna", "Detalhamento dos dados"])
-
-            st.markdown('''A base contém 50 colunas referente ao período de 2020 a 2022, com colunas adicionais no decorrer dos anos.''', unsafe_allow_html=True)
-
-            st.table(df)    
+            st.markdown('''                   
+                        Importante: <br>
+                        O dicionário disponibilizado para download é a versão com as bases de 2020 até 2022, material disponibilizado pela instituição de ensino para o desáfio.
+                        ''',unsafe_allow_html=True) 
             
         st.markdown('''        
         ---
-        
         **📡 Fontes de dados**:
-        - [IPEA](http://www.ipeadata.gov.br/Default.aspx)
-        - [FRED](https://fred.stlouisfed.org/series/DCOILBRENTEU)
-        - [Yahoo Finance](https://finance.yahoo.com/quote/CL=F?p=CL=F)
-
+        - [PASSOS MÁGICOS](https://passosmagicos.org.br/)
+        - [GOOGLE DRIVE](https://drive.google.com/drive/folders/1Z1j6uzzCOgjB2a6i3Ym1pmJRsasfm7cD)
         ---
         
         **🧑🏻‍🚀 Autores**: 
-        - [Victor Novais de Oliveira](https://www.linkedin.com)
-        - [Rodrigo Zambotti de Andrade](https://www.linkedin.com)
+        - [Victor Novais de Oliveira](https://www.linkedin.com/in/victor-novais-166369171/)
+        - [Rodrigo Zambotti de Andrade](https://www.linkedin.com/in/rodrigo-zambotti-369840a4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
         - [Arencio Job Pereira](https://www.linkedin.com)  
         - [Bruno Akio Matsuzaki Shimada](https://www.linkedin.com)                     
-
         ---
         
         **🪐 Repositório**: 
@@ -341,8 +292,10 @@ elif page == page_1:
         
         st.markdown('''
                     <p style="font-size: 18px">
+
                     O <b><font color='blue'>Índice de Desenvolvimento Educacional (INDE)</b></font> da Associação Passos Mágicos é uma métrica utilizada para avaliar o progresso educacional dos alunos atendidos pela instituição. 
                     Esse índice é calculado com base em diversos fatores, incluindo:
+
                     </p>
                     ''', unsafe_allow_html=True)    
         
@@ -364,7 +317,10 @@ elif page == page_1:
         
         st.markdown('''
                     <p style="font-size: 18px">
-                    O INDE é uma ferramenta crucial para a Passos Mágicos, pois permite monitorar e ajustar suas estratégias educacionais, garantindo que cada aluno receba o suporte necessário para alcançar seu pleno potencial.
+
+                    O INDE é uma ferramenta crucial para a Passos Mágicos, pois permite monitorar e ajustar suas estratégias educacionais, 
+                    garantindo que cada aluno receba o suporte necessário para alcançar seu pleno potencial.
+                    
                     </p>
                     ''', unsafe_allow_html=True)
 
@@ -372,9 +328,13 @@ elif page == page_1:
     if indicador == 'Pedras':
 
         st.markdown('''
+                    <p style="font-size: 18px">
+
                     As <b><font color='blue'>Pedras</b></font> podem ser definidas como o quanto os alunos estão pontuando, então ele entra num esquema de classificação, 
                     o que traz mais clareza na análise e atenção para o desenvolvimento de cada aluno e também dá uma visão mais competitiva aos alunos, porém eles irão almejar as melhores classificações. 
                     Até o último relatório PEDE tinhamos 4 pedras que são:
+
+                    </p>
                     ''',unsafe_allow_html=True)
         
         st.markdown('''
@@ -397,91 +357,160 @@ elif page == page_1:
     if indicador == 'IEG':
 
         st.markdown('''
-                    ###### <font color='blue'>IEG (Índice de Engajamento Global)
+                    <p style="font-size: 18px">
+
+                    ###### IEG (Índice de Engajamento Global)
+
+                    </p>
                     ''',unsafe_allow_html=True )
         
         st.markdown('''
-                    Avalia o nível de envolvimento dos alunos em atividades extracurriculares e programas de intercâmbio. Este índice é importante para entender como as experiências 
-                    fora da sala de aula contribuem para o desenvolvimento pessoal e acadêmico dos alunos.
+                    <p style="font-size: 18px">
+
+                    O IEG expressa as entregas das atividades solicitadas para realização nos contraturnos das aulas do Programa de Aceleração do Conhecimento - a lição de casa dos estudantes das Fases 0 até a fase 7.
+                    Para os estudantes da Fase 8, bolsistas universitários, essa é a medidade do seu engajamento nas ações disponíveis de voluntariado. 
+                    Seu valor é a transposição do percentual de entregas para uma base numérica comum (de 0 a 10 pontos)
+
+                    </p>
                     ''')
 
     #Tabela IDA
     if indicador == 'IDA':
 
         st.markdown('''
-                    ###### <font color='blue'>IDA (Índice de Desenvolvimento Acadêmico)
+                    <p style="font-size: 18px">
+
+                    ###### IDA (Índice de Desenvolvimento Acadêmico)
+
+                    </p>
                     ''',unsafe_allow_html=True)
         
         st.markdown('''
-                    Mede o progresso acadêmico dos alunos, considerando notas, frequência escolar e participação em atividades educacionais. 
-                    Este índice ajuda a identificar áreas que necessitam de melhorias e a eficácia das intervenções pedagógicas.
-                    ''')
+                    <p style="font-size: 18px">
+
+                    O IDA expressa a proficiência dos estudantes da Fase 0 (alfabetização), até a Fase 7 (3º ano do ensino médio), nas provas aplicadas pela Associação Passos Mágicos, numa mesma base númerica (de 0 a 10 pontos). 
+                    Para esses estudantes essa é uma medida uniforme de avaliação, pois essas provas se referem aos conteúdos e às habilidades associadas a esses conteúdos, que foram desenvolvidos no contexto do Programa de Aceleração do Conhecimento.                
+                    Para os estudantes da Fase 8, bolsistas universitários, esse indicador expressa a média anual das avaliações de cada disciplina cursada em seus respectivos cursos, na mesma base númerica (de 0 a 10 pontos).
+
+                    </p>
+                    ''',unsafe_allow_html=True)
 
     #Tabela IAN
     if indicador == 'IAN':
 
         st.markdown('''
-                    ######  <font color='blue'>IAN (Índice de Aproveitamento Nutricional)
+                    <p style="font-size: 18px">
+
+                    ###### IAN (Índice de Aproveitamento Nutricional)
+
+                    </p>
                     ''',unsafe_allow_html=True)
         
         st.markdown('''
-                    Avalia a qualidade da alimentação fornecida às crianças e jovens, medindo o impacto da nutrição no desempenho escolar e no bem-estar geral dos alunos.
+                    <p style="font-size: 18px">
+
+                    O IAN capta a correspondência entre a Fase de Ensino, do Programa de Aceleração do Conhecimento, a qual o estudante estava vinculado no ano corrente, 
+                    com o ano escolar equivalente e adequado a sua idade. Essa equivalência é determinada pela resolução nº 6 do Conselho Nacional de Educação do Ministério da Educação, 
+                    que regulamenta a indicação da idade escolar em cada etapa da vida escolar dos estudantes no Brasil. 
+
+                    </p>
                     ''')
         
     #Tabela IAA
     if indicador == 'IAA':
 
         st.markdown('''
-                    ######  <font color='blue'>IAA (Índice de Atendimento e Acompanhamento)
+                    <p style="font-size: 18px">
+
+                    ###### IAA (Índice de Atendimento e Acompanhamento)
+
+                    </p>
                     ''',unsafe_allow_html=True)
         
         st.markdown('''
-                    Mede a qualidade e a frequência do atendimento psicológico e psicopedagógico oferecido aos alunos. 
-                    Este índice é crucial para garantir que os alunos recebam o suporte necessário para superar desafios emocionais e acadêmicos.
-                    ''')
+                    <p style="font-size: 18px">
+
+                    O indicador de Adequação de Nível registra a condinção de adequação do estudante, por meio da avaliação pedagógica e multidisciplinar da Associação,
+                    à Fase de Ensino efetivamente designada. Isso significa que o estudante é designado para a Fase de Ensino que seja compatível com o atual estágio de desenvolvimento das suas 
+                    capacidades e habilidades acadêmicas.<br>
+                    Sendo assim, cabe confrontar o diagnóstico de atribuição da Fase de Ensino efetivamente designada aos estudantes, com o seu respectivo desempenho acadêmico, para verificar
+                    se não existe um desempenho acadêmico advindo, meramente, da defasagem no Nível de Ensino. Isso seria observado, caso o desempenho acadêmico dos estudantes com defasagem fosse superior à média dos
+                    estudantes em geral, ou mesmo dos estudantes sem defasagens.
+
+                    </p>
+                    ''',unsafe_allow_html=True)
         
     #Tabela IPS
     if indicador == 'IPS':
 
         st.markdown('''
-                    ######  <font color='blue'>IPS (Índice de Participação Social)
+                    <p style="font-size: 18px">
+
+                    ######  IPS (Índice de Participação Social)
+
+                    </p>
                     ''',unsafe_allow_html=True)
         
         st.markdown('''
-                    Avalia o envolvimento dos alunos em atividades comunitárias e projetos sociais. Este índice ajuda a medir o impacto dos programas da Passos Mágicos na formação de cidadãos conscientes e ativos na sociedade.
+                    <p style="font-size: 18px">
+
+                    Avalia o envolvimento dos alunos em atividades comunitárias e projetos sociais. Este índice ajuda a medir o impacto dos programas da Passos Mágicos na 
+                    formação de cidadãos conscientes e ativos na sociedade.
+
+                    </p>
                     ''')
         
     #Tabela IPP
     if indicador == 'IPP':
 
         st.markdown('''
-                    ###### <font color='blue'>IPP (Índice de Progresso Pessoal)
+                    <p style="font-size: 18px">
+
+                    ###### IPP (Índice de Progresso Pessoal)
+
+                    </p>
                     ''',unsafe_allow_html=True)
         
         st.markdown('''
+                    <p style="font-size: 18px">
+
                     Mede o desenvolvimento pessoal dos alunos, considerando aspectos como autoestima, habilidades sociais e resiliência. 
                     Este índice é importante para avaliar o impacto das intervenções da Passos Mágicos no crescimento pessoal dos alunos.
+
+                    </p>
                     ''')
         
     #Tabela IPV
     if indicador == 'IPV':
 
         st.markdown('''
-                    ###### <font color='blue'>IPV (Índice de Permanência e Valorização)
+                    <p style="font-size: 18px">
+
+                    ###### IPV (Índice de Permanência e Valorização)
+
+                    </p>
                     ''',unsafe_allow_html=True)
         
         st.markdown('''
+                    <p style="font-size: 18px">
+
                     Avalia a taxa de retenção dos alunos nos programas da Passos Mágicos e a valorização dos mesmos pelos beneficiários e suas famílias. 
                     Este índice é fundamental para entender a satisfação e o comprometimento dos alunos com os programas oferecidos.
+
+                    </p>
                     ''')
         
     #Tabela Ponto de Virada   
     if indicador == 'Ponto de Virada':
         
         st.markdown(''' 
+                    <p style="font-size: 18px">
+
                     O Ponto de virada indica que o aluno atingiu um passo mágico, é a conquista de uma habilidade fundamental, 
                     é medido através das notas, avaliações e outros dados, e demonstra que o aluno teve um grande progresso, 
                     essa evolução o ajudará a enfrentar vários desafios que encontrará pela frente, assim como:
+
+                    </p>
                     ''' )
         
         st.markdown('''
