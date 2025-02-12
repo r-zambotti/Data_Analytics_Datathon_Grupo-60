@@ -26,6 +26,8 @@ import requests
 
 from PIL import Image
 
+from io import BytesIO
+
 # import pickle
 
 from utils import (normality_test, 
@@ -41,13 +43,8 @@ st.set_page_config(layout='centered',
                    page_title='Associação Passos Mágicos - Tech Challenge - FIAP', 
                    page_icon='🌟', initial_sidebar_state='auto')
 
-#Dados
-url = "https://github.com/wesleyesantos/Postech-Datathon/raw/main/PEDE_PASSOS_DATASET_FIAP.csv"
-url1 = "https://github.com/4ca63473-734d-4d8c-8181-9635c1837ddc"
-response = requests.get(url)
-csv_data = response.content
-response1 = requests.get(url1)
-file_data = response1.content
+# response = requests.get(url)
+# csv_data = response.content
 
 # paginação
 page_0 = 'Introdução ✨'
@@ -60,6 +57,7 @@ page_4 = 'Referências 📖'
 st.sidebar.title('Menu')
 page = st.sidebar.radio('Selecione a página:', 
                         [page_0, page_1, page_2, page_3, page_4])
+
         
 # Introdução
 if page == page_0:
@@ -69,7 +67,7 @@ if page == page_0:
     
     # descrição
     st.markdown('''
-                Analisando impacto causado pelas ações voluntárias da ONG Passos Mágicos, desenvolvendo uma análise exploratória, gerando insight e dashboard interativos.<br> 
+                Analisando impacto causado pelas ações voluntárias da ONG Passos Mágicos, desenvolvendo uma análise exploratória, gerando insights e dashboard interativos.<br> 
                 <br>Desenvolvido para a <b>Pós-Tech Data Analytics — FIAP</b>.
                 ''', unsafe_allow_html=True)
 
@@ -85,10 +83,13 @@ if page == page_0:
 
     # expansão com nota técnica
     with st.expander('🗒️ Nota Técnica'):
+
+
+
         st.markdown('''
         #### Dados do projeto
 
-        **🚀 Objetivo**: Analisar impacto causado pela ONG Passos Mágicos.
+        **🎯 Objetivo**: Analisar impacto causado pela ONG Passos Mágicos e gerar análise com base nos dados apresentados.
 
         ---
         
@@ -101,16 +102,36 @@ if page == page_0:
         **📡 Base de Dados e Dicionário**:
         ''')
 
-        tab9, tab10 = st.tabs(tabs=['Base de Dados', 'Dicionário'])
+        tab0, tab1 = st.tabs(tabs=['Base de Dados', 'Dicionário'])
 
-        with tab9:
+        with tab0:
             st.markdown('''Base de dados PEDE (Pesquisa Extensiva do Desenvolvimento Educacional)''',unsafe_allow_html=True)
-            
-            st.download_button(label="Baixar Base PEDE (csv)",data=csv_data,file_name="PEDE_PASSOS_DATASET_FIAP.csv",mime="text/csv")
 
-        with tab10:
+            #Dados
+            url = "https://github.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/raw/refs/heads/main/Bases/PEDE_PASSOS_2024.xlsx"
+            
+            opcao = st.radio("", ["Base de Dados PEDE", "Base de Dados Tratada"], horizontal=True)
+
+            if opcao == "Base de Dados PEDE":
+
+                df = pd.read_excel(url, engine="openpyxl")
+
+                output = BytesIO()
+                with pd.ExcelWriter(output) as writer:
+                    df.to_excel(writer, index=False, sheet_name='Dados')
+
+                excel_data = output.getvalue()
+
+                st.download_button(
+                    label="Baixar Base PEDE (xlsx)",
+                    data=excel_data,
+                    file_name="PEDE_PASSOS_2024.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+
+        with tab1:
             st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
-            st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
+            #st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
 
             st.markdown('''###### <font color='blue'>Estrutura da Base''',unsafe_allow_html=True)
             data_dict = {
@@ -467,7 +488,7 @@ elif page == page_1:
                     - Os alunos saberão que podem superar obstáculos com esforço contínuo.
                     ''')
 
-# Dashboard
+# Aplicação Analítica
 elif page == page_2:
 
     df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv")
@@ -905,6 +926,8 @@ elif page == page_2:
         elif model == 'Pedras':
             
             df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_pedra_geral.csv")
+            
+            plt.rcParams.update({'font.size': 14})  # Ajuste para aumentar toda a fonte do gráfico
 
 
             st.subheader('Pedras', divider='orange')
@@ -977,7 +1000,7 @@ elif page == page_2:
 
             # Criar o gráfico
             st.subheader("Gráfico com a quantidade total de alunos por pedra")
-            fig, ax = plt.subplots(figsize=(12, 6))
+            fig, ax = plt.subplots(figsize=(10, 6))
 
             # Remover fundo branco
             fig.patch.set_alpha(0)  # Remove fundo do gráfico
@@ -1009,12 +1032,19 @@ elif page == page_2:
 
                 ax.set_xlabel("Ano da Pesquisa", color="white")
                 ax.legend(title="Pedra")
+                leg = ax.legend()
+                leg.get_frame().set_facecolor('black')  # Fundo preto
+                leg.get_frame().set_edgecolor('white')  # Borda branca
+                for text in leg.get_texts():
+                    text.set_color("white")  # Texto branco
 
             # Configurações do gráfico
             ax.set_title("Alunos separados por PEDRA - Quantidade de alunos", color="white")
             ax.grid(color='gray', linestyle='--', linewidth=0.5)  # Grid mais suave
+
             ax.tick_params(axis='x', colors='white')  # Cor dos valores no eixo X
             ax.tick_params(axis='y', colors='white')  # Cor dos valores no eixo Y
+            
             plt.xticks(rotation=45)
             plt.tight_layout()
 
@@ -1043,19 +1073,27 @@ elif page == page_2:
                 for bar, valor in zip(bars, valores):
                     height = bar.get_height()
                     if height > 0:
-                        ax.text(bar.get_x() + bar.get_width()/2., height, f'{valor:.1f}%', ha='center', va='bottom', color='white')  # Cor do texto alterada
+                        ax.text(bar.get_x() + bar.get_width()/2., height, f'{valor:.1f}%', ha='center', va='bottom', color='white', fontsize=12)  # Ajuste no tamanho da fonte
 
             # Ajustes visuais
             ax.set_xticks(y_pos + 1.5 * bar_width)
-            ax.set_xticklabels(df_pedra_percentual.index, color='white')  # Cor do eixo X
-            ax.set_xlabel("Ano", color='white')
-            ax.set_ylabel("Porcentagem de Alunos", color='white')
-            ax.set_title("Distribuição percentual de alunos por pedra", color='white')
-            ax.legend()
+            ax.set_xticklabels(df_pedra_percentual.index, color='white', fontsize=12)  # Cor e tamanho do eixo X
+            ax.set_xlabel("Ano", color='white', fontsize=14)
+            ax.set_ylabel("Porcentagem de Alunos", color='white', fontsize=14)
+            ax.set_title("Distribuição percentual de alunos por pedra", color='white', fontsize=16)
             ax.set_ylim(0, 70)
             ax.grid(color='gray', linestyle='--', linewidth=0.5)  # Grid mais suave
 
+            # Ajustar a legenda para melhorar a visibilidade
+            leg = ax.legend()
+            leg.get_frame().set_facecolor('black')  # Fundo preto
+            leg.get_frame().set_edgecolor('white')  # Borda branca
+            for text in leg.get_texts():
+                text.set_color("white")  # Texto branco
+
             plt.tight_layout()
+            ax.tick_params(axis='x', colors='white')  # Cor dos valores no eixo X
+            ax.tick_params(axis='y', colors='white')  # Cor dos valores no eixo Y
             st.pyplot(fig)
 
         else:
