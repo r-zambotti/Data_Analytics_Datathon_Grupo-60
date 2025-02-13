@@ -26,6 +26,7 @@ import requests
 
 from PIL import Image
 from io import BytesIO
+from scipy.stats import norm
 
 # import pickle
 
@@ -312,28 +313,29 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    As <b><font color='blue'>Pedras</b></font> podem ser definidas como o quanto os alunos estão pontuando, então ele entra num esquema de classificação, 
-                    o que traz mais clareza na análise e atenção para o desenvolvimento de cada aluno e também dá uma visão mais competitiva aos alunos, porém eles irão almejar as melhores classificações. 
-                    Até o último relatório PEDE tinhamos 4 pedras que são:
+                    As pedras são definidas com base no índice do desenvolvimento educacional (INDE). Com base nas médias geradas pelos indicadores, conseguimos calcular como cada pedra será criada e atribuida a cada aluno.<br>  
+                    Como um dos principais objetivos do cálculo do INDE é ter um parâmetro de avaliação do desenvolvimento educacional dos estudantes da Associção Passos Mágicos, as suas medidas de variabilidade (médida, mediana e moda), nos possibilitam a formação de um critério
+                    de classificação de nota padronizada. Esse critério nos permite calcular intervalos de valor do INDE a partir do desempenho de todos os estudantes, comparando-os numa base mais justa, e não simplesmente ordenando suas notas pelos seus valores absolutos. 
+                    Assim, os resultados individuais do INDE levarão em conta as condições de dispersão das notas de todo o conjunto de estudantes. <b> A classificação das notas se dará então pela sua distância em relação à média geral e não por seu valor absoluto</b>. <br>
+                    Segue imagem abaixo para melhor entendimento: 
 
                     </p>
                     ''',unsafe_allow_html=True)
-        
+
+        image =  Image.open("img/notas_padronizadas.png")
+        st.image(image, caption= "Projeção Normal e limites da nota padronizada INDE escolar")
+
         st.markdown('''
-                    - <b><font color='blue'>Quartzo:</b></font> Alunos com INDE entre <b><font color='blue'>2,405 a 5,506</b></font>.
-                    ''',unsafe_allow_html=True)
-        
-        st.markdown('''
-                    - <b><font color='blue'>Ágata:</b></font> Alunos com INDE entre <b><font color='blue'>5,506 a 6,868</b></font>.
-                    ''',unsafe_allow_html=True)
-        
-        st.markdown('''
-                    - <b><font color='blue'>Ametista:</b></font> Alunos com INDE entre <b><font color='blue'>6,868 a 8,230</b></font>.
-                    ''',unsafe_allow_html=True)
-        
-        st.markdown('''
-                    - <b><font color='blue'>Topázio:</b></font> Alunos com INDE entre <b><font color='blue'>8,230 a 9,294</b></font>.
-                    ''',unsafe_allow_html=True)
+            <p style="font-size: 18px">
+
+            Com base nessas notas, geramos as seguintes médias para cada tipo de pedra: 
+            - Quartzo: Alunos com INDE entre 3.032 a 5.996.
+            - Ágata: Alunos com INDE entre 6.0092 a 6.9995.
+            - Ametista: Alunos com INDE entre 7.0000 a 8.058.
+            - Topázio: Alunos com INDE entre 8.0026 a 9.5313.
+
+            </p>
+            ''',unsafe_allow_html=True)
         
     #Tabela IEG    
     if indicador == 'IEG':
@@ -341,7 +343,7 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    ###### IEG (Índice de Engajamento Global)
+                    ###### IEG (Indicador de Engajamento)
 
                     </p>
                     ''',unsafe_allow_html=True )
@@ -349,9 +351,8 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    O IEG expressa as entregas das atividades solicitadas para realização nos contraturnos das aulas do Programa de Aceleração do Conhecimento - a lição de casa dos estudantes das Fases 0 até a fase 7.
-                    Para os estudantes da Fase 8, bolsistas universitários, essa é a medidade do seu engajamento nas ações disponíveis de voluntariado. 
-                    Seu valor é a transposição do percentual de entregas para uma base numérica comum (de 0 a 10 pontos).
+                    O Indicador de Engajamento - IEG, registra a participação em ações de voluntariado dos estudantes universitários, e a entrega das lições de casa dos estudantes em fase escolar.
+                    O indicador dos escolares foi produzido a partir dos registros feitos, diariamente, pela equipe pedagógica, no sistema escolar da Associação. 
 
                     </p>
                     ''',unsafe_allow_html=True )
@@ -362,7 +363,7 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    ###### IDA (Índice de Desenvolvimento Acadêmico)
+                    ###### IDA (Indicador de Desempenho Acadêmico)
 
                     </p>
                     ''',unsafe_allow_html=True)
@@ -383,28 +384,7 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    ###### IAN (Índice de Aproveitamento Nutricional)
-
-                    </p>
-                    ''',unsafe_allow_html=True)
-        
-        st.markdown('''
-                    <p style="font-size: 18px">
-
-                    O IAN capta a correspondência entre a Fase de Ensino, do Programa de Aceleração do Conhecimento, a qual o estudante estava vinculado no ano corrente, 
-                    com o ano escolar equivalente e adequado a sua idade. Essa equivalência é determinada pela resolução nº 6 do Conselho Nacional de Educação do Ministério da Educação, 
-                    que regulamenta a indicação da idade escolar em cada etapa da vida escolar dos estudantes no Brasil. 
-
-                    </p>
-                    ''',unsafe_allow_html=True )
-        
-    #Tabela IAA
-    if indicador == 'IAA':
-
-        st.markdown('''
-                    <p style="font-size: 18px">
-
-                    ###### IAA (Índice de Atendimento e Acompanhamento)
+                    ###### IAN (Indicador de Adequação de Nível)
 
                     </p>
                     ''',unsafe_allow_html=True)
@@ -420,7 +400,50 @@ elif page == page_1:
                     estudantes em geral, ou mesmo dos estudantes sem defasagens.
 
                     </p>
+                    ''',unsafe_allow_html=True )
+
+        image =  Image.open("img/ian_avaliacoes.png")
+        st.image(image, caption= "Dimensões e Indicadores do INDE") 
+        
+    #Tabela IAA
+    if indicador == 'IAA':
+
+        st.markdown('''
+                    <p style="font-size: 18px">
+
+                    ###### IAA (Indicador de Autoavaliação)
+
+                    </p>
                     ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    <p style="font-size: 18px">
+
+                    O indicador de autoavaliação - IAA, é um indicador de avaliação da dimensão psicossocial, isto é, seus resultados são uma medida produzida pelo próprio estudante, a partir de respostas sobre ele mesmo a respeito de aspesctos
+                    da sua vida e da sua experiência cotidiana. <br>
+
+                    O questionário de autoavaliação investigou seis aspectos da vida do estudante, sendo esses: 
+                    - Q1: Como se sente consigo mesmo?
+                    - Q2: Como se sente sobre os estudos?
+                    - Q3: Como se sente sobre a sua vida familiar? 
+                    - Q4: Como se sente sobre sua relação com os amigos?
+                    - Q5: Como se sente sobre a Associação Passos Mágicos? 
+                    - Q6: Como se sente sobre seus Professores na Passos Mágicos?
+
+                    </p>
+                    ''',unsafe_allow_html=True)
+        
+        st.markdown('''
+                    <p style="font-size: 18px">
+
+                    Confira na imagem abaixo: 
+
+                    </p>
+                    ''',unsafe_allow_html=True)        
+
+
+        image =  Image.open("img/iaa_avaliacoes.png")
+        st.image(image, caption= "Dimensões e Indicadores do INDE") 
         
     #Tabela IPS
     if indicador == 'IPS':
@@ -428,7 +451,7 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    ######  IPS (Índice de Participação Social)
+                    ######  IPS (Indicador de Psicossocial)
 
                     </p>
                     ''',unsafe_allow_html=True)
@@ -451,7 +474,7 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    ###### IPP (Índice de Progresso Pessoal)
+                    ###### IPP (Indicador Psicopedagógico)
 
                     </p>
                     ''',unsafe_allow_html=True)
@@ -490,7 +513,7 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    ###### IPV (Índice de Permanência e Valorização)
+                    ###### IPV (Indicador de Ponto de Virada)
 
                     </p>
                     ''',unsafe_allow_html=True)
@@ -959,6 +982,7 @@ elif page == page_2:
                     """, unsafe_allow_html=True
                 )
 
+
         elif model == 'Pedras':
             
             df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_pedra_geral.csv")
@@ -1132,6 +1156,7 @@ elif page == page_2:
             ax.tick_params(axis='y', colors='white')  # Cor dos valores no eixo Y
             st.pyplot(fig)
 
+
         else:
             st.subheader('Ponto de Virada', divider='orange')
 
@@ -1144,7 +1169,7 @@ elif page == page_2:
                             <br>
                         </p>
                         ''', unsafe_allow_html=True)
-
+              
     elif menu == "Análise Preditiva":
         st.subheader("🔮 Análise Preditiva")
        # st.write("Aqui você pode acessar modelos preditivos.")
