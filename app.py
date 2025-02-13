@@ -273,13 +273,14 @@ elif page == page_1:
                 ''',  unsafe_allow_html=True)
 
     st.markdown('''
-                Quanto ao <b><font color='blue'>INDE </b></font> geral tem uma média de 7,07, obtendo uma variação bem grande entre o mínimo de 2,46 e máximo de 9,71; 
+                Quanto ao <b><font color='blue'>INDE </b></font> geral tem uma média de 6,84, obtendo uma variação bem grande entre o mínimo de 3,03 e máximo de 9,53; 
                 ao realizar a análise por ano podemos observar que tem um aumento na quantidade de alunos e os níveis do INDE caem, nos trazendo o desafio de começar a segregar essa informação para buscar o gap.
                 ''', unsafe_allow_html=True) 
 
     st.markdown('''
-                O indicador <b><font color='blue'>IDA</b></font> se sobresai como o mais baixo de todos os anos que é um indicador de participação dos projetos e atividades pedagógicas, 
-                e devido a esse defasamento o maior indicador que temos é o <b><font color='blue'>IAA</b></font> que é o indice de atenção psicológica e psicopedagógica aos alunos.
+                Com base nas análises, é possível observar que a maioria dos estudantes tende a se concentrar nos intervalos de scores entre (6.88, 7.52], 
+                indicando um desempenho consistente e relativamente alto em várias métricas. A tendência geral mostra um aumento no número de estudantes nos intervalos superiores ao longo dos anos, 
+                sugerindo melhorias nos índices de desenvolvimento educacional, autoavaliação, engajamento, psicossocial, aprendizagem e pontos de virada.
                 ''', unsafe_allow_html=True)
 
     #Análise dos Indicadores
@@ -1183,14 +1184,27 @@ elif page == page_3:
     # texto
     st.markdown('''
                 <p style="font-size: 20px">
-                    Neste projeto, foram treinados dois modelos para prever o preço do petróleo Brent: XGBoost e Prophet.
-                    <br><br>
-                    O modelo XGBoost obteve <b>RMSE de 15.89</b>, <b>MAE de 12.31</b> e <b>MAPE de 16.06%</b>, 
-                    o modelo Prophet obteve <b>RMSE de 10.73</b>, <b>MAE de 6.14</b> e <b>MAPE de 12.11%</b>. 
-                    Com base nas configurações atuais, o modelo Prophet obteve melhores métricas de avaliação.
-                    <br>
+                Este projeto teve como objetivo analisar o impacto da ONG Passos Mágicos no desenvolvimento educacional de crianças e jovens em situação de vulnerabilidade social, 
+                utilizando dados do período de 2020 a 2024. A combinação de ciência de dados e storytelling foi fundamental para transformar um grande volume de informações em insights acionáveis.<br>
+
+                Com o uso do Google Colab para exploração e tratamento de dados e o Streamlit para a criação de um dashboard interativo, foi possível apresentar de forma intuitiva os principais indicadores de performance.<br>
+
+                A análise revelou tendências significativas que demonstram o impacto positivo da ONG em diversos aspectos-chave:
+                - <b>Redução da Defasagem Escolar:</b> Observou-se uma tendência de diminuição da defasagem entre idade e série, refletindo a eficácia das intervenções pedagógicas da ONG.<br>
+                - <b>Aumento no "Ponto de Virada" (PV):</b> Houve um crescimento constante no número de alunos que atingiram o PV, indicando o fortalecimento de competências acadêmicas e socioemocionais. <br>
+                - <b>Evolução por Gênero e Faixa Etária:</b> A distribuição equilibrada entre gêneros e a melhoria dos resultados em diferentes faixas etárias destacam o caráter inclusivo das ações da ONG. <br>
+                - <b>Impacto Longitudinal:</b> A progressão consistente no desempenho acadêmico ao longo dos anos sugere que o impacto da ONG é cumulativo e sustentável. <br>
+
                 </p>
                 ''', unsafe_allow_html=True)
+    st.markdown('''
+                <p style="font-size: 20px">
+                <br>Esses resultados não apenas evidenciam o papel transformador da Passos Mágicos, mas também oferecem subsídios valiosos para a tomada de decisões estratégicas. O uso de visualizações interativas facilita o acompanhamento dos indicadores, permitindo que gestores e stakeholders da ONG identifiquem oportunidades de melhoria e ampliem o impacto de suas iniciativas.
+                Dessa forma, este trabalho reforça a importância da análise de dados no terceiro setor, demonstrando como a tecnologia pode ser uma aliada poderosa na promoção da transformação social por meio da educação.
+                <br>
+                </p>
+                ''', unsafe_allow_html=True)    
+
 
     st.markdown('<br>', unsafe_allow_html=True)
     
