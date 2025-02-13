@@ -285,7 +285,7 @@ elif page == page_1:
     st.subheader('Análise dos Indicadores', divider='orange')
 
     #Divindo cada indicador em selectbox para melhor visualização
-    indicador = st.selectbox('Selecione o indicador:', ['INDE','Pedras','IEG', 'IDA', 'IAN', 'IAA', 'IPS', 'IPP', 'IPV', 'Ponto de Virada'])
+    indicador = st.selectbox('Selecione o indicador:', ['INDE','Pedras','IEG', 'IDA', 'IAN', 'IAA', 'IPS', 'IPP', 'IPV'])
 
     #Tabela INDE
     if indicador == 'INDE':
@@ -293,36 +293,18 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    O <b><font color='blue'>Índice de Desenvolvimento Educacional (INDE)</b></font> da Associação Passos Mágicos é uma métrica utilizada para avaliar o progresso educacional dos alunos atendidos pela instituição. 
-                    Esse índice é calculado com base em diversos fatores, incluindo:
+                    O INDE (índice do desenvolvimento educacional), como medida síntese do presente processo avaliativo, é composto
+                    por uma dimensão acadêmica, uma dimensão psicossocial e uma dimensão psicopedagógica. Essas dimensões são observadas por meio do resultado
+                    de sete indicadores <b>(IAN, IDA, IEG, IAA, IPS, IPP e IPV)</b>, que aglutinados por ponderação, formam o índice sintético (INDE). <br>
+
+                    No quadro abaixo, pode ser visto uma apresentação esquemática da relação entre as três dimensões de avaliação, e os indicadores, em suas duas categorias de classificação 
+                    e a sua aplicação pelas faixas de Fase de ensino da Associação Passos Mágicos. 
 
                     </p>
                     ''', unsafe_allow_html=True)    
-        
-        st.markdown('''
-                    - <b><font color='blue'>Desempenho Acadêmico:</b></font> Avaliação das notas dos alunos em disciplinas como Português, Matemática e Inglês.
-                    ''', unsafe_allow_html=True)
-        
-        st.markdown('''
-                    - <b><font color='blue'>Apoio Psicológico e Psicopedagógico:</b></font> Impacto das intervenções psicológicas e psicopedagógicas no desenvolvimento dos alunos.
-                    ''', unsafe_allow_html=True)
-        
-        st.markdown('''
-                    - <b><font color='blue'>Participação em Atividades Extracurriculares:</b></font> Envolvimento dos alunos em atividades que ampliam sua visão de mundo, como intercâmbios e projetos culturais.
-                    ''', unsafe_allow_html=True)
-        
-        st.markdown('''
-                    - <b><font color='blue'>Evolução ao Longo do Ano:</b></font> Comparação das notas e do desenvolvimento dos alunos entre o início e o final do ano letivo.
-                    ''', unsafe_allow_html=True)
-        
-        st.markdown('''
-                    <p style="font-size: 18px">
 
-                    O INDE é uma ferramenta crucial para a Passos Mágicos, pois permite monitorar e ajustar suas estratégias educacionais, 
-                    garantindo que cada aluno receba o suporte necessário para alcançar seu pleno potencial.
-                    
-                    </p>
-                    ''', unsafe_allow_html=True)
+        image =  Image.open("img/inde_indicadores.png")
+        st.image(image, caption= "Dimensões e Indicadores do INDE")       
 
     #Tabela Pedras
     if indicador == 'Pedras':
@@ -369,10 +351,10 @@ elif page == page_1:
 
                     O IEG expressa as entregas das atividades solicitadas para realização nos contraturnos das aulas do Programa de Aceleração do Conhecimento - a lição de casa dos estudantes das Fases 0 até a fase 7.
                     Para os estudantes da Fase 8, bolsistas universitários, essa é a medidade do seu engajamento nas ações disponíveis de voluntariado. 
-                    Seu valor é a transposição do percentual de entregas para uma base numérica comum (de 0 a 10 pontos)
+                    Seu valor é a transposição do percentual de entregas para uma base numérica comum (de 0 a 10 pontos).
 
                     </p>
-                    ''')
+                    ''',unsafe_allow_html=True )
 
     #Tabela IDA
     if indicador == 'IDA':
@@ -414,7 +396,7 @@ elif page == page_1:
                     que regulamenta a indicação da idade escolar em cada etapa da vida escolar dos estudantes no Brasil. 
 
                     </p>
-                    ''')
+                    ''',unsafe_allow_html=True )
         
     #Tabela IAA
     if indicador == 'IAA':
@@ -454,11 +436,14 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    Avalia o envolvimento dos alunos em atividades comunitárias e projetos sociais. Este índice ajuda a medir o impacto dos programas da Passos Mágicos na 
-                    formação de cidadãos conscientes e ativos na sociedade.
+                    O indicador Psicossocial - IPS, é um indicador de conselho da dimensão psicossocial, seus resultados foram obtidos por meio de avaliações feitas pela equipe de psicologia da Associação Passos Mágicos. 
+                    Nas avaliações que resultaram na nota IPS, foram analisados quatro aspectos do desenvolvimento dos estudantes em 2022. Os elementos de avaliação, suas categorias de avaliação e seus pesos estão relacionados abaixo:
 
                     </p>
-                    ''')
+                    ''',unsafe_allow_html=True )
+
+        image =  Image.open("img/ips_avaliacoes.png")
+        st.image(image, caption= "Questões de avaliação do IPS, categorias e seus valores")
         
     #Tabela IPP
     if indicador == 'IPP':
@@ -474,11 +459,30 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    Mede o desenvolvimento pessoal dos alunos, considerando aspectos como autoestima, habilidades sociais e resiliência. 
-                    Este índice é importante para avaliar o impacto das intervenções da Passos Mágicos no crescimento pessoal dos alunos.
+                    O indicador Psicopedagógico - IPP, é um indicador de conselho da dimensão psicopedagógica, seus resultados foram obtidos por meio de avaliações individuais,
+                    feitas por membro da equipe de professores e psicopedagogos da Associação Passos Mágicos.<bre>
+                    A avaliação que produziou o IPP, foi feita pela análise individual de cada avaliador, de forma independente e sem conluio com os demais avaliadores,
+                    buscando avaliar quatro aspectos dos estudantes:
+                    - Desenvolvimento cognitivo;
+                    - Desenvolvimento emocional; 
+                    - Desenvolvimento comportamental; 
+                    - Desenvolvimento social.<br>
 
                     </p>
-                    ''')
+                    ''',unsafe_allow_html=True)
+                    
+        st.markdown('''
+                    <p style="font-size: 18px">
+                    
+                    Os avaliadores caracterizaram cada um desses aspectos, respondendo qual condição descreve melhor o seu desenvolvimento atual, as quais, então,
+                    um valor. É calculado, então, o valor médio das avaliações, em cada questão, e ao final, somam-se essas médidas resultando numa nota de base comum, de 0 a 10.  
+                    As questãoes, e os seus valores, então logo abaixo:                
+
+                    </p>
+                    ''',unsafe_allow_html=True)
+
+        image =  Image.open("img/ipp_avaliacoes.png")
+        st.image(image, caption= "Questões de avaliação do IPS, categorias e seus valores")                   
         
     #Tabela IPV
     if indicador == 'IPV':
@@ -494,39 +498,31 @@ elif page == page_1:
         st.markdown('''
                     <p style="font-size: 18px">
 
-                    Avalia a taxa de retenção dos alunos nos programas da Passos Mágicos e a valorização dos mesmos pelos beneficiários e suas famílias. 
-                    Este índice é fundamental para entender a satisfação e o comprometimento dos alunos com os programas oferecidos.
+                    O indicador do Ponto de Virada - IPV, é um indicador de conselho da dimensão psicopedagógica, seus resultados foram obtidos
+                    por meio de avaliações individuais, geitas por membros da equipe de professores e psicopedagogos da Associação Passos Mágicos. <br>
+
+                    O que se chama Ponto de Virada é um estágio do desenvolvimento do estudante, no qual ele demonstra de forma ativa, por meio da sua trajetória dentro da associação, estar consciente da importância da educação, do valor do saber e da importância de aprender. 
+                    Passar pelo Ponto de Virada deve sifnificar estar apto a iniciar a transformação da sua vida por meio da educação. Portanto, não se trata de um ponto de chegada, mas um momento no qual se inica uma importante mudança.<br>
+
+                    A avaliação do IPV foi feita pela avaliação de três aspectos do desenvolvimento do estudante durante o ano letivo: 
+                    - Integração à associação; 
+                    - Desenovlvimento emocional;
+                    - Potencial acadêmico. 
 
                     </p>
-                    ''')
-        
-    #Tabela Ponto de Virada   
-    if indicador == 'Ponto de Virada':
-        
-        st.markdown(''' 
-                    <p style="font-size: 18px">
+                    ''',unsafe_allow_html=True )
 
-                    O Ponto de virada indica que o aluno atingiu um passo mágico, é a conquista de uma habilidade fundamental, 
-                    é medido através das notas, avaliações e outros dados, e demonstra que o aluno teve um grande progresso, 
-                    essa evolução o ajudará a enfrentar vários desafios que encontrará pela frente, assim como:
-
-                    </p>
-                    ''' )
-        
         st.markdown('''
-                    - Os alunos poderão superar dificuldades em matérias específicas e melhorar seu desempenho acadêmico,
-                    - Isso pode incluir avanços em leitura, matemática, ciências e outras áreas,
-                    - O ponto de virada traz consigo uma sensação de realização e confiança,
-                    - Os alunos se sentirão mais capazes e confiantes em suas habilidades,
-                    - Eles desenvolverão habilidades de comunicação, resolução de conflitos, empatia e trabalho em equipe,
-                    - Isso os ajudará a lidar com situações sociais e emocionais,
-                    - O ponto de virada também envolve uma ampliação da visão de mundo,
-                    - Os alunos estarão mais abertos a diferentes culturas, perspectivas e oportunidades,
-                    - Os alunos serão incentivados a assumir o protagonismo em suas vidas,
-                    - Eles tomarão decisões mais conscientes e terão maior autonomia,
-                    - O ponto de virada ensina a importância da persistência e da resiliência,
-                    - Os alunos saberão que podem superar obstáculos com esforço contínuo.
-                    ''')
+                    <p style="font-size: 18px">
+                    
+                    Abaixo é demonstrado a estrutura de avaliação do IPV:                
+
+                    </p>
+                    ''',unsafe_allow_html=True)
+
+        image =  Image.open("img/ipv_avaliacoes.png")
+        st.image(image, caption= "Questões de avaliação do IPS, categorias e seus valores")        
+
 
 # Aplicação Analítica
 elif page == page_2:
