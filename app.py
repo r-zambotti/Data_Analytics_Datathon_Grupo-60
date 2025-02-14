@@ -1262,33 +1262,48 @@ elif page == page_2:
             df_pedra_percentual = df_pedra_contagem.divide(total_pedra_geral, axis=0) * 100
             df_pedra_percentual = df_pedra_percentual.fillna(0)  # Substituir NaN por 0 se necessário
 
+            # Detectar o tema do Streamlit
+            tema = st.get_option("theme.base")
+            if tema == "dark":
+                texto_cor = "white"
+                fundo_grafico = "black"
+                grade_cor = "gray"
+                legenda_fundo = "black"
+                legenda_borda = "white"
+            else:
+                texto_cor = "black"
+                fundo_grafico = "white"
+                grade_cor = "lightgray"
+                legenda_fundo = "white"
+                legenda_borda = "black"
+
             # Cores para o gráfico
             cores = {
-                'Quartzo': 'red',
-                'Agata': 'yellow',
-                'Ametista': 'lightblue',
-                'Topazio': 'lightgreen'
+                'Quartzo': '#E63946',  # Vermelho forte
+                'Agata': '#F4A261',  # Laranja queimado
+                'Ametista': '#6A4C93',  # Roxo escuro
+                'Topazio': '#2A9D8F'  # Verde azulado
             }   
 
-            # Criar o gráfico
+            # --------- GRÁFICO 1: Quantidade total de alunos por pedra --------- #
             st.subheader("Gráfico com a quantidade total de alunos por pedra")
+
             fig, ax = plt.subplots(figsize=(10, 6))
 
-            # Remover fundo branco
-            fig.patch.set_alpha(0)  # Remove fundo do gráfico
-            ax.set_facecolor("none")  # Remove fundo do eixo
-            ax.patch.set_alpha(0)  # Remove fundo interno do gráfico
+            # Ajustar fundo do gráfico
+            fig.patch.set_facecolor(fundo_grafico)
+            ax.set_facecolor(fundo_grafico)
 
             if ano_selecionado3:
                 # Se um único ano for selecionado, usar gráfico de barras
                 df_pedra_contagem = df_filtrado['pedra'].value_counts()
                 ax.bar(df_pedra_contagem.index, df_pedra_contagem.values, 
                     color=[cores.get(p, 'gray') for p in df_pedra_contagem.index])
-                ax.set_ylabel("Total de Pedras", color="white")
-                ax.set_xlabel("Pedra", color="white")
+                ax.set_ylabel("Total de Pedras", color=texto_cor)
+                ax.set_xlabel("Pedra", color=texto_cor)
                 
                 for i, v in enumerate(df_pedra_contagem.values):
-                    ax.text(i, v + 0.5, str(v), ha='center', color="white")  # Ajuste de cor do texto
+                    ax.text(i, v + 0.5, str(v), ha='center', color=texto_cor)
             else:
                 # Se nenhum ano for selecionado, manter o gráfico de linhas
                 for pedra in df_pedra_contagem.columns:
@@ -1300,44 +1315,39 @@ elif page == page_2:
                         color=cores.get(pedra, 'gray')
                     )
                     for i, count in enumerate(df_pedra_contagem[pedra]):
-                        ax.text(df_pedra_contagem.index[i], count, str(count), ha='center', va='bottom', color="white")
+                        ax.text(df_pedra_contagem.index[i], count, str(count), ha='center', va='bottom', color=texto_cor)
 
-                ax.set_xlabel("Ano da Pesquisa", color="white")
-                ax.legend(title="Pedra")
+                ax.set_xlabel("Ano da Pesquisa", color=texto_cor)
                 leg = ax.legend()
-                leg.get_frame().set_facecolor('black')  # Fundo preto
-                leg.get_frame().set_edgecolor('white')  # Borda branca
+                leg.get_frame().set_facecolor(legenda_fundo)
+                leg.get_frame().set_edgecolor(legenda_borda)
                 for text in leg.get_texts():
-                    text.set_color("white")  # Texto branco
+                    text.set_color(texto_cor)
 
-            # Configurações do gráfico
-            ax.set_title("Alunos separados por PEDRA - Quantidade de alunos", color="white")
-            ax.grid(color='gray', linestyle='--', linewidth=0.5)  # Grid mais suave
+            ax.set_title("Alunos separados por PEDRA - Quantidade de alunos", color=texto_cor)
+            ax.grid(color=grade_cor, linestyle='--', linewidth=0.5)
+            ax.tick_params(axis='x', colors=texto_cor)
+            ax.tick_params(axis='y', colors=texto_cor)
 
-            ax.tick_params(axis='x', colors='white')  # Cor dos valores no eixo X
-            ax.tick_params(axis='y', colors='white')  # Cor dos valores no eixo Y
-            
             plt.xticks(rotation=45)
             plt.tight_layout()
-
-            # Exibir no Streamlit
             st.pyplot(fig)
 
-            # Criar o gráfico de distribuição percentual de alunos por pedra
+            # --------- GRÁFICO 2: Distribuição percentual de alunos por pedra --------- #
             st.subheader("Gráfico de distribuição percentual de alunos por pedra")
-            fig, ax = plt.subplots(figsize=(10, 6))
 
-            # Remover fundo branco do gráfico
-            fig.patch.set_alpha(0)  # Remove o fundo branco do gráfico
-            ax.set_facecolor("none")  # Remove o fundo dos eixos
-            ax.patch.set_alpha(0)  # Remove fundo do plot
+            fig2, ax2 = plt.subplots(figsize=(10, 6))
+
+            # Ajustar fundo do gráfico
+            fig2.patch.set_facecolor(fundo_grafico)
+            ax2.set_facecolor(fundo_grafico)
 
             bar_width = 0.15
             y_pos = np.arange(len(df_pedra_percentual.index))
 
             barras = []
             for i, pedra in enumerate(df_pedra_percentual.columns):
-                bars = ax.bar(y_pos + i * bar_width, df_pedra_percentual[pedra], bar_width, color=cores.get(pedra, 'gray'), label=pedra)
+                bars = ax2.bar(y_pos + i * bar_width, df_pedra_percentual[pedra], bar_width, color=cores.get(pedra, 'gray'), label=pedra)
                 barras.append((bars, df_pedra_percentual[pedra]))
 
             # Adicionar porcentagens corretamente
@@ -1345,28 +1355,31 @@ elif page == page_2:
                 for bar, valor in zip(bars, valores):
                     height = bar.get_height()
                     if height > 0:
-                        ax.text(bar.get_x() + bar.get_width()/2., height, f'{valor:.1f}%', ha='center', va='bottom', color='white', fontsize=12)  # Ajuste no tamanho da fonte
+                        ax2.text(bar.get_x() + bar.get_width()/2., height, f'{valor:.1f}%', ha='center', va='bottom', color=texto_cor, fontsize=12)
 
             # Ajustes visuais
-            ax.set_xticks(y_pos + 1.5 * bar_width)
-            ax.set_xticklabels(df_pedra_percentual.index, color='white', fontsize=12)  # Cor e tamanho do eixo X
-            ax.set_xlabel("Ano", color='white', fontsize=14)
-            ax.set_ylabel("Porcentagem de Alunos", color='white', fontsize=14)
-            ax.set_title("Distribuição percentual de alunos por pedra", color='white', fontsize=16)
-            ax.set_ylim(0, 70)
-            ax.grid(color='gray', linestyle='--', linewidth=0.5)  # Grid mais suave
+            ax2.set_xticks(y_pos + 1.5 * bar_width)
+            ax2.set_xticklabels(df_pedra_percentual.index, color=texto_cor, fontsize=12)
+            ax2.set_xlabel("Ano", color=texto_cor, fontsize=14)
+            ax2.set_ylabel("Porcentagem de Alunos", color=texto_cor, fontsize=14)
+            ax2.set_title("Distribuição percentual de alunos por pedra", color=texto_cor, fontsize=16)
+            ax2.set_ylim(0, 70)
+            ax2.grid(color=grade_cor, linestyle='--', linewidth=0.5)
 
-            # Ajustar a legenda para melhorar a visibilidade
-            leg = ax.legend()
-            leg.get_frame().set_facecolor('black')  # Fundo preto
-            leg.get_frame().set_edgecolor('white')  # Borda branca
-            for text in leg.get_texts():
-                text.set_color("white")  # Texto branco
+            # Ajustar a legenda
+            leg2 = ax2.legend()
+            leg2.get_frame().set_facecolor(legenda_fundo)
+            leg2.get_frame().set_edgecolor(legenda_borda)
+            for text in leg2.get_texts():
+                text.set_color(texto_cor)
 
             plt.tight_layout()
-            ax.tick_params(axis='x', colors='white')  # Cor dos valores no eixo X
-            ax.tick_params(axis='y', colors='white')  # Cor dos valores no eixo Y
-            st.pyplot(fig)          
+            ax2.tick_params(axis='x', colors=texto_cor)
+            ax2.tick_params(axis='y', colors=texto_cor)
+
+            # Exibir segundo gráfico
+            st.pyplot(fig2)
+
 
         elif model == "Ponto de Virada":
      
