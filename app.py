@@ -1064,7 +1064,6 @@ elif page == page_2:
                     tb.siglaPeriodo
                             ''')
                         
-
             # Mostrando o gráfico
             plt.tight_layout() # Ajusta o layout para evitar sobreposição
             st.pyplot(plt)
