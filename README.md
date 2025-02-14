@@ -2,7 +2,7 @@
 
 # Análise Exploratória Metodologia "Passos Mágicos"
 
-🎯 Objetivo: 
+## 🎯 Objetivo: 
  - Analisar o impacto gerado pela ONG Passos Mágicos na comunidade atendida, por meio da criação de dashboards e insights dinâmicos que facilitem a análise exploratória e auxiliem a associação na tomada de decisões estratégicas.
  - Além disso, demonstrar os efeitos das ações da ONG no desempenho dos estudantes e levantar indicadores de performance relevantes.
   
