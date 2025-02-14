@@ -1480,25 +1480,53 @@ elif page == page_3:
                 ''', unsafe_allow_html=True) 
                 
     # melhoria do modelo XGBoost
-    st.markdown('''#### Melhoria do Modelo XGBoost''')
+    st.markdown('''#### Desistência de Alunos''')
     # texto
     st.markdown('''
                 <p style="font-size: 18px">
-                    - <b>Próximo passo:</b> utilizar outros modelos para que o XGBoost possa extrapolar previsões para 
-                      além dos limites dos dados de treinamento.
-                <br>
-                </p>
+
+                1. Motivos Mais Comuns de Inativação
+                Falta de retorno às tentativas de contato: Esse motivo aparece com frequência em 2022 (256 casos) e 2023 (55 casos), indicando que muitos responsáveis não respondem às tentativas de contato da organização.
+
+                    Mudança de bairro/cidade/distância: Esse motivo também é significativo, especialmente em 2022 (209 casos) e 2023 (54 casos), sugerindo que a localização geográfica é um fator importante para a inativação.
+
+                    Outras prioridades/trabalho: Esse motivo é relevante em ambos os anos, com 126 casos em 2022 e 87 casos em 2023, indicando que compromissos profissionais ou outras prioridades podem impedir a continuidade.
+
+                2. Variação Anual dos Motivos
+                2022 vs. 2023: Em 2022, os motivos mais comuns foram "Falta de retorno às tentativas de contato" e "Mudou de bairro/cidade/distância". Em 2023, esses motivos continuam relevantes, mas com números menores, possivelmente indicando uma melhora nas estratégias de engajamento ou mudanças nas circunstâncias dos participantes.
+
+                    Motivos Menos Comuns: Alguns motivos, como "Iniciou curso superior sem auxílio da Passos" (6 casos em 2023) e "Suspensão - Comportamento inadequado" (6 casos em 2023), são menos frequentes, mas ainda relevantes para análises específicas.
+
+                3. Tendências ao Longo do Tempo
+                Redução em Certos Motivos: Alguns motivos, como "Falta de retorno às tentativas de contato", tiveram uma redução significativa de 2022 para 2023 (de 256 para 55 casos). Isso pode indicar que a organização melhorou suas estratégias de comunicação ou que os responsáveis estão mais engajados.
+
+                    Aumento em Outros Motivos: Motivos como "Sem responsável para levar a criança até a unidade" (66 casos em 2023) e "Sem condição financeira para o transporte público" (29 casos em 2023) podem indicar desafios socioeconômicos que estão se tornando mais prevalentes.
+
+                4. Distribuição dos Motivos
+                Concentração de Motivos: Alguns anos têm uma concentração maior de motivos específicos. Por exemplo, em 2022, "Falta de retorno às tentativas de contato" e "Mudou de bairro/cidade/distância" dominam os números, enquanto em 2023 há uma distribuição mais equilibrada entre vários motivos.
+
+                    Motivos Específicos por Ano: Em 2021, os números são menores, mas ainda é possível identificar motivos como "Conflito com horário escolar / período integral" (8 casos) e "Desinteresse / Falta de retorno" (10 casos).
+
+                5. Implicações para Ações Futuras
+                Melhoria na Comunicação: Dado o alto número de casos de "Falta de retorno às tentativas de contato", a organização pode precisar revisar e melhorar suas estratégias de comunicação com os responsáveis.
+
+                    Apoio Financeiro e Logístico: Motivos como "Sem condição financeira para o transporte público" e "Sem responsável para levar a criança até a unidade" sugerem a necessidade de apoio logístico e financeiro para as famílias.
+
+                    Adaptação às Necessidades dos Participantes: Motivos como "Não se adaptou às aulas/não acompanhou" (13 casos em 2023) e "Excesso de atividades" (33 casos em 2023) indicam a necessidade de revisar o currículo e a carga horária para melhor atender às necessidades dos participantes.
+
+                6. Análise de Dados Antigos (2021)
+                Embora os dados de 2021 sejam limitados, eles mostram que alguns motivos, como "Conflito com horário escolar / período integral" e "Desinteresse / Falta de retorno", já estavam presentes, sugerindo que esses são desafios persistentes.
+
+
                 ''', unsafe_allow_html=True)    
     
     create_insight(
-                    'Extrapolação de Dados na Previsão',
+                    'Conclusão Geral:',
                     '''
-                        O modelo XGBoost, assim como quaisquer algoritmos baseados em árvore, 
-                        possui uma desvantagem para tarefas de regressão: suas predições respeitarão os 
-                        limites dos dados utilizados no treinamento. Ou seja, existe dificuldade em <b>extrapolar</b> os 
-                        valores máximo e mínimo do intervalo de dados de treinamento. Por isso, se faz interessante 
-                        combinar esse modelo a outros, como modelos lineares ou mesmo Redes Neurais Recorrentes, 
-                        como <i>Long Short-Term Memory</i> (LSTM).
+                    O gráfico de heatmap permite visualizar claramente os principais motivos de inativação e como eles variam ao 
+                    longo dos anos. Isso pode ajudar a organização a identificar áreas de melhoria, como comunicação, apoio 
+                    logístico e adaptação do programa às necessidades dos participantes. Além disso, a análise desses dados 
+                    pode orientar a alocação de recursos e a implementação de estratégias mais eficazes para reduzir a desistência.
                     '''
                     )
 
