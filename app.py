@@ -43,6 +43,24 @@ st.set_page_config(layout='centered',
                    page_title='Associação Passos Mágicos - Tech Challenge - FIAP', 
                    page_icon='🌟', initial_sidebar_state='auto')
 
+# CSS para modificar o fundo de toda a página
+page_bg = """
+<style>
+    /* Fundo para toda a página */
+    [data-testid="stAppViewContainer"] {
+        background-image: url("https://source.unsplash.com/random/1920x1080");
+        background-size: cover;
+        background-attachment: fixed;
+    }
+    
+    /* Fundo para a barra lateral */
+    [data-testid="stSidebar"] {
+        background-color: #111827; /* Fundo branco semi-transparente */
+    }
+</style>
+"""
+
+
 #Bases
 url = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv"
 url_file_data = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/file/Dicion%C3%A1rio%20Dados%20Datathon.pdf"
@@ -758,7 +776,7 @@ elif page == page_2:
         st.subheader("💡 Insights")
 
         # seleção de modelo
-        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Pedras', 'Ponto de Virada'])
+        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Evasão', 'Pedras', 'Ponto de Virada'])
 
         st.markdown('<br>', unsafe_allow_html=True)
 
@@ -983,7 +1001,6 @@ elif page == page_2:
                     """, unsafe_allow_html=True
                 )
 
-
         elif model == 'Pedras':
             
             df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_pedra_geral.csv")
@@ -1156,7 +1173,6 @@ elif page == page_2:
             ax.tick_params(axis='x', colors='white')  # Cor dos valores no eixo X
             ax.tick_params(axis='y', colors='white')  # Cor dos valores no eixo Y
             st.pyplot(fig)
-
 
         else:
             st.subheader('Ponto de Virada', divider='orange')

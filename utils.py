@@ -2,7 +2,7 @@
 ##                  Imports                  ##
 ## ----------------------------------------- ##
 
-import yfinance as yf
+#import yfinance as yf
 
 import time
 
