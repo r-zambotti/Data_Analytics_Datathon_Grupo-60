@@ -1644,79 +1644,39 @@ else:
                 </p>
                 ''', unsafe_allow_html=True)
     
-    # lista de fontes de dados
+        # lista de fontes de dados
     st.markdown('''
-                #### [**IPEA**](http://www.ipeadata.gov.br/Default.aspx) - Instituto de Pesquisa Econômica Aplicada
-                Portal de dados econômicos do governo brasileiro, disponibiliza dados de diversos indicadores econômicos, 
-                como inflação, PIB, taxa de juros, câmbio e preços de *commodities*. As séries temporais podem ser baixadas 
-                em formato `.csv`. O IPEA também permite acesso através de requisições `HTTP` por meio de API.
-                ''')
-    
-    with st.expander('🐍 Exibir código Python'):
-        st.code('''
-                # acessar dados do IPEA
-                
-                !pip install ipeadatapy                 # instalar biblioteca
-                import ipeadatapy as ipea               # importar biblioteca
-                
-                #ipea.list_series()                     # lista de séries disponíveis
-                
-                df = ip.timeseries(ipea_table_code)     # obter dados do petróleo Brent
+                #### [**Passos Mágicos**](https://passosmagicos.org.br/quem-somos/) -  Associação Passos Mágicos
+                Associação Passos Mágicos tem uma trajetória de 30 anos de atuação, 
+                trabalhando na transformação da vida de crianças e jovens de baixa renda os levando a melhores oportunidades de vida.
                 ''')
     
     st.markdown('''
-                #### [**FRED**](https://fred.stlouisfed.org/series/DCOILBRENTEU) - Federal Reserve Economic Data
-                Banco de dados econômicos mantido pelo Federal Reserve Bank of St. Louis, nos EUA. 
-                Ele contém uma vasta quantidade de dados econômicos, incluindo séries temporais de preços de *commodities*, 
-                como o [**petróleo Brent**](https://fred.stlouisfed.org/series/DCOILBRENTEU).
-                Os dados podem ser baixados em formato `.csv`. O FRED disponibiliza também permite acesso através de requisições `HTTP` por meio de API.
-                ''')
-
-    with st.expander('🐍 Exibir código Python'):
-        st.code('''
-                    # acessar dados do FRED
-                    
-                    !pip install pandas_datareader            # instalar biblioteca
-                    import pandas_datareader as pdr           # importar biblioteca
-                    
-                    df = pdr.get_data_fred('DCOILBRENTEU')    # obter dados do petróleo Brent
-                ''')
-
-    st.markdown('''
-                #### [**Yahoo Finance**](https://finance.yahoo.com/quote/CL=F?p=CL=F) - Yahoo Finance
-                Plataforma de notícias e dados financeiros, permite acessar cotações de ativos, índices 
-                e preços de *commodities*. Os dados podem ser baixados em formato `.csv` e também acessados por meio de API.
-                A biblioteca [`yfinance`](https://pypi.org/project/yfinance/) permite acessar os dados do Yahoo Finance diretamente no Python:
+                #### [**Google**](https://drive.google.com/drive/folders/1Z1j6uzzCOgjB2a6i3Ym1pmJRsasfm7cD) - Repositório Google Drive
+                A base de dados inclui informações educacionais e socioeconômicas dos estudantes da Passos Mágicos. 
+                Foram disponibilizadas para o desenvolvimento educacional e condições socioeconômicas, além de um dicionário de dados para 
+                mapeamento das variáveis. 
+                Relatórios de pesquisa da ONG também estão acessíveis para apoiar a compreensão do contexto. 
                 ''')
     
-    with st.expander('🐍 Exibir código Python'):
-        st.code('''
-                    # acessar dados do Yahoo Finance
-                    
-                    !pip install yfinance            # instalar biblioteca
-                    import yfinance as yf            # importar biblioteca
-                    
-                    df = yf.download('BZ=F')         # obter dados do petróleo Brent
+    st.markdown('''
+                #### [**GITHUB**](https://github.com/r-zambotti/Data_Analytics_Datathon_Grupo-60) - Repositório do projeto
+                O repositório "Data_Analytics_Datathon_Grupo-60" no GitHub foi criado para a análise exploratória da metodologia "Passos Mágicos". 
+                Contém um notebook Jupyter (Data_Analytics_Datathon_Grupo_60.ipynb) que realiza a análise dos dados fornecidos. 
+                Além disso, há arquivos Python (app.py e utils.py) que auxiliam no processamento dos dados e na execução de funcionalidades adicionais. 
+                A licença do projeto é MIT.
                 ''')
-
+         
     st.markdown('<br>', unsafe_allow_html=True)
     # subtítulo para Bibliografia
     st.header('Bibliografia')
     # lista de links
     st.markdown('''
-                    - [**OPEC**](https://www.opec.org/opec_web/en/about_us/24.htm) - Organization of the Petroleum Exporting Countries
-                    - [**CBI**](https://cbie.com.br/) - Centro Brasileiro de Infraestrutura
-                    - [**Investopedia**](https://www.investopedia.com/terms/f/futuresmarket.asp) - Futures Market
-                    - [**Wikipedia**](https://en.wikipedia.org/wiki/Brent_Crude) - Brent Crude Oil
-                    - [**AWS**](https://aws.amazon.com/pt/) - Amazon Web Services
-                    - [**Super Interessante**](https://super.abril.com.br/coluna/deriva-continental/nos-bastidores-da-terra-geologa-explica-a-formacao-do-petroleo) - Nos bastidores da Terra: geóloga explica a formação do petróleo
-                    - [**Forecasting Oil Price Using Web-based Sentiment Analysis**](https://www.mdpi.com/1996-1073/12/22/4291) - 
-                        Energies (2019), por ZHAO, Lu-Tao; ZENG, Guan-Rong; WANG, Wen-Jing; ZHANG, Zhi-Gang
-                    - [**Análise prática de séries temporais: predição com estatística e aprendizado de máquina**](https://www.amazon.com.br/Análise-Prática-Séries-Temporais-Estatística/dp/8550815624) - 
-                        Alta Books (2021), por NIELSEN, Aileen
+                    - [**ASSOCIAÇÃO PASSOS MÁGICOS**](https://passosmagicos.org.br/quem-somos/) -  Associação Passos Mágicos
+                    - [**Google Drive**](https://drive.google.com/drive/folders/1Z1j6uzzCOgjB2a6i3Ym1pmJRsasfm7cD) 
+                    - [**Relatorio_PEDE2022**](https://drive.google.com/drive/folders/1Z1j6uzzCOgjB2a6i3Ym1pmJRsasfm7cD) - SILVA, Dario Rodrigues da. Pesquisa Extensiva do Desenvolvimento Educacional - PEDE 2022. 
+                      Associação Passos Mágicos. São Paulo, p. 217. 2023.                               
                 ''')
-    
-    
 # footer
 st.markdown('<br>', unsafe_allow_html=True)
 
@@ -1729,22 +1689,3 @@ st.markdown('''<p style="font-size: 18px; text-align: center;">
             <br>
             </p>''', unsafe_allow_html=True)
 
-# linkedin = 'https://www.linkedin.com/in/viniplima/'
-# github = 'https://github.com/euvina/'
-
-# mail = 'pradolimavinicius@gmail.com'
-# subject = 'Contato via Streamlit - Projeto Previsão de Preço do Petróleo Brent'
-
-# # área de contato
-# st.markdown('''<p style="font-size: 18px; text-align: center;">
-#             📧 Entre em contato:<br>
-#             <a href="mailto:{}?subject={}">
-#             <img src="https://img.shields.io/badge/-Gmail-D14836?style=for-the-badge&logo=Gmail&logoColor=white" alt="Gmail">
-#             </a>
-#             <a href="{}">
-#             <img src="https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white" alt="GitHub">
-#             </a>
-#             <a href="{}">
-#             <img src="https://img.shields.io/badge/-LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white" alt="LinkedIn">
-#             </a>
-#             </p>'''.format(mail, subject, linkedin, github), unsafe_allow_html=True)
