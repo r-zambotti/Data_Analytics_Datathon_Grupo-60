@@ -7,7 +7,8 @@
  - Além disso, demonstrar os efeitos das ações da ONG no desempenho dos estudantes e levantar indicadores de performance relevantes.
   
 ## 🔍 Visão Geral
-- Esta aplicação utiliza dados de alunos referentes ao período de 2020 a 2024 e tem como objetivo principal analisar o relatório principal da PASSOS MÁGICOS, destacando os pontos fortes e as oportunidades de melhoria para aperfeiçoar a metodologia de atuação da instituição com seus alunos. Por meio de uma análise exploratória, é possível interagir com gráficos e métricas relevantes, proporcionando uma compreensão mais aprofundada do comportamento dos indicadores ao longo do tempo
+- Esta análise utiliza dados de alunos referentes ao período de 2020 a 2024 e tem como objetivo principal analisar diversos pontos principais da PASSOS MÁGICOS, destacando os pontos fortes e as oportunidades de melhoria para aperfeiçoar a metodologia de atuação da instituição com seus alunos.
+- Por meio de uma análise exploratória, é possível interagir com gráficos e métricas relevantes, proporcionando uma compreensão mais aprofundada do comportamento dos alunos e seus indicadores ao longo do tempo
 
 ## 📊 Funcionalidades Principais
 - **Análise Exploratória**: Comparação de desempenho dos alunos entre os anos de 2020 a 20224.
