@@ -761,7 +761,7 @@ elif page == page_2:
         st.subheader("💡 Insights")
 
         # seleção de modelo
-        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Desistência' ,'Pedras', 'Ponto de Virada'])
+        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Defasagem', 'Desistência', 'Indicadores', 'Pedras', 'Ponto de Virada'])
 
         st.markdown('<br>', unsafe_allow_html=True)
 
@@ -886,11 +886,93 @@ elif page == page_2:
             st.dataframe(df_filtrado)
             st.markdown('</div>', unsafe_allow_html=True)
 
+        elif model == 'Defasagem': 
+
+            st.subheader('Defasagem', divider='orange')
+
+            # texto 
+            st.markdown('''
+                <p style="font-size: 18px">
+                Permite verifica de forma dinâmica a defasagem dos alunos com base no gênero e ano, sendo o eixo X os níveis de defasagem existente na base.<br></p>                                            
+                    1º gráfico irá demonstrar a quantidade de alunos por gênero e o seu nível de defasagem; <br>
+                    2º gráfico irá apresnetar a média de idade em cada nível de defasagem.
+                        
+                ''', unsafe_allow_html=True)
+            
+            st.markdown('---')
+            
+            df = pd.read_csv(base_alunos)
+            
+            # Converter o ano para string
+            df['ANO_LETIVO'] = df['ANO_LETIVO'].astype(str)
+
+            # Criar filtros no Streamlit
+            col1, col2 = st.columns(2)
+
+            with col1:
+                anos_disponiveis = sorted(df['ANO_LETIVO'].unique())
+                ano_selecionado6 = st.selectbox('Selecione o ano:', [None] + list(anos_disponiveis), key='ano_selecionado6')
+
+            with col2:
+                generos_disponiveis = sorted(df['GENERO'].unique())
+                genero_selecionado3 = st.selectbox('Selecione o gênero:', [None] + list(generos_disponiveis), key='genero_selecionado3')    
+
+            # Aplicar filtros
+            df_defasagem = df.copy()
+
+            if ano_selecionado6:
+                df_defasagem = df_defasagem[df_defasagem['ANO_LETIVO'] == ano_selecionado6]
+
+            if genero_selecionado3:
+                df_defasagem = df_defasagem[df_defasagem['GENERO'] == genero_selecionado3]
+
+            # 📊 **Gráfico 1: Distribuição da Defasagem por Gênero**
+            fig1, ax1 = plt.subplots(figsize=(10, 6))
+            sns.set_style("whitegrid")
+
+            sns.countplot(data=df_defasagem, x="DEFASAGEM", hue="GENERO", palette="coolwarm", ax=ax1)
+
+            # Adicionar rótulos e título
+            ax1.set_xlabel("Defasagem", fontsize=14, fontweight="bold")
+            ax1.set_ylabel("Quantidade de Alunos", fontsize=14, fontweight="bold")
+            ax1.set_title("Distribuição da Defasagem por Gênero", fontsize=16, fontweight="bold")
+
+            # Exibir os valores nas barras
+            for p in ax1.patches:
+                ax1.annotate(f"{int(p.get_height())}",
+                            (p.get_x() + p.get_width() / 2., p.get_height()),
+                            ha='center', va='baseline', fontsize=12, color='black', xytext=(0, 5),
+                            textcoords='offset points')
+
+            # Exibir o gráfico no Streamlit
+            st.pyplot(fig1)
+
+            # 📊 **Gráfico 2: Média de Idade por Nível de Defasagem**
+            fig2, ax2 = plt.subplots(figsize=(10, 6))
+
+            sns.barplot(data=df_defasagem, x="DEFASAGEM", y="IDADE", palette="viridis", ci=None, ax=ax2)
+
+            # Adicionar rótulos e título
+            ax2.set_xlabel("Defasagem", fontsize=14, fontweight="bold")
+            ax2.set_ylabel("Média de Idade", fontsize=14, fontweight="bold")
+            ax2.set_title("Média de Idade por Nível de Defasagem", fontsize=16, fontweight="bold")
+
+            # Exibir os valores acima das barras
+            for p in ax2.patches:
+                ax2.annotate(f"{p.get_height():.0f}",
+                            (p.get_x() + p.get_width() / 2., p.get_height()),
+                            ha='center', va='bottom', fontsize=12, color='black', xytext=(0, 5),
+                            textcoords='offset points')
+
+            # Exibir o gráfico no Streamlit
+            st.pyplot(fig2)
+            
         elif model == 'Desistência':
-            st.subheader('Indicadores', divider='orange')
-                   # texto                       
-             
+
+            st.subheader('Desistência', divider='orange')
+                          
             # Carregar o DataFrame com tratamento de possíveis issues
+
             df = pd.read_csv(base_evasao)
             
             tabela=df
@@ -989,9 +1071,6 @@ elif page == page_2:
             # Carregar os dados
             df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/EvasaoPorMotivo.csv")
             
-
-
-
         elif model == 'Indicadores':
 
             st.subheader('Indicadores', divider='orange')
@@ -1314,13 +1393,14 @@ elif page == page_2:
 
 
             st.subheader("Gráfico de ponto de virada por ANO")
-            # 🔹 Aumentar o tamanho das fontes
+
+            # Aumentar o tamanho das fontes
             sns.set_context("talk")  # Opções: "paper", "notebook", "talk", "poster"
 
-            # 🔹 Definir a ordem personalizada das fases
+            # Definir a ordem personalizada das fases
             ordem_fases = ["ALFA", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-            # 🔹 Primeiro gráfico: Quantidade de alunos por ano letivo
+            # Primeiro gráfico: Quantidade de alunos por ano letivo
             fig1, ax1 = plt.subplots(figsize=(14, 7))
 
             sns.countplot(
@@ -1351,7 +1431,8 @@ elif page == page_2:
             st.markdown('---')
 
             st.subheader("Gráfico de ponto de virada por FASE")
-            # 🔹 Segundo gráfico: Quantidade de alunos por fase e situação de PV
+
+            # Segundo gráfico: Quantidade de alunos por fase e situação de PV
             fig2, ax2 = plt.subplots(figsize=(14, 7))
 
             # Garantir que a coluna 'FASE' siga a ordem desejada
@@ -1363,7 +1444,7 @@ elif page == page_2:
                 data=df_ponto_virada,
                 palette="coolwarm",
                 ax=ax2,
-                order=ordem_fases  # ⬅️ Define a ordem personalizada
+                order=ordem_fases  
             )
 
             # Adicionar valores acima das barras
