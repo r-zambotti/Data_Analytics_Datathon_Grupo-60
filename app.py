@@ -885,7 +885,7 @@ elif page == page_2:
             tabela = tabela.dropna(axis=1, how='all')
         
             st.markdown('''
-                        Dados calculados por desistência/turma:
+                        Dados calculados por desistência/ano:
                         ''')  
             st.write(tabela)
 
@@ -966,6 +966,12 @@ elif page == page_2:
             # Mostrando o gráfico
             plt.tight_layout() # Ajusta o layout para evitar sobreposição
             st.pyplot(plt)
+
+            # Carregar os dados
+            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/EvasaoPorMotivo.csv")
+            
+
+
 
         elif model == 'Indicadores':
 
