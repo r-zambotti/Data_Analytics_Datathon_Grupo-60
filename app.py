@@ -1582,7 +1582,7 @@ elif page == page_3:
         opcoes = ["Defasagem", "Desistência", "Indicadores", "Pedras", "Ponto de Virada"]
 
         # Cria o st.radio para selecionar uma opção
-        escolha = st.radio("Selecione uma opção:", opcoes)
+        escolha = st.radio("**Selecione um Insight:**", opcoes)
 
         # Variável para armazenar o texto a ser exibido
         texto_exibido = ""
@@ -1590,8 +1590,11 @@ elif page == page_3:
         if escolha == "Defasagem":
             texto_exibido = """
             ## Defasagem
-            Esta seção aborda questões de defasagem no aprendizado e estratégias para superá-las.
-            - **Estratégias**: Aulas de reforço, mentoria, programas de apoio, etc.
+            A análise dos gráficos mostra padrões importantes sobre a defasagem escolar e como ela se relaciona com idade e gênero. A maioria dos alunos está no nível esperado de desempenho, enquanto aqueles com defasagem, tanto para mais quanto para menos, são minoria.
+
+            Os dados indicam que alunos com maior defasagem negativa costumam ser mais velhos, o que sugere dificuldades no aprendizado que podem ser trabalhadas com estratégias de recuperação. Já os alunos com defasagem positiva têm idades mais próximas entre si, o que pode indicar um desempenho avançado e a necessidade de estímulos para manter seu desenvolvimento.
+
+            Além disso, as diferenças entre gêneros, mesmo que sutis, reforçam a importância de uma abordagem de ensino inclusiva e adaptável. Essas informações podem ajudar a instituição PASSOS MÁGICOS a aprimorar sua metodologia, reduzir desigualdades e melhorar o desempenho de todos os alunos.
             """
 
         elif escolha == "Desistência":
@@ -1628,24 +1631,37 @@ elif page == page_3:
         elif escolha == "Pedras":
             texto_exibido = """
             ## Pedras
-            Esta seção foca nos desafios e obstáculos enfrentados pelos alunos e possíveis soluções.
-            - **Desafios**: Problemas sociais, dificuldades financeiras, falta de motivação, etc.
+            Os gráficos mostram como a quantidade e a distribuição dos alunos por pedra evoluíram de 2020 a 2024, separando os dados por gênero.
+
+            O grupo Topázio cresceu bastante e se tornou o mais numeroso, enquanto o Quartzo, que antes tinha mais alunos, perdeu participação. Já os grupos Ágata e Ametista se mantiveram mais estáveis.
+
+            Além disso, o número de alunas aumentou mais do que o de alunos, principalmente nos grupos de maior desempenho. Esses dados sugerem uma melhora geral no rendimento dos estudantes ao longo dos anos.
+
+            **Considerações Finais:**
+            - Crescimento do Topázio: Mais alunos estão atingindo níveis mais altos de desempenho.
+            - Declínio do Quartzo: Menos alunos permanecem nas classificações mais baixas.
+            - Diferenças por Gênero: As alunas tiveram um crescimento maior, especialmente nos grupos com melhor desempenho.
             """
 
         elif escolha == "Ponto de Virada":
             texto_exibido = """
             ## Ponto de Virada
-            Esta seção destaca os momentos cruciais que podem influenciar positivamente o desenvolvimento dos alunos.
-            - **Momentos**: Mudança de escola, novos métodos de ensino, suporte familiar, etc.
+            O número de alunos que não atingiram o ponto de virada em 2024 teve um aumento significativo, enquanto os alunos que atingiram teve uma queda, 
+            o que pode sinalizar desafios para determinadas turmas ou fases.
+
+            As fases iniciais possuem mais alunos, mas há uma queda significativa conforme avançam, o que pode indicar evasão ou dificuldades acadêmicas. 
+            É necessário reforçar o acompanhamento nas fases intermediárias e incentivar a continuidade dos estudos para melhorar os resultados.
+
+
+            **Conclusão e Recomendações:**
+            - O aumento dos alunos que não atingiram o ponto de virada em 2024 exige uma análise para identificar as dificuldades.
+            - Estratégias de acompanhamento nas fases intermediárias são necessárias, pois há uma queda significativa no número de alunos conforme avançam.
+            - Incentivo à continuidade nos estudos deve ser reforçado para garantir que mais alunos cheguem às fases universitárias e de formação.
             """
 
         st.markdown('---')
         # Exibe o texto manipulado usando st.markdown
         st.markdown(texto_exibido)
-
-
-    st.markdown('<br>', unsafe_allow_html=True)
-       
 
     # separador
     st.markdown('<br>', unsafe_allow_html=True)
@@ -1678,7 +1694,7 @@ elif page == page_3:
 # referências        
 else:
     st.title('Referências 📝')
-    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('---')     
     # subtítulo
     st.header('Fontes de dados')
     st.markdown('''
@@ -1707,8 +1723,7 @@ else:
                 Arquivos Python (app.py e utils.py) que auxiliam no processamento dos dados e na execução de funcionalidades adicionais.  
                 A licença do projeto é MIT.  
                 ''')
-         
-    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('---')     
     # subtítulo para Bibliografia
     st.header('Bibliografia')
     # lista de links
@@ -1724,10 +1739,8 @@ st.markdown('<br>', unsafe_allow_html=True)
 
 st.markdown('---')
 
-
 # texto -> Agradecimentos
 st.markdown('''<p style="font-size: 18px; text-align: center;">
             Obrigado por acompanhar este projeto! 🚀
             <br>
             </p>''', unsafe_allow_html=True)
-
