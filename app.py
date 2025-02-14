@@ -889,6 +889,39 @@ elif page == page_2:
                         ''')  
             st.write(tabela)
 
+            import matplotlib.pyplot as plt
+            import numpy as np
+
+            siglaPeriodo_list = df['siglaPeriodo'].tolist()
+            totalReprovado_list = df['TotalReprovado'].tolist()
+            totalDesistente_list = df['TotalDesistente'].tolist()
+            totalAlunos_list = df['TotalAlunos'].tolist()
+            percDesistencia_list = df['Perc'].tolist()
+
+            # Convertendo os valores para porcentagens
+            total = np.add(totalAlunos_list, totalDesistente_list)
+            percent1 = np.divide(totalAlunos_list, total) * 100
+            percent2 = np.divide(totalDesistente_list, total) * 100
+
+            x = np.arange(len(siglaPeriodo_list))
+            largura = 0.8
+
+            # Plotando as barras
+            plt.figure(figsize=(12, 6)) # <-- Aumentar o tamanho do gráfico aqui
+            plt.bar(x, percent2, largura, label='Desistentes', color='orange', alpha=0.7)
+            plt.bar(x, percent1, bottom=percent2, label='Total de Alunos', color='blue', alpha=0.7)
+
+            plt.plot(x, percent2, marker='o', linestyle='-', color='red', label='Perc Desistência')
+
+            # Adicionando rótulos e título
+            plt.xlabel('Período')
+            plt.ylabel('Porcentagem (%)')
+            plt.xticks(x, siglaPeriodo_list)
+
+            # Criando a legenda fora da área do gráfico
+            plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+
+
             with st.expander('☁️ Exibir query'):
                     st.code('''
                 SELECT
@@ -930,48 +963,64 @@ elif page == page_2:
                     tb.siglaPeriodo
                             ''')
                         
-            import matplotlib.pyplot as plt
-            import numpy as np
-
-            siglaPeriodo_list = df['siglaPeriodo'].tolist()
-            totalReprovado_list = df['TotalReprovado'].tolist()
-            totalDesistente_list = df['TotalDesistente'].tolist()
-            totalAlunos_list = df['TotalAlunos'].tolist()
-            percDesistencia_list = df['Perc'].tolist()
-
-            # Convertendo os valores para porcentagens
-            total = np.add(totalAlunos_list, totalDesistente_list)
-            percent1 = np.divide(totalAlunos_list, total) * 100
-            percent2 = np.divide(totalDesistente_list, total) * 100
-
-            x = np.arange(len(siglaPeriodo_list))
-            largura = 0.8
-
-            # Plotando as barras
-            plt.figure(figsize=(12, 6)) # <-- Aumentar o tamanho do gráfico aqui
-            plt.bar(x, percent2, largura, label='Desistentes', color='orange', alpha=0.7)
-            plt.bar(x, percent1, bottom=percent2, label='Total de Alunos', color='blue', alpha=0.7)
-
-            plt.plot(x, percent2, marker='o', linestyle='-', color='red', label='Perc Desistência')
-
-            # Adicionando rótulos e título
-            plt.xlabel('Período')
-            plt.ylabel('Porcentagem (%)')
-            plt.xticks(x, siglaPeriodo_list)
-
-            # Criando a legenda fora da área do gráfico
-            plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-
 
             # Mostrando o gráfico
             plt.tight_layout() # Ajusta o layout para evitar sobreposição
             st.pyplot(plt)
-
+            st.markdown('''
+                        Intensidade dos Motivos de Inativação:
+                        ''')  
             # Carregar os dados
             df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/EvasaoPorMotivo.csv")
             
+            # Preparar os dados para o heatmap
+            df_pivot = df.pivot(index='ano', columns='MotivoInativacao', values='Total').fillna(0)
 
+            # Transpor o DataFrame para trocar os eixos
+            df_pivot_transposed = df_pivot.T
 
+            # Criar o heatmap com eixos trocados
+            plt.figure(figsize=(12, 6))
+            sns.heatmap(df_pivot_transposed, annot=True, fmt=".0f", cmap="Blues")
+            plt.xlabel('Ano')  # Agora o eixo x representa os anos
+            plt.ylabel('Motivo de Inativação')  # Agora o eixo y representa os motivos
+            st.pyplot(plt)
+
+            with st.expander('☁️ Exibir query'):
+                    st.code('''
+                    SELECT
+                    EXTRACT(year  FROM    TIMESTAMP(alt.DataSituacaoInativo)) ano,
+                    mi.MotivoInativacao,
+                    COUNT(1) Total
+                    FROM
+                    `datathonpm.PassoMagicos.TbAluno` al
+                    JOIN
+                    `datathonpm.PassoMagicos.TbAlunoTurma` alt
+                    ON
+                    al.IdAluno = alt.IdAluno
+                    JOIN
+                    `datathonpm.PassoMagicos.TbMotivoInativacao` mi
+                    ON
+                    alt.IdMotivoInativacao = mi.IdMotivoInativacao
+                    JOIN
+                    `datathonpm.PassoMagicos.TbTurma` tu
+                    ON
+                    tu.IdTurma = alt.IdTurma
+                    JOIN
+                    `datathonpm.PassoMagicos.TbPeriodo`pe
+                    ON
+                    pe.idPeriodo = tu.IdPeriodo
+                    JOIN
+                    `datathonpm.PassoMagicos.TbSituacaoAlunoTurma`sat
+                    ON
+                    sat.IdSituacaoAlunoTurma = alt.IdSituacaoAlunoTurma
+                    WHERE
+                    alt.IdSituacaoAlunoTurma = 14
+                    AND EXTRACT(year  FROM    TIMESTAMP(DataSituacaoInativo)) < 2024
+                    GROUP BY
+                    EXTRACT(year  FROM    TIMESTAMP(DataSituacaoInativo)),
+                    mi.MotivoInativacao
+                            ''')
 
         elif model == 'Indicadores':
 
