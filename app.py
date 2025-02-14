@@ -1541,14 +1541,12 @@ elif page == page_2:
 
 # conclusão
 elif page == page_3:
+
     # título
     st.title('Conclusão 📍')
 
     st.markdown('---')
-    
-    # separador
-    st.markdown('<br>', unsafe_allow_html=True)
-    
+
     create_insight(
         'Conclusão Geral',
         '''
@@ -1589,7 +1587,7 @@ elif page == page_3:
 
         if escolha == "Defasagem":
             texto_exibido = """
-            ## Defasagem
+            ### Defasagem
             A análise dos gráficos mostra padrões importantes sobre a defasagem escolar e como ela se relaciona com idade e gênero. A maioria dos alunos está no nível esperado de desempenho, enquanto aqueles com defasagem, tanto para mais quanto para menos, são minoria.
 
             Os dados indicam que alunos com maior defasagem negativa costumam ser mais velhos, o que sugere dificuldades no aprendizado que podem ser trabalhadas com estratégias de recuperação. Já os alunos com defasagem positiva têm idades mais próximas entre si, o que pode indicar um desempenho avançado e a necessidade de estímulos para manter seu desenvolvimento.
@@ -1599,7 +1597,7 @@ elif page == page_3:
 
         elif escolha == "Desistência":
             texto_exibido = """
-            ## Desistência
+            ### Desistência
             1. Motivos Mais Comuns de Inativação
             Falta de retorno às tentativas de contato: Esse motivo aparece com frequência em 2022 (256 casos) e 2023 (55 casos), indicando que muitos responsáveis não respondem às tentativas de contato da organização.
             Mudança de bairro/cidade/distância: Esse motivo também é significativo, especialmente em 2022 (209 casos) e 2023 (54 casos), sugerindo que a localização geográfica é um fator importante para a inativação.
@@ -1623,14 +1621,20 @@ elif page == page_3:
 
         elif escolha == "Indicadores":
             texto_exibido = """
-            ## Indicadores
-            Nesta seção, você encontrará uma análise dos principais indicadores de desempenho e desenvolvimento.
-            - **Indicadores**: INDE, IAA, IEG, IPS, IDA, IPV, IPP.
+            ### Indicadores
+            O INDE é o indicador principal, com ele é decidido várias ações. Com base em outros indicadores, conseguimos chegar numa nota média no INDE, sendo assim, decidimos apresentar apenas este indicador na conclusão do nossos insight. 
+
+            Em suna, o indicador INDE apresentou uma média de 6.84, com valores variando de 3.03 a 9.53. A maioria dos alunos está concentrada nas faixas intermediárias (5.6 a 8.8), indicando um desempenho de moderado a alto.
+
+            Em 2024, houve um aumento no número de alunos com INDE mais elevado e uma redução na quantidade de estudantes nos níveis mais baixos, 
+            sugerindo melhorias no desempenho educacional, é importante manter ações voltadas ao fortalecimento do aprendizado, especialmente para os alunos que ainda se encontram nos níveis mais baixos.
+
+            Para manter essa evolução, é essencial continuar investindo em suporte pedagógico e acompanhamento individualizado, garantindo que mais alunos alcancem níveis mais altos de desenvolvimento e garantir que cheguem às fases universitárias e de formação.
             """
 
         elif escolha == "Pedras":
             texto_exibido = """
-            ## Pedras
+            ### Pedras
             Os gráficos mostram como a quantidade e a distribuição dos alunos por pedra evoluíram de 2020 a 2024, separando os dados por gênero.
 
             O grupo Topázio cresceu bastante e se tornou o mais numeroso, enquanto o Quartzo, que antes tinha mais alunos, perdeu participação. Já os grupos Ágata e Ametista se mantiveram mais estáveis.
@@ -1645,7 +1649,7 @@ elif page == page_3:
 
         elif escolha == "Ponto de Virada":
             texto_exibido = """
-            ## Ponto de Virada
+            ### Ponto de Virada
             O número de alunos que não atingiram o ponto de virada em 2024 teve um aumento significativo, enquanto os alunos que atingiram teve uma queda, 
             o que pode sinalizar desafios para determinadas turmas ou fases.
 
@@ -1660,11 +1664,11 @@ elif page == page_3:
             """
 
         st.markdown('---')
+
         # Exibe o texto manipulado usando st.markdown
         st.markdown(texto_exibido)
 
-    # separador
-    st.markdown('<br>', unsafe_allow_html=True)
+    st.markdown('---')
     
     create_insight(
         'Próximos passos',
@@ -1693,6 +1697,7 @@ elif page == page_3:
 
 # referências        
 else:
+
     st.title('Referências 📝')
     st.markdown('---')     
     # subtítulo
