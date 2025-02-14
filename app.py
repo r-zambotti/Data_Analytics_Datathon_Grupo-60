@@ -885,13 +885,67 @@ elif page == page_2:
 
         elif model == 'Evasão':
             st.subheader('Indicadores', divider='orange')
-                   # texto
-            st.markdown('''
-                        Dados de evasão!
-                        ''')  
+                   # texto                       
+             
             # Carregar o DataFrame com tratamento de possíveis issues
-            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/DadosDesistenciaEReprovados.csv")
+            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/Evasao.csv")
+            
+            tabela=df
+            tabela = tabela.rename(columns={
+                tabela.columns[0]: 'Período',
+                tabela.columns[1]: 'Alunos Reprovados',
+                tabela.columns[2]: 'Alunos Desistentes',
+                tabela.columns[3]: 'Total de Alunos',
+                tabela.columns[4]: 'Evasão%'
+            })
+            tabela = tabela.dropna(axis=1, how='all')
+        
+            st.markdown('''
+                        Evasão classificada por desistência:
+                        ''')  
+            st.write(tabela)
 
+            with st.expander('☁️ Exibir query'):
+                    st.code('''
+                SELECT
+                    tb.siglaPeriodo AS Periodo,
+                    COUNTIF( tb.SituacaoAlunoTurma ="Reprovado" ) AS Alunos_Reprovados,
+                    COUNTIF( tb.SituacaoAlunoTurma ="Desistente" ) AS Alunos_Desistentes,
+                    COUNT(1) AS Total_Alunos,
+                    (COUNTIF( tb.SituacaoAlunoTurma ="Desistente" ) / COUNT(1) ) * 100 AS Evasao
+                    FROM (
+                    SELECT
+                        al.IdAluno,
+                        pe.siglaPeriodo,
+                        sat.SituacaoAlunoTurma,
+                    FROM
+                        `datathonpm.PassoMagicos.TbAluno` al
+                    JOIN
+                        `datathonpm.PassoMagicos.TbAlunoTurma` alt
+                    ON
+                        al.IdAluno = alt.IdAluno
+                    JOIN
+                        `datathonpm.PassoMagicos.TbTurma` tu
+                    ON
+                        tu.IdTurma = alt.IdTurma
+                    JOIN
+                        `datathonpm.PassoMagicos.TbPeriodo`pe
+                    ON
+                        pe.idPeriodo = tu.IdPeriodo
+                    JOIN
+                        `datathonpm.PassoMagicos.TbSituacaoAlunoTurma`sat
+                    ON
+                        sat.IdSituacaoAlunoTurma = alt.IdSituacaoAlunoTurma
+                    WHERE
+                        pe.SiglaPeriodo < 2024
+                    GROUP BY
+                        al.IdAluno,
+                        pe.siglaPeriodo,
+                        sat.SituacaoAlunoTurma) tb
+                    GROUP BY
+                    tb.siglaPeriodo
+                            ''')
+                        
             import matplotlib.pyplot as plt
             import numpy as np
 
@@ -905,6 +959,30 @@ elif page == page_2:
             total = np.add(totalAlunos_list, totalDesistente_list)
             percent1 = np.divide(totalAlunos_list, total) * 100
             percent2 = np.divide(totalDesistente_list, total) * 100
+
+            x = np.arange(len(siglaPeriodo_list))
+            largura = 0.8
+
+            # Plotando as barras
+            plt.figure(figsize=(12, 6)) # <-- Aumentar o tamanho do gráfico aqui
+            plt.bar(x, percent2, largura, label='Desistentes', color='orange', alpha=0.7)
+            plt.bar(x, percent1, bottom=percent2, label='Total de Alunos', color='blue', alpha=0.7)
+
+            plt.plot(x, percent2, marker='o', linestyle='-', color='red', label='Perc Desistência')
+
+            # Adicionando rótulos e título
+            plt.xlabel('Período')
+            plt.ylabel('Porcentagem (%)')
+            plt.title('Evasão Passos Mágicos')
+            plt.xticks(x, siglaPeriodo_list)
+
+            # Criando a legenda fora da área do gráfico
+            plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+
+
+            # Mostrando o gráfico
+            plt.tight_layout() # Ajusta o layout para evitar sobreposição
+            st.pyplot(plt)
 
         elif model == 'Indicadores':
 
