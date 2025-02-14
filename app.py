@@ -97,15 +97,9 @@ if page == page_0:
         st.markdown('''
         #### Dados do projeto
 
-        **🎯 Objetivo**: Analisar impacto causado pela ONG Passos Mágicos e gerar análise com base nos dados apresentados.
+        **🎯 Objetivo**: Analisar impacto causado pela ONG Passos Mágicos e gerar dashboard dinâmicos para auxiliar na análise exploratória com o objetivo de auxliar a associação Passos Mágicos a tomar a melhor decisão.
 
-        ---
-        
-        **🛸 Modelos**: os dados utilizados para análise e treinamento no modelo foram coletados em 18/05/2024 e correspondem ao período de 20/05/1987 a 13/05/2024.
-        - [XGBoost](https://xgboost.readthedocs.io/en/stable/)
-        - [Prophet](https://facebook.github.io/prophet/)
-
-        ---
+        ---        
         
         **📡 Base de Dados e Dicionário**:
         ''')
