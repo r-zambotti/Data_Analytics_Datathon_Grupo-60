@@ -44,15 +44,20 @@ st.set_page_config(layout='centered',
                    page_icon='🌟', initial_sidebar_state='auto')
 
 #Bases
-url = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv"
+base_alunos = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv"
+base_evasao = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/Evasao.csv"
+base_pedra_geral = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_pedra_geral.csv"
+
+#Dicionário
 url_file_data = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/file/Dicion%C3%A1rio%20Dados%20Datathon.pdf"
 
+#Link para download das bases
+url = base_alunos
 response = requests.get(url)
 csv_data = response.content
 
 response = requests.get(url_file_data)
 file_data = response.content
-
 
 # paginação
 page_0 = 'Introdução ✨'
@@ -231,11 +236,17 @@ if page == page_0:
         
     st.markdown('---')
 
-    # Inserindo imagem da ONG Passos Mágicos
+    # Link correto para incorporação (substitua pelo ID do seu vídeo)
+    video_id = "36ZfZQa68og"  # Substitua pelo ID do vídeo do YouTube
+    youtube_link = f"https://www.youtube.com/embed/{video_id}"
 
-    image =  Image.open("img/passos_magicos.png")
-    st.image(image, caption= "Imagem oficial da ONG Passos Mágicos")
-    
+    # Incorporar o vídeo no Streamlit
+    st.markdown(
+        f'<iframe width="700" height="400" src="{youtube_link}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+        unsafe_allow_html=True
+)
+
+
 # Análise Exploratória
 elif page == page_1:
 
@@ -243,8 +254,11 @@ elif page == page_1:
     st.markdown('<br>', unsafe_allow_html=True)
     
     st.markdown('''
-                O projeto teve sua análise exploratória realizada com base nos dados da PEDE (Pesquisa Extensiva do Desenvolvimento Educacional), disponibilizados pela Passos Mágicos. A documentação completa, que explica a construção dos índices e métricas já existentes, foi compartilhada, trazendo à tona os detalhes da metodologia aplicada. A Passos Mágicos utiliza o INDE (Índice Nacional de Desenvolvimento Educacional) como uma métrica central para avaliar o desempenho dos estudantes. O INDE é formado por um conjunto de indicadores, distribuídos em três dimensões principais, que abrangem critérios como adequação de nível, desempenho acadêmico, engajamento, autoavaliação, aspectos psicossociais e psicopedagógicos. Essas dimensões são organizadas da seguinte maneira, cada uma com seus respectivos indicadores:
-                                
+                O projeto teve sua análise exploratória realizada com base nos dados da PEDE (Pesquisa Extensiva do Desenvolvimento Educacional), disponibilizados pela Passos Mágicos. 
+                A documentação completa, que explica a construção dos índices e métricas já existentes, foi compartilhada, trazendo à tona os detalhes da metodologia aplicada. 
+                A Passos Mágicos utiliza o INDE (Índice Nacional de Desenvolvimento Educacional) como uma métrica central para avaliar o desempenho dos estudantes. O INDE é formado por um conjunto de indicadores, 
+                distribuídos em três dimensões principais, que abrangem critérios como adequação de nível, desempenho acadêmico, engajamento, autoavaliação, aspectos psicossociais e psicopedagógicos. Essas dimensões são organizadas da seguinte maneira, 
+                cada uma com seus respectivos indicadores:                              
                 ''', unsafe_allow_html=True)
     
     st.markdown('''
@@ -260,11 +274,15 @@ elif page == page_1:
                 ''',  unsafe_allow_html=True)
 
     st.markdown('''
-                O <b> <font color='blue'> INDE </b> </font> geral apresenta uma média de 6,84, com uma amplitude significativa entre os valores mínimo e máximo, que variam de 3,03 a 9,53. Ao analisar os dados por ano, percebe-se um crescimento no número de alunos, porém acompanhado de uma queda nos níveis do INDE. Esse cenário nos coloca diante de um desafio importante: a necessidade de segmentar essas informações para identificar e compreender as lacunas existentes, buscando estratégias que possam reverter essa tendência e fortalecer o desempenho educacional.
+                O INDE geral apresenta uma média de 6,84, com uma amplitude significativa entre os valores mínimo e máximo, que variam de 3,03 a 9,53. 
+                Ao analisar os dados por ano, percebe-se um crescimento no número de alunos, porém acompanhado de uma queda nos níveis do INDE. Esse cenário nos coloca diante de um desafio importante: 
+                a necessidade de segmentar essas informações para identificar e compreender as lacunas existentes, buscando estratégias que possam reverter essa tendência e fortalecer o desempenho educacional.
                 ''', unsafe_allow_html=True) 
 
     st.markdown('''
-                Com base nas análises realizadas, observa-se que a maioria dos estudantes se concentra nos intervalos de scores entre (6.88, 7.52], o que reflete um desempenho consistente e relativamente elevado em diversas métricas. A tendência geral aponta para um crescimento no número de estudantes nos intervalos superiores ao longo dos anos, indicando melhorias significativas nos índices de desenvolvimento educacional, autoavaliação, engajamento, aspectos psicossociais, aprendizagem e pontos de virada.
+                Com base nas análises realizadas, observa-se que a maioria dos estudantes se concentra nos intervalos de scores entre (6.88, 7.52], o que reflete um desempenho consistente e relativamente elevado em diversas métricas. 
+                A tendência geral aponta para um crescimento no número de estudantes nos intervalos superiores ao longo dos anos, indicando melhorias significativas nos índices de desenvolvimento educacional, autoavaliação, engajamento, 
+                aspectos psicossociais, aprendizagem e pontos de virada.
   ''', unsafe_allow_html=True)
 
     #Análise dos Indicadores
@@ -299,9 +317,10 @@ elif page == page_1:
                     <p style="font-size: 18px">
 
                     As pedras são definidas com base no índice do desenvolvimento educacional (INDE). Com base nas médias geradas pelos indicadores, conseguimos calcular como cada pedra será criada e atribuida a cada aluno.<br>  
-                    Como um dos principais objetivos do cálculo do INDE é ter um parâmetro de avaliação do desenvolvimento educacional dos estudantes da Associção Passos Mágicos, as suas medidas de variabilidade (médida, mediana e moda), nos possibilitam a formação de um critério
-                    de classificação de nota padronizada. Esse critério nos permite calcular intervalos de valor do INDE a partir do desempenho de todos os estudantes, comparando-os numa base mais justa, e não simplesmente ordenando suas notas pelos seus valores absolutos. 
-                    Assim, os resultados individuais do INDE levarão em conta as condições de dispersão das notas de todo o conjunto de estudantes. <b> A classificação das notas se dará então pela sua distância em relação à média geral e não por seu valor absoluto</b>. <br>
+                    Como um dos principais objetivos do cálculo do INDE é ter um parâmetro de avaliação do desenvolvimento educacional dos estudantes da Associção Passos Mágicos, as suas medidas de variabilidade (médida, mediana e moda), 
+                    nos possibilitam a formação de um critério de classificação de nota padronizada. Esse critério nos permite calcular intervalos de valor do INDE a partir do desempenho de todos os estudantes, comparando-os numa base mais justa, 
+                    e não simplesmente ordenando suas notas pelos seus valores absolutos. Assim, os resultados individuais do INDE levarão em conta as condições de dispersão das notas de todo o conjunto de estudantes. <b> A classificação das notas 
+                    se dará então pela sua distância em relação à média geral e não por seu valor absoluto</b>. <br>
                     Segue imagem abaixo para melhor entendimento: 
 
                     </p>
@@ -535,7 +554,7 @@ elif page == page_1:
 # Aplicação Analítica
 elif page == page_2:
 
-    df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv")
+    df = pd.read_csv(base_alunos)
 
     # Estilizando o título e centralizando
     st.markdown("<h1 style='text-align: center;'>📈 Aplicação Analítica</h1>", unsafe_allow_html=True)
@@ -556,7 +575,7 @@ elif page == page_2:
     )
 
     # Criando o menu centralizado
-    menu = st.radio("", ["Dashboard", "Insight", "Análise Preditiva"], horizontal=True, label_visibility="collapsed")
+    menu = st.radio("", ["Dashboard", "Insight"], horizontal=True, label_visibility="collapsed")
 
     st.markdown('---', unsafe_allow_html=True)
 
@@ -742,7 +761,7 @@ elif page == page_2:
         st.subheader("💡 Insights")
 
         # seleção de modelo
-        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Desistência' ,'Pedras'])
+        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Desistência' ,'Pedras', 'Ponto de Virada'])
 
         st.markdown('<br>', unsafe_allow_html=True)
 
@@ -872,7 +891,7 @@ elif page == page_2:
                    # texto                       
              
             # Carregar o DataFrame com tratamento de possíveis issues
-            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/Evasao.csv")
+            df = pd.read_csv(base_evasao)
             
             tabela=df
             tabela = tabela.rename(columns={
@@ -1038,7 +1057,7 @@ elif page == page_2:
                         ''')        
 
             # Carregar o DataFrame com tratamento de possíveis issues
-            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv")
+            df = pd.read_csv(base_alunos)
 
             # Definindo os bins do histograma
             bins = [3.03, 3.67, 4.31, 4.96, 5.60, 6.24, 6.88, 7.52, 8.16, 8.80, 9.44]
@@ -1122,13 +1141,11 @@ elif page == page_2:
                     """, unsafe_allow_html=True
                 )
 
-
         elif model == 'Pedras':
             
-            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_pedra_geral.csv")
+            df = pd.read_csv(base_pedra_geral)
             
             plt.rcParams.update({'font.size': 14})  # Ajuste para aumentar toda a fonte do gráfico
-
 
             st.subheader('Pedras', divider='orange')
 
@@ -1294,12 +1311,126 @@ elif page == page_2:
             plt.tight_layout()
             ax.tick_params(axis='x', colors='white')  # Cor dos valores no eixo X
             ax.tick_params(axis='y', colors='white')  # Cor dos valores no eixo Y
-            st.pyplot(fig)
+            st.pyplot(fig)          
 
-              
-    elif menu == "Análise Preditiva":
-        st.subheader("🔮 Análise Preditiva")
-       # st.write("Aqui você pode acessar modelos preditivos.")
+        elif model == "Ponto de Virada":
+
+            df = pd.read_csv(base_alunos)
+
+            df['ANO_LETIVO'] = df['ANO_LETIVO'].astype(str) 
+            
+            df_atingiu_pv = df.set_index('ANO_LETIVO')
+
+
+            # Criar sessão de estado para os filtros se ainda não existirem
+            for key in ['ano_selecionado5', 'genero_selecionado2', 'fase_selecionada', 'pv_selecionado']:
+                if key not in st.session_state:
+                    st.session_state[key] = None
+
+                    # Criar os widgets de filtro
+            col1, col2, col3, col4 = st.columns(4)
+
+            with col1:
+                anos_disponiveis = sorted(df['ANO_LETIVO'].unique())
+                ano_selecionado5 = st.selectbox('Selecione o ano:', [None] + list(anos_disponiveis), key='ano_selecionado')
+
+            with col2:
+                generos_disponiveis = sorted(df['GENERO'].unique())
+                genero_selecionado2 = st.selectbox('Selecione o gênero:', [None] + list(generos_disponiveis), key='genero_selecionado2')    
+
+            with col3:
+                fases_disponiveis = sorted (df['FASE'].unique())
+                fase_selecionada = st.selectbox('Selecione a fase:', [None] + fases_disponiveis, key='fase_selecionada')
+
+            with col4:
+                pv_disponiveis = sorted (df['ATINGIU_PV'].unique())
+                pv_selecionado = st.selectbox('Ponto de virada:', [None] + pv_disponiveis, key='atingiu_pv')
+
+            # Aplicar filtros
+            df_ponto_virada = df.copy()
+
+            if ano_selecionado5:
+                df_ponto_virada = df_ponto_virada[df_ponto_virada['ANO_LETIVO'] == ano_selecionado5]
+
+            if genero_selecionado2:
+                df_ponto_virada = df_ponto_virada[df_ponto_virada['GENERO'] == genero_selecionado2]
+
+            if fase_selecionada:
+                df_ponto_virada = df_ponto_virada[df_ponto_virada['FASE'] == fase_selecionada]
+
+            if pv_selecionado:
+                df_ponto_virada = df_ponto_virada[df_ponto_virada['ATINGIU_PV'] == pv_selecionado]
+
+
+            st.subheader("Gráfico de ponto de virada por ANO")
+            # 🔹 Aumentar o tamanho das fontes
+            sns.set_context("talk")  # Opções: "paper", "notebook", "talk", "poster"
+
+            # 🔹 Definir a ordem personalizada das fases
+            ordem_fases = ["ALFA", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+            # 🔹 Primeiro gráfico: Quantidade de alunos por ano letivo
+            fig1, ax1 = plt.subplots(figsize=(14, 7))
+
+            sns.countplot(
+                x="ANO_LETIVO",
+                hue="ATINGIU_PV",
+                data=df_ponto_virada,
+                palette="viridis",
+                ax=ax1
+            )
+
+            # Adicionar valores acima das barras
+            for p in ax1.patches:
+                if p.get_height() > 0:
+                    ax1.annotate(
+                        f'{int(p.get_height())}',
+                        (p.get_x() + p.get_width() / 2., p.get_height()),
+                        ha='center', va='center', fontsize=14, color='black', xytext=(0, 5),
+                        textcoords='offset points'
+                    )
+
+            ax1.set_xlabel("Ano Letivo", fontsize=12)
+            ax1.set_ylabel("Quantidade de Alunos", fontsize=12)
+            ax1.set_title("Alunos que Atingiram o Ponto de Virada por Ano", fontsize=14, fontweight="bold")
+            ax1.legend(title="Atingiu PV", fontsize=10, title_fontsize=12)
+
+            st.pyplot(fig1)  # Exibir o primeiro gráfico no Streamlit
+
+            st.markdown('---')
+
+            st.subheader("Gráfico de ponto de virada por FASE")
+            # 🔹 Segundo gráfico: Quantidade de alunos por fase e situação de PV
+            fig2, ax2 = plt.subplots(figsize=(14, 7))
+
+            # Garantir que a coluna 'FASE' siga a ordem desejada
+            df_ponto_virada["FASE"] = pd.Categorical(df_ponto_virada["FASE"], categories=ordem_fases, ordered=True)
+
+            sns.countplot(
+                x="FASE",
+                hue="ATINGIU_PV",
+                data=df_ponto_virada,
+                palette="coolwarm",
+                ax=ax2,
+                order=ordem_fases  # ⬅️ Define a ordem personalizada
+            )
+
+            # Adicionar valores acima das barras
+            for p in ax2.patches:
+                if p.get_height() > 0:
+                    ax2.annotate(
+                        f'{int(p.get_height())}',
+                        (p.get_x() + p.get_width() / 2., p.get_height()),
+                        ha='center', va='center', fontsize=14, color='black', xytext=(0, 5),
+                        textcoords='offset points'
+                    )
+
+            ax2.set_xlabel("Fase", fontsize=14)
+            ax2.set_ylabel("Quantidade de Alunos", fontsize=14)
+            ax2.set_title("Quantidade de Alunos por Fase e Situação de PV", fontsize=14, fontweight="bold")
+            ax2.legend(title="Atingiu PV", fontsize=10, title_fontsize=14)
+
+            st.pyplot(fig2)  # Exibir o segundo gráfico no Streamlit
 
 # conclusão
 elif page == page_3:
@@ -1567,10 +1698,6 @@ else:
 st.markdown('<br>', unsafe_allow_html=True)
 
 st.markdown('---')
-
-
-
-
 
 
 # texto -> Agradecimentos
