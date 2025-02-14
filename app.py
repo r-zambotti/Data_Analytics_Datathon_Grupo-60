@@ -1616,107 +1616,20 @@ elif page == page_3:
     st.markdown('<br>', unsafe_allow_html=True)
 
     # título
-    st.markdown('''#### Modelos de *Ensemble Learning*''')
+    st.markdown('''#### xxxxxxxxxxxx''')
     # texto
     st.markdown('''
                 <p style="font-size: 18px">
-                    O preço do petróleo é influenciado por diversos fatores, como oferta e demanda.
-                    Além disso, eventos globais, como guerras e desastres naturais, também podem afetá-lo.
-                    Logo, essa série temporal não é estacionária e possui comportamento não linear. Fatos inesperados, 
-                    como os apresentados na seção "Análise", não são facilmente capturados por um único modelo.<br><br>
-                    - <b>Próximo passo:</b> empregar a técnica de <i>ensemble learning</i> para combinar modelos.
-                    <br>
+   Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsu
                 </p>
                 ''', unsafe_allow_html=True)
     
     # criar insight
-    create_insight('Complexidade do Preço do Petróleo', 
+    create_insight('Why do we use it', 
                    '''
-                        Sugere-se a utilização de <i>ensemble learning</i> para combinar modelos de previsão.
-                        Esses modelos não precisam se voltar apenas ao preço do petróleo, mas também a outros fatores fundamentais - como produção e mercado.<br>
-                        Um modelo de classificação para prever "alta" ou "baixa" do preço do petróleo pode compor uma <i>feature</i> adicional.<br>
-                        Redes Neurais Convolucionais, ou <i>Convolutional Neural Networks</i> (CNN) são eficazes para análise de imagens de satélite e previsão de eventos climáticos.
-                        CNNs também podem ser usadas para previsão, a partir de gráficos de <i>candlestick</i>, utilizados por <i>traders</i> para análise técnica.
+                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
                     ''')
     
-    st.markdown('<br>', unsafe_allow_html=True)
-    
-    st.markdown('''#### Análise de Sentimentos & Mercado Futuro''')
-
-    st.markdown('''
-                <p style="font-size: 18px">
-                    A análise de sentimentos é uma técnica de Processamento de Linguagem Natural,
-                    ou <i>Natural Language Processing</i> (NLP), que visa identificar e classificar a polaridade 
-                    emocional de um texto. Ela utiliza algoritmos e modelos de aprendizado de máquina para 
-                    atribuir uma pontuação de sentimento a cada trecho, indicando se é positivo, negativo ou neutro.
-                    Para melhoria do modelo, um passo importante é a construção de uma <i>feature</i> que 
-                    capture a opinião pública sobre o mercado de petróleo em tempo real, a partir de notícias e redes sociais. 
-                    Implementar esses sentimentos no modelo ajuda a incorporar tendências emergentes e 
-                    mudanças de humor que não seriam capturadas apenas por dados históricos de preços.<br><br>
-                    - <b>Próximo passo:</b> integrar o modelo com outras fontes de dados sobre o mercado de futuro.
-                    <br>
-                </p>
-                ''', unsafe_allow_html=True)
-
-    create_insight('Mercado Futuro & Análise de Sentimento', 
-                     '''
-                        A análise de sentimento também contribui para a estabilidade das previsões, 
-                        conforme medido pelo EV (<i>Error Variance</i>, ou Variância do Erro). A adição de sentimentos extraídos por textos 
-                        tende a estabilizar os resultados, reduzindo a variabilidade das previsões e tornando-as mais confiáveis.<br>
-                        Além disso, criar features baseadas em contratos futuros de petróleo e ajudará a 
-                        entender dados de extração e estoque. Também, o volume de transações no mercado de futuro é componente essencial para o cálculo 
-                        de outros indicadores técnicos, como o <i>Open Interest</i>, que mede o número de contratos em aberto.
-                      ''')
-    
-    st.markdown('<br>', unsafe_allow_html=True)    
-    
-    # título
-    st.markdown('''#### Database na Nuvem''')
-    # texto
-    st.markdown('''
-                <p style="font-size: 18px">
-                    MLOps é uma prática que visa integrar o desenvolvimento de modelos de Machine Learning 
-                    com a operação de sistemas. Para essa etapa, é importante criar um pipeline de dados.<br><br>
-                    - <b>Próximo passo:</b> <i>deploy</i> da aplicação na nuvem, com a Amazon Web Services (AWS).<br>
-                        * <b>Amazon S3</b> para armazenamento do modelo<br>
-                        * <b>Amazon Redshift</b> para armazenamento dos dados estruturados<br>
-                        * <b>Amazon Glue</b> para ETL - <i>Extract Transform Load</i><br>
-                        * <b>Amazon SageMaker</b> para treinamento de modelos de Machine Learning<br>
-                </p>
-                ''', unsafe_allow_html=True)
-
-    # criar insight
-    create_insight(
-                    'Vantagens de um Database na Nuvem',
-                   '''
-                        - Escalabilidade: aumenta ou diminui a capacidade de armazenamento conforme a demanda.<br>
-                        - Segurança: os dados são armazenados em servidores seguros e protegidos por criptografia.<br>
-                        - Acessibilidade: os dados podem ser acessados de qualquer lugar e a qualquer momento.<br>
-                        - Backup: salvamento automático de dados, que podem ser recuperados em caso de falhas.<br>
-                        - Integração: integração com outras ferramentas, como pipelines de dados e APIs.
-                        '''
-                     )
-    
-    st.markdown('<br>', unsafe_allow_html=True)
-    
-    st.markdown('''#### Desenvolver API''')
-
-    st.markdown('''<p style="font-size: 18px">
-                API, ou <i>Application Programming Interface</i>, é um conjunto de regras e protocolos que 
-                permitem a comunicação entre sistemas.<br><br>
-                - <b>Próximo passo:</b> criar API para disponibilizar o modelo para usuários e outras aplicações.
-                <br>
-                </p>
-                ''', unsafe_allow_html=True)
-                        
-    # criar insight
-    create_insight('API', 
-                   '''
-                        - Facilita o acesso às previsões do modelo, permitindo que outras aplicações e sistemas consumam os dados.<br>
-                        - Pode ser utilizada para criar dashboards, relatórios e aplicações web que consomem as previsões do modelo.<br>
-                        - Permite integração com outros sistemas, como CRMs (<i>Customer Relationship Management</i>) e 
-                          ERPs (<i>Enterprise Resource Planning).
-                    ''')
     
     st.markdown('<br>', unsafe_allow_html=True)
        
