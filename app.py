@@ -1579,7 +1579,7 @@ elif page == page_3:
                     ''', unsafe_allow_html=True)
 
         # Lista de opções para o st.radio
-        opcoes = ["Análise por Aluno", "Defasagem", "Desistência", "Indicadores", "Pedras", "Ponto de Virada"]
+        opcoes = ["Defasagem", "Desistência", "Indicadores", "Pedras", "Ponto de Virada"]
 
         # Cria o st.radio para selecionar uma opção
         escolha = st.radio("Selecione uma opção:", opcoes)
@@ -1587,15 +1587,7 @@ elif page == page_3:
         # Variável para armazenar o texto a ser exibido
         texto_exibido = ""
 
-        # Manipula o texto com base na opção selecionada
-        if escolha == "Análise por Aluno":
-            texto_exibido = """
-            ## Análise por Aluno
-            Esta seção fornece uma análise detalhada do desempenho de cada aluno em várias métricas.
-            - **Métricas**: Desempenho acadêmico, engajamento, desenvolvimento psicossocial, etc.
-            """
-
-        elif escolha == "Defasagem":
+        if escolha == "Defasagem":
             texto_exibido = """
             ## Defasagem
             Esta seção aborda questões de defasagem no aprendizado e estratégias para superá-las.
@@ -1654,6 +1646,35 @@ elif page == page_3:
 
     st.markdown('<br>', unsafe_allow_html=True)
        
+
+    # separador
+    st.markdown('<br>', unsafe_allow_html=True)
+    
+    create_insight(
+        'Próximos passos',
+
+        '''
+        Com base na análise realizada sobre o impacto da ONG Passos Mágicos no desenvolvimento educacional de crianças e jovens em situação de vulnerabilidade social,
+        é crucial planejar os próximos passos para aprimorar ainda mais as iniciativas e garantir um impacto sustentável e significativo. Aqui estão algumas sugestões de melhoria focadas em potencializar o trabalho da associação:
+
+        <b>1 - Reforço das Intervenções Pedagógicas Personalizadas:</b>
+
+        - Utilizar os dados para identificar alunos com maiores dificuldades e oferecer apoio individualizado. Ferramentas de aprendizado adaptativo e tutoria personalizada podem ser implementadas para atender às necessidades específicas de cada aluno, reduzindo ainda mais a defasagem escolar.
+        
+        <b>2- Ampliação de Programas de Desenvolvimento Socioemocional:</b>
+
+        - Fortalecer os programas focados no desenvolvimento de competências socioemocionais, já que o aumento no "Ponto de Virada" (PV) indica sucesso nessas áreas. Isso pode incluir oficinas, atividades extracurriculares e acompanhamento psicológico para ajudar os alunos a desenvolverem resiliência, empatia e habilidades de comunicação.
+        
+        <b>3 - Expansão das Tecnologias Educacionais:</b>
+
+        - Investir em tecnologias educacionais que facilitem o aprendizado interativo e a personalização. A utilização de plataformas como Google Colab e Streamlit demonstrou ser eficaz, e novas ferramentas podem ser exploradas para enriquecer ainda mais a experiência de aprendizado dos alunos.
+
+        <b>4 - Capacitação e Formação de Educadores:</b>
+
+        - Oferecer programas de capacitação contínua para os educadores e voluntários da ONG. A formação em metodologias pedagógicas inovadoras e o uso de tecnologia na educação são essenciais para garantir a qualidade das intervenções.         
+        '''
+    )
+
 # referências        
 else:
     st.title('Referências 📝')
