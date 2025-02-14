@@ -408,7 +408,7 @@ elif page == page_1:
                     ''',unsafe_allow_html=True )
 
         image =  Image.open("img/ian_avaliacoes.png")
-        st.image(image, caption= "Dimensões e Indicadores do INDE") 
+        st.image(image, caption= "Tabela de adequação de nível") 
         
     #Tabela IAA
     if indicador == 'IAA':
@@ -448,7 +448,7 @@ elif page == page_1:
 
 
         image =  Image.open("img/iaa_avaliacoes.png")
-        st.image(image, caption= "Dimensões e Indicadores do INDE") 
+        st.image(image, caption= "Questionário de autoavaliação") 
         
     #Tabela IPS
     if indicador == 'IPS':
@@ -510,7 +510,7 @@ elif page == page_1:
                     ''',unsafe_allow_html=True)
 
         image =  Image.open("img/ipp_avaliacoes.png")
-        st.image(image, caption= "Questões de avaliação do IPS, categorias e seus valores")                   
+        st.image(image, caption= "Questões de avaliação Psicopedagógico")                   
         
     #Tabela IPV
     if indicador == 'IPV':
@@ -549,7 +549,7 @@ elif page == page_1:
                     ''',unsafe_allow_html=True)
 
         image =  Image.open("img/ipv_avaliacoes.png")
-        st.image(image, caption= "Questões de avaliação do IPS, categorias e seus valores")        
+        st.image(image, caption= "Questões de avaliação do IPV")        
 
 
 # Aplicação Analítica
