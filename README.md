@@ -3,8 +3,8 @@
 # Análise Exploratória Metodologia "Passos Mágicos"
 
 🎯 Objetivo: 
-- Analisar o impacto causado pela ONG Passos Mágicos e gerar dashboard dinâmicos para auxiliar na análise exploratória
-  com o objetivo de auxliar a associação Passos Mágicos a tomar a melhor decisão.
+- Analisar o impacto causado pela ONG Passos Mágicos e gerar dashboard e Insight dinâmicos para auxiliar na análise exploratória
+  da associação Passos Mágicos a tomar a melhor decisão.
   
 ## 🔍 Visão Geral
 
@@ -13,12 +13,13 @@
 
 
 ## 🛠️ Tecnologias Utilizadas
-- **Google Colab**: Para realizar análise explorátoria da base
-- **Pandas**: Utilizado para analisar os dados.
-- **Plotly**: Para a construção de gráficos dinâmicos.
+- **Google Colab**: Tratamento e análise explorátoria da base.
+- **Python**: Desenvolvimento do projeto, incluindo análise de dados
+- **Pandas**: Biblioteca utilizado para analisar os dados.
+- **Plotly** e **Matplotlib**: Biblioteca para construção de gráficos dinâmicos.
 - **VSCode**: Utilizado para o desenvolvimento e edição do código.
-- **Python**: Base para todo o desenvolvimento do projeto, incluindo análise de dados e Machine Learning.
-- **Streamlit**: Criação da interface e Insight interativos.
+- **Streamlit**: Criação da interface web e Insight interativos.
+- **Bigquery**: Para criação de query e analise de Desistência.
 
-## 🚀 Acesse o Projeto
+## 🚀 Streamlit do Projeto
 - [Datathon Passos Mágicos](https://data-analytics-datathon-grupo-60.streamlit.app/)
