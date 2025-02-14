@@ -46,19 +46,19 @@ st.set_page_config(layout='centered',
 # CSS para modificar o fundo de toda a página
 page_bg = """
 <style>
-    /* Fundo para toda a página */
+    /* Fundo da página principal */
     [data-testid="stAppViewContainer"] {
-        background-image: url("https://source.unsplash.com/random/1920x1080");
-        background-size: cover;
-        background-attachment: fixed;
+        background-image: url("https://source.unsplash.com/random/1920x1080"); !important;  /* Azul escuro */
     }
-    
-    /* Fundo para a barra lateral */
+
+    /* Fundo da barra lateral */
     [data-testid="stSidebar"] {
-        background-color: #111827; /* Fundo branco semi-transparente */
+        background-color: #0F172A !important;  /* Azul quase preto */
     }
 </style>
 """
+
+st.markdown(page_bg, unsafe_allow_html=True)
 
 
 #Bases
