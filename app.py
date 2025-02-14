@@ -47,6 +47,7 @@ st.set_page_config(layout='centered',
 base_alunos = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv"
 base_evasao = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/Evasao.csv"
 base_pedra_geral = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_pedra_geral.csv"
+base_evasao_por_motivo = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/EvasaoPorMotivo.csv"
 
 #Dicionário
 url_file_data = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/file/Dicion%C3%A1rio%20Dados%20Datathon.pdf"
@@ -890,7 +891,6 @@ elif page == page_2:
 
             st.subheader('Defasagem', divider='orange')
 
-            # texto 
             st.markdown('''
                 <p style="font-size: 18px">
                 Permite verifica de forma dinâmica a defasagem dos alunos com base no gênero e ano, sendo o eixo X os níveis de defasagem existente na base.<br></p>                                            
@@ -926,7 +926,9 @@ elif page == page_2:
             if genero_selecionado3:
                 df_defasagem = df_defasagem[df_defasagem['GENERO'] == genero_selecionado3]
 
-            # 📊 **Gráfico 1: Distribuição da Defasagem por Gênero**
+            #Gráfico 1: Distribuição da Defasagem por Gênero
+            st.subheader("Gráfico de defasagem por Gênero")
+
             fig1, ax1 = plt.subplots(figsize=(10, 6))
             sns.set_style("whitegrid")
 
@@ -947,7 +949,9 @@ elif page == page_2:
             # Exibir o gráfico no Streamlit
             st.pyplot(fig1)
 
-            # 📊 **Gráfico 2: Média de Idade por Nível de Defasagem**
+            #Gráfico 2: Média de Idade por Nível de Defasagem**
+            st.subheader("Gráfico por Média de idade por nível de Defasagem")
+
             fig2, ax2 = plt.subplots(figsize=(10, 6))
 
             sns.barplot(data=df_defasagem, x="DEFASAGEM", y="IDADE", palette="viridis", ci=None, ax=ax2)
@@ -1072,7 +1076,7 @@ elif page == page_2:
                         Intensidade dos Motivos de Inativação:
                         ''')  
       
-            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/EvasaoPorMotivo.csv")
+            df = pd.read_csv(base_evasao_por_motivo)
 
             df_pivot = df.pivot(index='ano', columns='MotivoInativacao', values='Total').fillna(0)
 
@@ -1119,7 +1123,6 @@ elif page == page_2:
                 EXTRACT(year  FROM    TIMESTAMP(DataSituacaoInativo)),
                 mi.MotivoInativacao
                             ''')
-
 
         elif model == 'Indicadores':
 
@@ -1394,7 +1397,29 @@ elif page == page_2:
             st.pyplot(fig)          
 
         elif model == "Ponto de Virada":
+     
+            st.subheader('Ponto de Virada', divider='orange')
 
+            st.markdown('''
+                <p style="font-size: 18px">
+                De forma dinâmica, é possível verificar através do ANO, GÊNERO, FASE e PV (Ponto de Virada) 
+                o resultado final da base e identificar insight e entender o comportamento do ponto de virada para 
+                alcançar ou se manter na mesma fase.<br>
+                        ''', unsafe_allow_html=True)  
+            st.markdown('''
+                Segue detalhes de cada fase: 
+                - ALFA (1° e 2° ano);
+                - Fase 1 (3° e 4° ano);
+                - Fase 2 (5° e 6° ano);
+                - Fase 3 (7° e 8° ano);
+                - Fase 4 (9° ano);
+                - Fase 5 (1° EM);
+                - Fase 6 (2° EM);
+                - Fase 7 (3° EM);
+                - Fase 8 (Universitários)
+                - Fase 9 (Formados (EAD))   
+                ''')
+                                           
             df = pd.read_csv(base_alunos)
 
             df['ANO_LETIVO'] = df['ANO_LETIVO'].astype(str) 
@@ -1517,124 +1542,121 @@ elif page == page_2:
 # conclusão
 elif page == page_3:
     # título
-    st.title('Conclusão')
+    st.title('Conclusão 📍')
+
+    st.markdown('---')
+    
     # separador
     st.markdown('<br>', unsafe_allow_html=True)
-    # texto
-    st.markdown('''
-                <p style="font-size: 20px">
-                Este projeto teve como objetivo analisar o impacto da ONG Passos Mágicos no desenvolvimento educacional de crianças e jovens em situação de vulnerabilidade social, 
-                utilizando dados do período de 2020 a 2024. A combinação de ciência de dados e storytelling foi fundamental para transformar um grande volume de informações em insights acionáveis.<br>
-
-                Com o uso do Google Colab para exploração e tratamento de dados e o Streamlit para a criação de um dashboard interativo, foi possível apresentar de forma intuitiva os principais indicadores de performance.<br>
-
-                A análise revelou tendências significativas que demonstram o impacto positivo da ONG em diversos aspectos-chave:
-                - <b>Redução da Defasagem Escolar:</b> Observou-se uma tendência de diminuição da defasagem entre idade e série, refletindo a eficácia das intervenções pedagógicas da ONG.<br>
-                - <b>Aumento no "Ponto de Virada" (PV):</b> Houve um crescimento constante no número de alunos que atingiram o PV, indicando o fortalecimento de competências acadêmicas e socioemocionais. <br>
-                - <b>Evolução por Gênero e Faixa Etária:</b> A distribuição equilibrada entre gêneros e a melhoria dos resultados em diferentes faixas etárias destacam o caráter inclusivo das ações da ONG. <br>
-                - <b>Impacto Longitudinal:</b> A progressão consistente no desempenho acadêmico ao longo dos anos sugere que o impacto da ONG é cumulativo e sustentável. <br>
-
-                </p>
-                ''', unsafe_allow_html=True)
-    st.markdown('''
-                <p style="font-size: 20px">
-                <br>Esses resultados não apenas evidenciam o papel transformador da Passos Mágicos, mas também oferecem subsídios valiosos para a tomada de decisões estratégicas. O uso de visualizações interativas facilita o acompanhamento dos indicadores, permitindo que gestores e stakeholders da ONG identifiquem oportunidades de melhoria e ampliem o impacto de suas iniciativas.
-                Dessa forma, este trabalho reforça a importância da análise de dados no terceiro setor, demonstrando como a tecnologia pode ser uma aliada poderosa na promoção da transformação social por meio da educação.
-                <br>
-                </p>
-                ''', unsafe_allow_html=True)    
-
-
-    st.markdown('<br>', unsafe_allow_html=True)
+    
+    create_insight(
+        'Conclusão Geral',
+        '''
+        Este projeto teve como objetivo analisar o impacto da ONG Passos Mágicos no desenvolvimento educacional de crianças e jovens em situação de vulnerabilidade social, 
+        utilizando dados do período de 2020 a 2024. A combinação de ciência de dados e storytelling foi fundamental para transformar um grande volume de informações em insights acionáveis.<br><br>
+        Com o uso do Google Colab para exploração e tratamento de dados e o Streamlit para a criação de um dashboard interativo, foi possível apresentar de forma intuitiva os principais indicadores de performance.
+        A análise revelou tendências significativas que demonstram o impacto positivo da ONG em diversos aspectos-chave:<br><br>
+        - <b>Redução da Defasagem Escolar:</b> Observou-se uma tendência de diminuição da defasagem entre idade e série, refletindo a eficácia das intervenções pedagógicas da ONG.<br>
+        - <b>Aumento no "Ponto de Virada" (PV):</b> Houve um crescimento constante no número de alunos que atingiram o PV, indicando o fortalecimento de competências acadêmicas e socioemocionais.<br>
+        - <b>Evolução por Gênero e Faixa Etária:</b> A distribuição equilibrada entre gêneros e a melhoria dos resultados em diferentes faixas etárias destacam o caráter inclusivo das ações da ONG.<br>
+        - <b>Impacto Longitudinal:</b> A progressão consistente no desempenho acadêmico ao longo dos anos sugere que o impacto da ONG é cumulativo e sustentável.<br><br>
+        Esses resultados não apenas evidenciam o papel transformador da Passos Mágicos, mas também oferecem subsídios valiosos para a tomada de decisões estratégicas. O uso de visualizações interativas facilita o acompanhamento dos indicadores, permitindo que gestores e stakeholders da ONG identifiquem oportunidades de melhoria e ampliem o impacto de suas iniciativas.
+        Dessa forma, este trabalho reforça a importância da análise de dados no terceiro setor, demonstrando como a tecnologia pode ser uma aliada poderosa na promoção da transformação social por meio da educação.                  
+        '''
+    )
     
     st.markdown('---')
     
-    # próximos passos
-    st.markdown('''## Principais Insights''')
-    
-    # texto
-    st.markdown('''
-                <p style="font-size: 18px">
+    with st.expander('🚀 Principais Insights'):
+
+        # Texto de introdução
+        st.markdown('''
+                    #### Principais Insights
                     Os principais <i>insights</i> e respectivas etapas de melhorias ao projeto,
-                    obtidos durante os processos de análise dos dados e construção dos modelos, são retratados a seguir:
-                    <br>
-                </p>
-                ''', unsafe_allow_html=True) 
-                
-    # melhoria do modelo XGBoost
-    st.markdown('''#### Desistência de Alunos''')
-    # texto
-    st.markdown('''
-                <p style="font-size: 18px">
+                    obtidos durante os processos de análise dos dados e construção dos modelos, são retratados a seguir.
 
-                1. Motivos Mais Comuns de Inativação
-                Falta de retorno às tentativas de contato: Esse motivo aparece com frequência em 2022 (256 casos) e 2023 (55 casos), indicando que muitos responsáveis não respondem às tentativas de contato da organização.
+                    ---
+                    ''', unsafe_allow_html=True)
 
-                    Mudança de bairro/cidade/distância: Esse motivo também é significativo, especialmente em 2022 (209 casos) e 2023 (54 casos), sugerindo que a localização geográfica é um fator importante para a inativação.
+        # Lista de opções para o st.radio
+        opcoes = ["Análise por Aluno", "Defasagem", "Desistência", "Indicadores", "Pedras", "Ponto de Virada"]
 
-                    Outras prioridades/trabalho: Esse motivo é relevante em ambos os anos, com 126 casos em 2022 e 87 casos em 2023, indicando que compromissos profissionais ou outras prioridades podem impedir a continuidade.
+        # Cria o st.radio para selecionar uma opção
+        escolha = st.radio("Selecione uma opção:", opcoes)
 
-                2. Variação Anual dos Motivos
-                2022 vs. 2023: Em 2022, os motivos mais comuns foram "Falta de retorno às tentativas de contato" e "Mudou de bairro/cidade/distância". Em 2023, esses motivos continuam relevantes, mas com números menores, possivelmente indicando uma melhora nas estratégias de engajamento ou mudanças nas circunstâncias dos participantes.
+        # Variável para armazenar o texto a ser exibido
+        texto_exibido = ""
 
-                    Motivos Menos Comuns: Alguns motivos, como "Iniciou curso superior sem auxílio da Passos" (6 casos em 2023) e "Suspensão - Comportamento inadequado" (6 casos em 2023), são menos frequentes, mas ainda relevantes para análises específicas.
+        # Manipula o texto com base na opção selecionada
+        if escolha == "Análise por Aluno":
+            texto_exibido = """
+            ## Análise por Aluno
+            Esta seção fornece uma análise detalhada do desempenho de cada aluno em várias métricas.
+            - **Métricas**: Desempenho acadêmico, engajamento, desenvolvimento psicossocial, etc.
+            """
 
-                3. Tendências ao Longo do Tempo
-                Redução em Certos Motivos: Alguns motivos, como "Falta de retorno às tentativas de contato", tiveram uma redução significativa de 2022 para 2023 (de 256 para 55 casos). Isso pode indicar que a organização melhorou suas estratégias de comunicação ou que os responsáveis estão mais engajados.
+        elif escolha == "Defasagem":
+            texto_exibido = """
+            ## Defasagem
+            Esta seção aborda questões de defasagem no aprendizado e estratégias para superá-las.
+            - **Estratégias**: Aulas de reforço, mentoria, programas de apoio, etc.
+            """
 
-                    Aumento em Outros Motivos: Motivos como "Sem responsável para levar a criança até a unidade" (66 casos em 2023) e "Sem condição financeira para o transporte público" (29 casos em 2023) podem indicar desafios socioeconômicos que estão se tornando mais prevalentes.
+        elif escolha == "Desistência":
+            texto_exibido = """
+            ## Desistência
+            1. Motivos Mais Comuns de Inativação
+            Falta de retorno às tentativas de contato: Esse motivo aparece com frequência em 2022 (256 casos) e 2023 (55 casos), indicando que muitos responsáveis não respondem às tentativas de contato da organização.
+            Mudança de bairro/cidade/distância: Esse motivo também é significativo, especialmente em 2022 (209 casos) e 2023 (54 casos), sugerindo que a localização geográfica é um fator importante para a inativação.
+            Outras prioridades/trabalho: Esse motivo é relevante em ambos os anos, com 126 casos em 2022 e 87 casos em 2023, indicando que compromissos profissionais ou outras prioridades podem impedir a continuidade.
+            2. Variação Anual dos Motivo
+            2022 vs. 2023: Em 2022, os motivos mais comuns foram "Falta de retorno às tentativas de contato" e "Mudou de bairro/cidade/distância". Em 2023, esses motivos continuam relevantes, mas com números menores, possivelmente indicando uma melhora nas estratégias de engajamento ou mudanças nas circunstâncias dos participantes.
+            Motivos Menos Comuns: Alguns motivos, como "Iniciou curso superior sem auxílio da Passos" (6 casos em 2023) e "Suspensão - Comportamento inadequado" (6 casos em 2023), são menos frequentes, mas ainda relevantes para análises específicas.
+            3. Tendências ao Longo do Tempo
+            Redução em Certos Motivos: Alguns motivos, como "Falta de retorno às tentativas de contato", tiveram uma redução significativa de 2022 para 2023 (de 256 para 55 casos). Isso pode indicar que a organização melhorou suas estratégias de comunicação ou que os responsáveis estão mais engajados.
+            Aumento em Outros Motivos: Motivos como "Sem responsável para levar a criança até a unidade" (66 casos em 2023) e "Sem condição financeira para o transporte público" (29 casos em 2023) podem indicar desafios socioeconômicos que estão se tornando mais prevalentes.
+            4. Distribuição dos Motivos
+            Concentração de Motivos: Alguns anos têm uma concentração maior de motivos específicos. Por exemplo, em 2022, "Falta de retorno às tentativas de contato" e "Mudou de bairro/cidade/distância" dominam os números, enquanto em 2023 há uma distribuição mais equilibrada entre vários motivos.
+            Motivos Específicos por Ano: Em 2021, os números são menores, mas ainda é possível identificar motivos como "Conflito com horário escolar / período integral" (8 casos) e "Desinteresse / Falta de retorno" (10 casos).
+            5. Implicações para Ações Futuras
+            Melhoria na Comunicação: Dado o alto número de casos de "Falta de retorno às tentativas de contato", a organização pode precisar revisar e melhorar suas estratégias de comunicação com os responsáveis.
+            Apoio Financeiro e Logístico: Motivos como "Sem condição financeira para o transporte público" e "Sem responsável para levar a criança até a unidade" sugerem a necessidade de apoio logístico e financeiro para as famílias.
+            Adaptação às Necessidades dos Participantes: Motivos como "Não se adaptou às aulas/não acompanhou" (13 casos em 2023) e "Excesso de atividades" (33 casos em 2023) indicam a necessidade de revisar o currículo e a carga horária para melhor atender às necessidades dos participantes.
+            6. Análise de Dados Antigos (2021
+            Embora os dados de 2021 sejam limitados, eles mostram que alguns motivos, como "Conflito com horário escolar / período integral" e "Desinteresse / Falta de retorno", já estavam presentes, sugerindo que esses são desafios persistentes.
+            """
 
-                4. Distribuição dos Motivos
-                Concentração de Motivos: Alguns anos têm uma concentração maior de motivos específicos. Por exemplo, em 2022, "Falta de retorno às tentativas de contato" e "Mudou de bairro/cidade/distância" dominam os números, enquanto em 2023 há uma distribuição mais equilibrada entre vários motivos.
+        elif escolha == "Indicadores":
+            texto_exibido = """
+            ## Indicadores
+            Nesta seção, você encontrará uma análise dos principais indicadores de desempenho e desenvolvimento.
+            - **Indicadores**: INDE, IAA, IEG, IPS, IDA, IPV, IPP.
+            """
 
-                    Motivos Específicos por Ano: Em 2021, os números são menores, mas ainda é possível identificar motivos como "Conflito com horário escolar / período integral" (8 casos) e "Desinteresse / Falta de retorno" (10 casos).
+        elif escolha == "Pedras":
+            texto_exibido = """
+            ## Pedras
+            Esta seção foca nos desafios e obstáculos enfrentados pelos alunos e possíveis soluções.
+            - **Desafios**: Problemas sociais, dificuldades financeiras, falta de motivação, etc.
+            """
 
-                5. Implicações para Ações Futuras
-                Melhoria na Comunicação: Dado o alto número de casos de "Falta de retorno às tentativas de contato", a organização pode precisar revisar e melhorar suas estratégias de comunicação com os responsáveis.
+        elif escolha == "Ponto de Virada":
+            texto_exibido = """
+            ## Ponto de Virada
+            Esta seção destaca os momentos cruciais que podem influenciar positivamente o desenvolvimento dos alunos.
+            - **Momentos**: Mudança de escola, novos métodos de ensino, suporte familiar, etc.
+            """
 
-                    Apoio Financeiro e Logístico: Motivos como "Sem condição financeira para o transporte público" e "Sem responsável para levar a criança até a unidade" sugerem a necessidade de apoio logístico e financeiro para as famílias.
-
-                    Adaptação às Necessidades dos Participantes: Motivos como "Não se adaptou às aulas/não acompanhou" (13 casos em 2023) e "Excesso de atividades" (33 casos em 2023) indicam a necessidade de revisar o currículo e a carga horária para melhor atender às necessidades dos participantes.
-
-                6. Análise de Dados Antigos (2021)
-                Embora os dados de 2021 sejam limitados, eles mostram que alguns motivos, como "Conflito com horário escolar / período integral" e "Desinteresse / Falta de retorno", já estavam presentes, sugerindo que esses são desafios persistentes.
+        st.markdown('---')
+        # Exibe o texto manipulado usando st.markdown
+        st.markdown(texto_exibido)
 
 
-                ''', unsafe_allow_html=True)    
-    
-    create_insight(
-                    'Conclusão Geral:',
-                    '''
-                    O gráfico de heatmap permite visualizar claramente os principais motivos de inativação e como eles variam ao 
-                    longo dos anos. Isso pode ajudar a organização a identificar áreas de melhoria, como comunicação, apoio 
-                    logístico e adaptação do programa às necessidades dos participantes. Além disso, a análise desses dados 
-                    pode orientar a alocação de recursos e a implementação de estratégias mais eficazes para reduzir a desistência.
-                    '''
-                    )
-
-    st.markdown('<br>', unsafe_allow_html=True)
-
-    # título
-    st.markdown('''#### xxxxxxxxxxxx''')
-    # texto
-    st.markdown('''
-                <p style="font-size: 18px">
-   Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsu
-                </p>
-                ''', unsafe_allow_html=True)
-    
-    # criar insight
-    create_insight('Why do we use it', 
-                   '''
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                    ''')
-    
-    
     st.markdown('<br>', unsafe_allow_html=True)
        
 # referências        
 else:
-    st.title('Referências')
+    st.title('Referências 📝')
     st.markdown('<br>', unsafe_allow_html=True)
     # subtítulo
     st.header('Fontes de dados')
