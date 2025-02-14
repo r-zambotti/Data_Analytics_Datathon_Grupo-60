@@ -2,6 +2,8 @@
 ##                  Imports                  ##
 ## ----------------------------------------- ##
 
+#import yfinance as yf
+
 import time
 
 import pandas as pd
