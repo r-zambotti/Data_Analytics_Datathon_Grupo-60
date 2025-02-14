@@ -95,7 +95,19 @@ if page == page_0:
 
 
         st.markdown('''
-        #### Base de Dados e Dicionário:
+        #### Dados do projeto
+
+        **🎯 Objetivo**: Analisar impacto causado pela ONG Passos Mágicos e gerar análise com base nos dados apresentados.
+
+        ---
+        
+        **🛸 Modelos**: os dados utilizados para análise e treinamento no modelo foram coletados em 18/05/2024 e correspondem ao período de 20/05/1987 a 13/05/2024.
+        - [XGBoost](https://xgboost.readthedocs.io/en/stable/)
+        - [Prophet](https://facebook.github.io/prophet/)
+
+        ---
+        
+        **📡 Base de Dados e Dicionário**:
         ''')
 
         tab0, tab1 = st.tabs(tabs=['Base de Dados', 'Dicionário'])
@@ -146,15 +158,15 @@ if page == page_0:
         st.markdown('''        
         ---
         **📡 Fontes de dados**:
-        - [PASSOS MÁGICOS](https://passosmagicos.org.br/)
-        - [GOOGLE DRIVE](https://drive.google.com/drive/folders/1Z1j6uzzCOgjB2a6i3Ym1pmJRsasfm7cD)
+        - [Passos Mágicos](https://passosmagicos.org.br/)
+        - [Google Drive](https://drive.google.com/drive/folders/1Z1j6uzzCOgjB2a6i3Ym1pmJRsasfm7cD)
         ---
         
         **🧑🏻‍🚀 Autores**: 
         - [Victor Novais de Oliveira](https://www.linkedin.com/in/victor-novais-166369171/)
         - [Rodrigo Zambotti de Andrade](https://www.linkedin.com/in/rodrigo-zambotti-369840a4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
         - [Arencio Job Pereira](https://www.linkedin.com)  
-        - [Bruno Akio Matsuzaki Shimada](https://www.linkedin.com)                     
+        - [Bruno Akio Matsuzaki Shimada](www.linkedin.com/in/bruno-shimada-763726211)                     
         ---
         
         **🪐 Repositório**: 
