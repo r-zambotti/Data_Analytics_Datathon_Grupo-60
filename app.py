@@ -43,24 +43,6 @@ st.set_page_config(layout='centered',
                    page_title='Associação Passos Mágicos - Tech Challenge - FIAP', 
                    page_icon='🌟', initial_sidebar_state='auto')
 
-# CSS para modificar o fundo de toda a página
-page_bg = """
-<style>
-    /* Fundo da página principal */
-    [data-testid="stAppViewContainer"] {
-        background-image: url("https://source.unsplash.com/random/1920x1080"); !important;  /* Azul escuro */
-    }
-
-    /* Fundo da barra lateral */
-    [data-testid="stSidebar"] {
-        background-color: #0F172A !important;  /* Azul quase preto */
-    }
-</style>
-"""
-
-st.markdown(page_bg, unsafe_allow_html=True)
-
-
 #Bases
 url = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/df_alunos.csv"
 url_file_data = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/file/Dicion%C3%A1rio%20Dados%20Datathon.pdf"
@@ -113,19 +95,7 @@ if page == page_0:
 
 
         st.markdown('''
-        #### Dados do projeto
-
-        **🎯 Objetivo**: Analisar impacto causado pela ONG Passos Mágicos e gerar análise com base nos dados apresentados.
-
-        ---
-        
-        **🛸 Modelos**: os dados utilizados para análise e treinamento no modelo foram coletados em 18/05/2024 e correspondem ao período de 20/05/1987 a 13/05/2024.
-        - [XGBoost](https://xgboost.readthedocs.io/en/stable/)
-        - [Prophet](https://facebook.github.io/prophet/)
-
-        ---
-        
-        **📡 Base de Dados e Dicionário**:
+        #### Base de Dados e Dicionário:
         ''')
 
         tab0, tab1 = st.tabs(tabs=['Base de Dados', 'Dicionário'])
@@ -142,7 +112,7 @@ if page == page_0:
                 # URL do arquivo
                 url = "https://github.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/raw/refs/heads/main/Bases/PEDE_PASSOS_2024.xlsx"
 
-                opcao = st.radio("Selecione base para download:", ["Base de Dados PEDE", "Base de Dados Tratada"], horizontal=True)
+                opcao = st.radio("Selecione para download:", ["Base de Dados PEDE", "Base de Dados Tratada"], horizontal=True)
 
                 if opcao == "Base de Dados PEDE":
                     # Carrega os dados do Excel usando cache
@@ -172,11 +142,6 @@ if page == page_0:
                         ''',unsafe_allow_html=True)
             
             st.download_button(label="Dicionário da base PEDE",data=file_data,file_name="Dicionário dados PEDE.pdf",mime="application/pdf")
-
-            st.markdown('''                   
-                        Importante: <br>
-                        O dicionário disponibilizado para download é a versão com as bases de 2020 até 2022, material disponibilizado pela instituição de ensino para o desáfio.
-                        ''',unsafe_allow_html=True) 
             
         st.markdown('''        
         ---
@@ -272,34 +237,29 @@ elif page == page_1:
     st.markdown('<br>', unsafe_allow_html=True)
     
     st.markdown('''
-                A análise Exploratória do projeto foi realizada com a base <b><font color='blue'>PEDE (Pesquisa Extensiva do Desenvolvimento Educacional)</b></font> da Passos Mágicos e foi disponibilizada toda documentação 
-                explicando como foram criadas cada índice e métricas já existentes. A PASSOS MÁGICOS utiliza uma métrica chamada <b><font color='blue'>INDE (Índice Nacional de Desenvolvimento Educacional)</b></font> para avaliar 
-                os alunos essa métrica é composta por alguns indicadores que são separados em 3 dimensões principais onde avaliam vários critérios como adequação de nível, desempenho acadêmico, engajamento, autoavaliação, aspectos 
-                psicossociais e psicopedagógicos, essas dimensões estão divididas conforme abaixo e cada uma delas trazem os seguintes indicadores:
+                O projeto teve sua análise exploratória realizada com base nos dados da PEDE (Pesquisa Extensiva do Desenvolvimento Educacional), disponibilizados pela Passos Mágicos. A documentação completa, que explica a construção dos índices e métricas já existentes, foi compartilhada, trazendo à tona os detalhes da metodologia aplicada. A Passos Mágicos utiliza o INDE (Índice Nacional de Desenvolvimento Educacional) como uma métrica central para avaliar o desempenho dos estudantes. O INDE é formado por um conjunto de indicadores, distribuídos em três dimensões principais, que abrangem critérios como adequação de nível, desempenho acadêmico, engajamento, autoavaliação, aspectos psicossociais e psicopedagógicos. Essas dimensões são organizadas da seguinte maneira, cada uma com seus respectivos indicadores:
+                                
                 ''', unsafe_allow_html=True)
     
     st.markdown('''
-                - Dimensão acadêmica: Com os indicadores IEG, IDA e IAN
+                - Dimensão acadêmica: IEG, IAN e IDA
                 ''',  unsafe_allow_html=True)
     
     st.markdown('''
-                - Dimensão psicossocial: Com os indicadores IAA e IPS
+                - Dimensão psicopedagógica: IPP e IPV
                 ''',  unsafe_allow_html=True)
     
     st.markdown('''
-                - Dimensão psicopedagógica: Com os indicadores IPP e IPV
+                - Dimensão psicossocial: IPS e IAA
                 ''',  unsafe_allow_html=True)
 
     st.markdown('''
-                Quanto ao <b><font color='blue'>INDE </b></font> geral tem uma média de 6,84, obtendo uma variação bem grande entre o mínimo de 3,03 e máximo de 9,53; 
-                ao realizar a análise por ano podemos observar que tem um aumento na quantidade de alunos e os níveis do INDE caem, nos trazendo o desafio de começar a segregar essa informação para buscar o gap.
+                O <b> <font color='blue'> INDE </b> </font> geral apresenta uma média de 6,84, com uma amplitude significativa entre os valores mínimo e máximo, que variam de 3,03 a 9,53. Ao analisar os dados por ano, percebe-se um crescimento no número de alunos, porém acompanhado de uma queda nos níveis do INDE. Esse cenário nos coloca diante de um desafio importante: a necessidade de segmentar essas informações para identificar e compreender as lacunas existentes, buscando estratégias que possam reverter essa tendência e fortalecer o desempenho educacional.
                 ''', unsafe_allow_html=True) 
 
     st.markdown('''
-                Com base nas análises, é possível observar que a maioria dos estudantes tende a se concentrar nos intervalos de scores entre (6.88, 7.52], 
-                indicando um desempenho consistente e relativamente alto em várias métricas. A tendência geral mostra um aumento no número de estudantes nos intervalos superiores ao longo dos anos, 
-                sugerindo melhorias nos índices de desenvolvimento educacional, autoavaliação, engajamento, psicossocial, aprendizagem e pontos de virada.
-                ''', unsafe_allow_html=True)
+                Com base nas análises realizadas, observa-se que a maioria dos estudantes se concentra nos intervalos de scores entre (6.88, 7.52], o que reflete um desempenho consistente e relativamente elevado em diversas métricas. A tendência geral aponta para um crescimento no número de estudantes nos intervalos superiores ao longo dos anos, indicando melhorias significativas nos índices de desenvolvimento educacional, autoavaliação, engajamento, aspectos psicossociais, aprendizagem e pontos de virada.
+  ''', unsafe_allow_html=True)
 
     #Análise dos Indicadores
     st.subheader('Análise dos Indicadores', divider='orange')
@@ -776,7 +736,7 @@ elif page == page_2:
         st.subheader("💡 Insights")
 
         # seleção de modelo
-        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Evasão', 'Pedras', 'Ponto de Virada'])
+        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Desistência' ,'Pedras'])
 
         st.markdown('<br>', unsafe_allow_html=True)
 
@@ -901,15 +861,69 @@ elif page == page_2:
             st.dataframe(df_filtrado)
             st.markdown('</div>', unsafe_allow_html=True)
 
-        elif model == 'Evasão':
+        elif model == 'Desistência':
             st.subheader('Indicadores', divider='orange')
-                   # texto
-            st.markdown('''
-                        Dados de evasão!
-                        ''')  
+                   # texto                       
+             
             # Carregar o DataFrame com tratamento de possíveis issues
-            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/DadosDesistenciaEReprovados.csv")
+            df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/Evasao.csv")
+            
+            tabela=df
+            tabela = tabela.rename(columns={
+                tabela.columns[0]: 'Período',
+                tabela.columns[1]: 'Alunos Reprovados',
+                tabela.columns[2]: 'Alunos Desistentes',
+                tabela.columns[3]: 'Total de Alunos',
+                tabela.columns[4]: 'Desistência%'
+            })
+            tabela = tabela.dropna(axis=1, how='all')
+        
+            st.markdown('''
+                        Dados calculados por desistência/turma:
+                        ''')  
+            st.write(tabela)
 
+            with st.expander('☁️ Exibir query'):
+                    st.code('''
+                SELECT
+                    tb.siglaPeriodo AS Periodo,
+                    COUNTIF( tb.SituacaoAlunoTurma ="Reprovado" ) AS Alunos_Reprovados,
+                    COUNTIF( tb.SituacaoAlunoTurma ="Desistente" ) AS Alunos_Desistentes,
+                    COUNT(1) AS Total_Alunos,
+                    (COUNTIF( tb.SituacaoAlunoTurma ="Desistente" ) / COUNT(1) ) * 100 AS Evasao
+                    FROM (
+                    SELECT
+                        al.IdAluno,
+                        pe.siglaPeriodo,
+                        sat.SituacaoAlunoTurma,
+                    FROM
+                        `datathonpm.PassoMagicos.TbAluno` al
+                    JOIN
+                        `datathonpm.PassoMagicos.TbAlunoTurma` alt
+                    ON
+                        al.IdAluno = alt.IdAluno
+                    JOIN
+                        `datathonpm.PassoMagicos.TbTurma` tu
+                    ON
+                        tu.IdTurma = alt.IdTurma
+                    JOIN
+                        `datathonpm.PassoMagicos.TbPeriodo`pe
+                    ON
+                        pe.idPeriodo = tu.IdPeriodo
+                    JOIN
+                        `datathonpm.PassoMagicos.TbSituacaoAlunoTurma`sat
+                    ON
+                        sat.IdSituacaoAlunoTurma = alt.IdSituacaoAlunoTurma
+                    WHERE
+                        pe.SiglaPeriodo < 2024
+                    GROUP BY
+                        al.IdAluno,
+                        pe.siglaPeriodo,
+                        sat.SituacaoAlunoTurma) tb
+                    GROUP BY
+                    tb.siglaPeriodo
+                            ''')
+                        
             import matplotlib.pyplot as plt
             import numpy as np
 
@@ -923,6 +937,29 @@ elif page == page_2:
             total = np.add(totalAlunos_list, totalDesistente_list)
             percent1 = np.divide(totalAlunos_list, total) * 100
             percent2 = np.divide(totalDesistente_list, total) * 100
+
+            x = np.arange(len(siglaPeriodo_list))
+            largura = 0.8
+
+            # Plotando as barras
+            plt.figure(figsize=(12, 6)) # <-- Aumentar o tamanho do gráfico aqui
+            plt.bar(x, percent2, largura, label='Desistentes', color='orange', alpha=0.7)
+            plt.bar(x, percent1, bottom=percent2, label='Total de Alunos', color='blue', alpha=0.7)
+
+            plt.plot(x, percent2, marker='o', linestyle='-', color='red', label='Perc Desistência')
+
+            # Adicionando rótulos e título
+            plt.xlabel('Período')
+            plt.ylabel('Porcentagem (%)')
+            plt.xticks(x, siglaPeriodo_list)
+
+            # Criando a legenda fora da área do gráfico
+            plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+
+
+            # Mostrando o gráfico
+            plt.tight_layout() # Ajusta o layout para evitar sobreposição
+            st.pyplot(plt)
 
         elif model == 'Indicadores':
 
@@ -1023,6 +1060,7 @@ elif page == page_2:
                     </div>
                     """, unsafe_allow_html=True
                 )
+
 
         elif model == 'Pedras':
             
@@ -1197,18 +1235,6 @@ elif page == page_2:
             ax.tick_params(axis='y', colors='white')  # Cor dos valores no eixo Y
             st.pyplot(fig)
 
-        else:
-            st.subheader('Ponto de Virada', divider='orange')
-
-            # texto
-            st.markdown('''
-                        <p style="font-size: 18px">
-                            O XGBoost, ou <i>Extreme Gradient Boosting</i>, é um algoritmo de aprendizado de máquina supervisionado e baseado em árvores de decisão.
-                            O modelo é uma implementação otimizada do Gradient Boosting e pode ser utilizado para problemas de regressão e classificação. O XGBoost é 
-                            amplamente utilizado em competições de ciência de dados e é conhecido por sua eficiência e desempenho.
-                            <br>
-                        </p>
-                        ''', unsafe_allow_html=True)
               
     elif menu == "Análise Preditiva":
         st.subheader("🔮 Análise Preditiva")
@@ -1480,6 +1506,11 @@ else:
 st.markdown('<br>', unsafe_allow_html=True)
 
 st.markdown('---')
+
+
+
+
+
 
 # texto -> Agradecimentos
 st.markdown('''<p style="font-size: 18px; text-align: center;">
