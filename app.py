@@ -758,7 +758,7 @@ elif page == page_2:
         st.subheader("💡 Insights")
 
         # seleção de modelo
-        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Pedras', 'Ponto de Virada'])
+        model = st.selectbox('Selecione o modelo:', ['Análise por Aluno', 'Indicadores', 'Evasão' ,'Pedras', 'Ponto de Virada'])
 
         st.markdown('<br>', unsafe_allow_html=True)
 
@@ -882,6 +882,79 @@ elif page == page_2:
             st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
             st.dataframe(df_filtrado)
             st.markdown('</div>', unsafe_allow_html=True)
+
+        elif model == 'Evasão':
+            st.subheader('Indicadores', divider='orange')
+                   # texto
+            st.markdown('''
+                        Dados de evasão!
+                        ''')  
+            from google.cloud import bigquery
+
+            # Caminho do JSON da conta de serviço
+            service_account_path = "https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/content/datathonpm-7a80d4a43704.json"
+            
+            # Criar cliente autenticado do BigQuery
+            client = bigquery.Client.from_service_account_json(service_account_path)
+
+            # Definir a consulta SQL
+            query = """
+            SELECT
+            siglaPeriodo,
+            COUNTIF( SituacaoAlunoTurma ="Reprovado" ) AS TotalReprovado,
+            COUNTIF( SituacaoAlunoTurma ="Desistente" ) AS TotalDesistente,
+            COUNT(1) AS TotalAlunos ,
+            (COUNTIF( SituacaoAlunoTurma ="Desistente" ) / COUNT(1) ) * 100 as Perc
+            FROM (
+            SELECT
+                al.IdAluno,
+                pe.siglaPeriodo,
+                SituacaoAlunoTurma,
+            FROM
+                `datathonpm.PassoMagicos.TbAluno` al
+            JOIN
+                `datathonpm.PassoMagicos.TbAlunoTurma` alt
+            ON
+                al.IdAluno = alt.IdAluno
+            JOIN
+                `datathonpm.PassoMagicos.TbTurma` tu
+            ON
+                tu.IdTurma = alt.IdTurma
+            JOIN
+                `datathonpm.PassoMagicos.TbPeriodo`pe
+            ON
+                pe.idPeriodo = tu.IdPeriodo
+            JOIN
+                `datathonpm.PassoMagicos.TbSituacaoAlunoTurma`sat
+            ON
+                sat.IdSituacaoAlunoTurma = alt.IdSituacaoAlunoTurma
+            where SiglaPeriodo < 2024
+            GROUP BY
+                al.IdAluno,
+                pe.siglaPeriodo,
+                SituacaoAlunoTurma) tb
+            GROUP BY
+            siglaPeriodo
+            """
+
+            # Executar a consulta
+            query_job = client.query(query)
+
+            df = query_job.to_dataframe()
+
+            import matplotlib.pyplot as plt
+            import numpy as np
+
+            siglaPeriodo_list = df['siglaPeriodo'].tolist()
+            totalReprovado_list = df['TotalReprovado'].tolist()
+            totalDesistente_list = df['TotalDesistente'].tolist()
+            totalAlunos_list = df['TotalAlunos'].tolist()
+            percDesistencia_list = df['Perc'].tolist()
+
+            # Convertendo os valores para porcentagens
+            total = np.add(totalAlunos_list, totalDesistente_list)
+            percent1 = np.divide(totalAlunos_list, total) * 100
+            percent2 = np.divide(totalDesistente_list, total) * 100
 
         elif model == 'Indicadores':
 
@@ -1441,6 +1514,11 @@ else:
 st.markdown('<br>', unsafe_allow_html=True)
 
 st.markdown('---')
+
+
+
+
+
 
 # texto -> Agradecimentos
 st.markdown('''<p style="font-size: 18px; text-align: center;">
