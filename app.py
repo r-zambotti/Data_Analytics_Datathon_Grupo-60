@@ -1068,13 +1068,58 @@ elif page == page_2:
             # Mostrando o gráfico
             plt.tight_layout() # Ajusta o layout para evitar sobreposição
             st.pyplot(plt)
+
             st.markdown('''
                         Intensidade dos Motivos de Inativação:
                         ''')  
-            # Carregar os dados
+      
             df = pd.read_csv("https://raw.githubusercontent.com/r-zambotti/Data_Analytics_Datathon_Grupo-60/main/Bases/EvasaoPorMotivo.csv")
-            
 
+            df_pivot = df.pivot(index='ano', columns='MotivoInativacao', values='Total').fillna(0)
+
+            df_pivot_transposed = df_pivot.T
+
+            plt.figure(figsize=(12, 6))
+            sns.heatmap(df_pivot_transposed, annot=True, fmt=".0f", cmap="Blues")
+            plt.xlabel('Ano')  
+            plt.ylabel('Motivo de Inativação')  
+            st.pyplot(plt)
+
+            with st.expander('☁️ Exibir query'):
+                    st.code('''
+                SELECT
+                EXTRACT(year  FROM    TIMESTAMP(alt.DataSituacaoInativo)) ano,
+                mi.MotivoInativacao,
+                COUNT(1) Total
+                FROM
+                `datathonpm.PassoMagicos.TbAluno` al
+                JOIN
+                `datathonpm.PassoMagicos.TbAlunoTurma` alt
+                ON
+                al.IdAluno = alt.IdAluno
+                JOIN
+                `datathonpm.PassoMagicos.TbMotivoInativacao` mi
+                ON
+                alt.IdMotivoInativacao = mi.IdMotivoInativacao
+                JOIN
+                `datathonpm.PassoMagicos.TbTurma` tu
+                ON
+                tu.IdTurma = alt.IdTurma
+                JOIN
+                `datathonpm.PassoMagicos.TbPeriodo`pe
+                ON
+                pe.idPeriodo = tu.IdPeriodo
+                JOIN
+                `datathonpm.PassoMagicos.TbSituacaoAlunoTurma`sat
+                ON
+                sat.IdSituacaoAlunoTurma = alt.IdSituacaoAlunoTurma
+                WHERE
+                alt.IdSituacaoAlunoTurma = 14
+                AND EXTRACT(year  FROM    TIMESTAMP(DataSituacaoInativo)) < 2024
+                GROUP BY
+                EXTRACT(year  FROM    TIMESTAMP(DataSituacaoInativo)),
+                mi.MotivoInativacao
+                            ''')
 
 
         elif model == 'Indicadores':
