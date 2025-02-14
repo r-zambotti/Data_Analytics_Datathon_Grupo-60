@@ -1653,20 +1653,17 @@ else:
     
     st.markdown('''
                 #### [**Google**](https://drive.google.com/drive/folders/1Z1j6uzzCOgjB2a6i3Ym1pmJRsasfm7cD) - Repositório Google Drive
-                A base de dados inclui informações educacionais e socioeconômicas dos estudantes da Passos Mágicos. 
-                Foram disponibilizadas para o desenvolvimento educacional e condições socioeconômicas, além de um dicionário de dados para 
-                mapeamento das variáveis. 
-                Relatórios de pesquisa da ONG também estão acessíveis para apoiar a compreensão do contexto. 
+                Repositório disponobiliado pela FIAP com a bases de dados, dicionário de dados, relatórios e documentação.
                 ''')
     
     st.markdown(''' 
-        #### [**GITHUB**](https://github.com/r-zambotti/Data_Analytics_Datathon_Grupo-60) - Repositório do projeto  
-        O repositório "Data_Analytics_Datathon_Grupo-60" no GitHub foi criado para a análise exploratória da  
-        metodologia "Passos Mágicos".  
-        Contém um notebook Jupyter (Data_Analytics_Datathon_Grupo_60.ipynb) que realiza a análise dos dados fornecidos.  
-        Além disso, há arquivos Python (app.py e utils.py) que auxiliam no processamento dos dados e na execução de funcionalidades adicionais.  
-        A licença do projeto é MIT.  
-    ''')
+                #### [**GITHUB**](https://github.com/r-zambotti/Data_Analytics_Datathon_Grupo-60) - Repositório do projeto  
+                O repositório "Data_Analytics_Datathon_Grupo-60" no GitHub foi criado para a análise exploratória da  
+                metodologia "Passos Mágicos".  
+                Contém notebook Jupyter (Data_Analytics_Datathon_Grupo_60.ipynb) que realiza as análise dos dados fornecidos.  
+                Arquivos Python (app.py e utils.py) que auxiliam no processamento dos dados e na execução de funcionalidades adicionais.  
+                A licença do projeto é MIT.  
+                ''')
          
     st.markdown('<br>', unsafe_allow_html=True)
     # subtítulo para Bibliografia
